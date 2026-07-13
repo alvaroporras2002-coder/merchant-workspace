@@ -7341,6 +7341,100 @@ body.dd-portal-ui.dd-default.custom-photo-theme[data-theme="doordash"]{
     grid-template-columns: 1fr;
   }
 }
+
+
+/* games-tetris-classic */
+.tetris-shell {
+  background: #0f172a !important;
+  border: 2px solid rgba(148,163,184,.30) !important;
+}
+.tetris-grid {
+  display: grid;
+  grid-template-columns: minmax(320px, 1fr) 260px;
+  gap: 14px;
+  align-items: start;
+}
+.tetris-screen {
+  display: grid;
+  gap: 12px;
+  justify-items: start;
+}
+#tetrisCanvas,
+.preview-canvas {
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  background: #020617;
+  border: 3px solid #cbd5e1;
+  box-shadow: inset 0 0 0 2px rgba(15,23,42,.72);
+}
+#tetrisCanvas {
+  width: min(100%, 300px);
+  height: auto;
+  aspect-ratio: 1 / 2;
+}
+.preview-canvas {
+  width: 96px;
+  height: 96px;
+  display: block;
+}
+.tetris-side {
+  display: grid;
+  gap: 10px;
+}
+.tetris-stat {
+  background: #020617;
+  border: 2px solid #475569;
+  border-radius: 14px;
+  padding: 10px 12px;
+  font-family: "Courier New", monospace;
+}
+.tetris-stat .k {
+  color: #7dd3fc;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: .10em;
+  font-weight: 900;
+}
+.tetris-stat .v {
+  margin-top: 4px;
+  color: #f8fafc;
+  font-size: 24px;
+  font-weight: 900;
+  letter-spacing: -.04em;
+  line-height: 1;
+}
+.tetris-status {
+  font-size: 14px !important;
+  min-height: 24px;
+  display: flex;
+  align-items: center;
+}
+.tetris-controls {
+  margin-top: 2px;
+}
+.tetris-controls .btn {
+  min-height: 38px;
+}
+.tetris-help {
+  width: min(100%, 520px);
+  font-family: "Courier New", monospace;
+  color: #cbd5e1;
+  font-size: 12px;
+  line-height: 1.55;
+  padding: 12px;
+  border-radius: 14px;
+  border: 1px dashed #64748b;
+  background: #020617;
+}
+@media (max-width: 900px) {
+  .tetris-grid {
+    grid-template-columns: 1fr;
+  }
+  .tetris-screen {
+    justify-items: stretch;
+  }
+}
+
 </style>
 
 
@@ -7449,6 +7543,7 @@ body.dd-portal-ui.dd-default.custom-photo-theme[data-theme="doordash"]{
     <button class="nav-btn" data-view="logs">Logs <span class="nav-count" id="navLogCount">—</span></button>
     <button class="nav-btn" data-view="gpts">GPTs <span class="nav-count" id="navGptsCount">—</span></button>
     <button class="nav-btn" data-view="resources">Resources <span class="nav-count" id="navResourcesCount">—</span></button>
+    <button class="nav-btn" data-view="games">Games <span class="nav-count">NEW</span></button>
     <button class="nav-btn" data-view="settings">Settings <span class="nav-count">⚙</span></button>
       </div>
     </section>
@@ -7874,6 +7969,38 @@ body.dd-portal-ui.dd-default.custom-photo-theme[data-theme="doordash"]{
         </div>
       </div>
     </section>
+
+    <section class="page" id="view-games">
+      <div class="panel tetris-shell">
+        <div class="section-title">
+          <h3>Games</h3>
+          <span class="hint">Classic 1989-inspired Tetris · local save enabled</span>
+        </div>
+        <div class="tetris-grid">
+          <div class="tetris-screen">
+            <canvas id="tetrisCanvas" width="300" height="600" aria-label="Tetris board"></canvas>
+            <div class="actions tetris-controls">
+              <button class="btn blue" data-action="tetrisStart">Start</button>
+              <button class="btn ghost" data-action="tetrisPause">Pause</button>
+              <button class="btn green" data-action="tetrisRestart">Restart</button>
+              <button class="btn amber" data-action="tetrisMute">Sound: On/Off</button>
+            </div>
+            <div class="tetris-help">
+              Controls: ← → move · ↓ soft drop · Z/X rotate · Space hard drop · P pause · R restart.
+            </div>
+          </div>
+          <div class="tetris-side">
+            <div class="tetris-stat"><div class="k">Score</div><div class="v" id="tetrisScore">0</div></div>
+            <div class="tetris-stat"><div class="k">Lines</div><div class="v" id="tetrisLines">0</div></div>
+            <div class="tetris-stat"><div class="k">Level</div><div class="v" id="tetrisLevel">0</div></div>
+            <div class="tetris-stat"><div class="k">Best</div><div class="v" id="tetrisBest">0</div></div>
+            <div class="tetris-stat"><div class="k">Next</div><canvas id="tetrisNext" class="preview-canvas" width="96" height="96"></canvas></div>
+            <div class="tetris-stat"><div class="k">Status</div><div class="v tetris-status" id="tetrisStatus">Ready</div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section class="page" id="view-settings">
 
       <div class="panel custom-theme-panel" id="customThemeSettingsPanel">
@@ -9326,6 +9453,7 @@ function pageCopy(view){
     logs:["Photo Logs","Photo history and imported activity review."],
     gpts:["GPT hub","Launch, pin, and manage DoorDash GPT shortcuts."],
     resources:["Resources","Searchable hub for systems, forms, docs, and shortcuts."],
+    games:["Games","Classic 1989 Tetris with local save, score, lines, and level tracking."],
     import:["Import Center","Upload Calls CSV or Merchants CSV, review import results, and undo/reset when needed."],
     settings:["Settings","Clock, workspace health, and local configuration."]
   };
@@ -9374,6 +9502,7 @@ function showView(view){
   if(view==="logs") renderLogs();
   if(view==="gpts") renderGpts();
   if(view==="resources") renderResources();
+  if(view==="games") renderGames();
   if(view==="settings"){ renderSettings(); ensureMotionControls(); }
   if(view==="dashboard") renderDashboard();
   renderMetrics();
@@ -13270,6 +13399,9 @@ function getNextMerchantList(){
   return sortedRecords(candidates.length ? candidates : fallback);
 }
 
+function renderGames(){
+  TetrisClassic.init();
+}
 function renderAll(){
   applyAllMerchantEdits();
   populateStaticControls();
@@ -13284,6 +13416,7 @@ function renderAll(){
   else if(currentView==="activity") renderActivity();
   else if(currentView==="logs") renderLogs();
   else if(currentView==="resources") renderResources();
+  else if(currentView==="games") renderGames();
   else if(currentView==="settings") { renderSettings(); ensureMotionControls(); }
 
   renderWorkspaceHealth();
@@ -13436,6 +13569,10 @@ function handleClick(e){
   if(action==="selectMerchant") selectMerchant(u);
   if(action==="openCallConsole") openCallConsole(u);
   if(action==="openProfile"){ showView("profile"); setTimeout(()=>scrollWorkHubSection("profile"),80); }
+  if(action==="tetrisStart") TetrisClassic.start();
+  if(action==="tetrisPause") TetrisClassic.togglePause();
+  if(action==="tetrisRestart") TetrisClassic.restart();
+  if(action==="tetrisMute") TetrisClassic.toggleMute();
   if(action==="quickNoAnswer") saveCall("No Answer",0,{uid:u});
   if(action==="quickSpoke"){selectMerchant(u); showView("callControl"); setTimeout(()=>{const out=document.getElementById("callOutcome"); if(out) out.value="Spoke";},0)}
   if(action==="quickFollowup"){followupEditorId=""; selectMerchant(u); showView("followups"); setTimeout(()=>{ const m=document.getElementById("followMerchant"); if(m) m.value=u; const d=document.getElementById("followDate"); if(d) d.value=todayKey(); renderFollowups(); scrollFollowupWorkbenchIntoView(); },0);}
@@ -13542,6 +13679,7 @@ function bind(){
   document.getElementById("merchantSelect").addEventListener("change",e=>selectMerchant(e.target.value));
   document.addEventListener("keydown", (e)=>{
     if(e.key === "Escape" && merchantQuickEditField){ closeMerchantQuickEdit(); return; }
+    if(currentView === "games" && TetrisClassic.handleKey(e)) return;
     if(e.target && ["INPUT","TEXTAREA","SELECT"].includes(e.target.tagName)) return;
     if(e.key==="/"){ e.preventDefault(); openCommandBar(); }
     if(e.key.toLowerCase()==="n") nextMerchant();
@@ -17413,6 +17551,502 @@ body.dd-portal-ui .workspace-search-result-meta{
       if (panel) panel.style.display = 'none';
     }
   }
+
+
+  const TetrisClassic = (() => {
+    const STORAGE_KEY = "dd_tetris_classic_v1";
+    const BOARD_W = 10;
+    const BOARD_H = 20;
+    const CELL = 30;
+    const PLAYFIELD_W = BOARD_W * CELL;
+    const PLAYFIELD_H = BOARD_H * CELL;
+    const BASE_SPEED = 800;
+    const MIN_SPEED = 80;
+    const PIECES = {
+      I: [
+        [[0,1],[1,1],[2,1],[3,1]],
+        [[2,0],[2,1],[2,2],[2,3]],
+        [[0,2],[1,2],[2,2],[3,2]],
+        [[1,0],[1,1],[1,2],[1,3]]
+      ],
+      O: [
+        [[1,0],[2,0],[1,1],[2,1]],
+        [[1,0],[2,0],[1,1],[2,1]],
+        [[1,0],[2,0],[1,1],[2,1]],
+        [[1,0],[2,0],[1,1],[2,1]]
+      ],
+      T: [
+        [[1,0],[0,1],[1,1],[2,1]],
+        [[1,0],[1,1],[2,1],[1,2]],
+        [[0,1],[1,1],[2,1],[1,2]],
+        [[1,0],[0,1],[1,1],[1,2]]
+      ],
+      S: [
+        [[1,0],[2,0],[0,1],[1,1]],
+        [[1,0],[1,1],[2,1],[2,2]],
+        [[1,1],[2,1],[0,2],[1,2]],
+        [[0,0],[0,1],[1,1],[1,2]]
+      ],
+      Z: [
+        [[0,0],[1,0],[1,1],[2,1]],
+        [[2,0],[1,1],[2,1],[1,2]],
+        [[0,1],[1,1],[1,2],[2,2]],
+        [[1,0],[0,1],[1,1],[0,2]]
+      ],
+      J: [
+        [[0,0],[0,1],[1,1],[2,1]],
+        [[1,0],[2,0],[1,1],[1,2]],
+        [[0,1],[1,1],[2,1],[2,2]],
+        [[1,0],[1,1],[0,2],[1,2]]
+      ],
+      L: [
+        [[2,0],[0,1],[1,1],[2,1]],
+        [[1,0],[1,1],[1,2],[2,2]],
+        [[0,1],[1,1],[2,1],[0,2]],
+        [[0,0],[1,0],[1,1],[1,2]]
+      ]
+    };
+    const COLORS = {
+      I: "#7dd3fc",
+      O: "#facc15",
+      T: "#c084fc",
+      S: "#4ade80",
+      Z: "#fb7185",
+      J: "#60a5fa",
+      L: "#fb923c"
+    };
+    const SCORE_TABLE = [0, 40, 100, 300, 1200];
+    let state = null;
+    let raf = 0;
+    let lastTs = 0;
+    let flashUntil = 0;
+    let flashText = "";
+    let audioOn = true;
+
+    function emptyBoard() {
+      return Array.from({ length: BOARD_H }, () => Array(BOARD_W).fill(null));
+    }
+
+    function randomPiece() {
+      const keys = Object.keys(PIECES);
+      return keys[Math.floor(Math.random() * keys.length)];
+    }
+
+    function cloneBoard(board) {
+      return board.map(row => row.slice());
+    }
+
+    function defaultState() {
+      return {
+        board: emptyBoard(),
+        current: { type: randomPiece(), rot: 0, x: 3, y: 0 },
+        nextType: randomPiece(),
+        score: 0,
+        lines: 0,
+        level: 0,
+        best: Number(localStorage.getItem(STORAGE_KEY + "_best") || 0),
+        paused: true,
+        started: false,
+        gameOver: false,
+        lastDrop: 0,
+        dropInterval: BASE_SPEED,
+        banner: "Ready",
+        bannerUntil: 0,
+        lastLock: 0
+      };
+    }
+
+    function loadState() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) return null;
+        const saved = JSON.parse(raw);
+        if (!saved || typeof saved !== "object") return null;
+        const next = defaultState();
+        next.board = Array.isArray(saved.board) ? saved.board.map(row => Array.isArray(row) ? row.slice(0, BOARD_W).map(cell => cell || null) : Array(BOARD_W).fill(null)) : next.board;
+        next.current = saved.current && PIECES[saved.current.type] ? {
+          type: saved.current.type,
+          rot: Number(saved.current.rot || 0) % 4,
+          x: Number(saved.current.x || 3),
+          y: Number(saved.current.y || 0)
+        } : next.current;
+        next.nextType = PIECES[saved.nextType] ? saved.nextType : randomPiece();
+        next.score = Number(saved.score || 0);
+        next.lines = Number(saved.lines || 0);
+        next.level = Number(saved.level || 0);
+        next.best = Number(saved.best || next.best || 0);
+        next.paused = saved.paused !== false;
+        next.started = saved.started === true;
+        next.gameOver = !!saved.gameOver;
+        next.lastDrop = Number(saved.lastDrop || 0);
+        next.dropInterval = Number(saved.dropInterval || BASE_SPEED);
+        next.banner = String(saved.banner || "Ready");
+        next.bannerUntil = Number(saved.bannerUntil || 0);
+        next.lastLock = Number(saved.lastLock || 0);
+        audioOn = saved.audioOn !== false;
+        if (!Array.isArray(next.board) || next.board.length !== BOARD_H) return defaultState();
+        return next;
+      } catch (error) {
+        return null;
+      }
+    }
+
+    function persist() {
+      if (!state) return;
+      state.best = Math.max(Number(state.best || 0), Number(state.score || 0));
+      localStorage.setItem(STORAGE_KEY + "_best", String(state.best || 0));
+      const safeState = {
+        board: state.board,
+        current: state.current,
+        nextType: state.nextType,
+        score: state.score,
+        lines: state.lines,
+        level: state.level,
+        best: state.best,
+        paused: state.paused,
+        started: state.started,
+        gameOver: state.gameOver,
+        lastDrop: state.lastDrop,
+        dropInterval: state.dropInterval,
+        banner: state.banner,
+        bannerUntil: state.bannerUntil,
+        lastLock: state.lastLock,
+        audioOn
+      };
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(safeState));
+    }
+
+    function ensureCanvas() {
+      const canvas = document.getElementById("tetrisCanvas");
+      const nextCanvas = document.getElementById("tetrisNext");
+      if (!canvas || !nextCanvas) return null;
+      if (!state) state = loadState() || defaultState();
+      return { canvas, nextCanvas };
+    }
+
+    function cellsFor(piece) {
+      const rotations = PIECES[piece.type] || PIECES.I;
+      return rotations[(piece.rot || 0) % rotations.length];
+    }
+
+    function intersects(board, piece, dx = 0, dy = 0, rot = piece.rot) {
+      const test = { type: piece.type, rot, x: piece.x + dx, y: piece.y + dy };
+      const cells = cellsFor(test);
+      for (const [cx, cy] of cells) {
+        const x = test.x + cx;
+        const y = test.y + cy;
+        if (x < 0 || x >= BOARD_W || y < 0 || y >= BOARD_H) return true;
+        if (board[y][x]) return true;
+      }
+      return false;
+    }
+
+    function setBanner(text, ms = 1200) {
+      if (!state) return;
+      state.banner = String(text || "");
+      state.bannerUntil = performance.now() + ms;
+      persist();
+    }
+
+    function syncDropSpeed() {
+      state.dropInterval = Math.max(MIN_SPEED, BASE_SPEED - state.level * 60);
+    }
+
+    function spawnNext() {
+      state.current = { type: state.nextType || randomPiece(), rot: 0, x: 3, y: 0 };
+      state.nextType = randomPiece();
+      if (intersects(state.board, state.current, 0, 0, state.current.rot)) {
+        state.gameOver = true;
+        state.paused = true;
+        state.started = true;
+        setBanner("GAME OVER", 4000);
+      }
+      syncDropSpeed();
+    }
+
+    function lockPiece() {
+      const cells = cellsFor(state.current);
+      cells.forEach(([cx, cy]) => {
+        const x = state.current.x + cx;
+        const y = state.current.y + cy;
+        if (y >= 0 && y < BOARD_H && x >= 0 && x < BOARD_W) state.board[y][x] = state.current.type;
+      });
+      let cleared = 0;
+      for (let y = BOARD_H - 1; y >= 0; y--) {
+        if (state.board[y].every(Boolean)) {
+          state.board.splice(y, 1);
+          state.board.unshift(Array(BOARD_W).fill(null));
+          cleared += 1;
+          y += 1;
+        }
+      }
+      if (cleared > 0) {
+        const points = SCORE_TABLE[cleared] || 0;
+        state.score += points * (state.level + 1);
+        state.lines += cleared;
+        const nextLevel = Math.floor(state.lines / 10);
+        if (nextLevel > state.level) {
+          state.level = nextLevel;
+          setBanner(`LEVEL ${state.level}`, 1100);
+        } else if (cleared === 4) {
+          setBanner("TETRIS!", 900);
+        } else {
+          setBanner(`${cleared} LINE${cleared > 1 ? "S" : ""}`, 900);
+        }
+        if (state.score > state.best) state.best = state.score;
+      }
+      spawnNext();
+      persist();
+      render();
+    }
+
+    function softDrop() {
+      if (!state || state.paused || state.gameOver) return;
+      if (!intersects(state.board, state.current, 0, 1, state.current.rot)) {
+        state.current.y += 1;
+        state.score += 1;
+      } else {
+        lockPiece();
+      }
+      persist();
+      render();
+    }
+
+    function hardDrop() {
+      if (!state || state.paused || state.gameOver) return;
+      let dropped = 0;
+      while (!intersects(state.board, state.current, 0, 1, state.current.rot)) {
+        state.current.y += 1;
+        dropped += 1;
+      }
+      state.score += dropped * 2;
+      lockPiece();
+      persist();
+      render();
+    }
+
+    function move(dx) {
+      if (!state || state.paused || state.gameOver) return false;
+      if (!intersects(state.board, state.current, dx, 0, state.current.rot)) {
+        state.current.x += dx;
+        persist();
+        render();
+        return true;
+      }
+      return false;
+    }
+
+    function rotate(dir) {
+      if (!state || state.paused || state.gameOver) return false;
+      const rotations = PIECES[state.current.type] || PIECES.I;
+      const nextRot = (state.current.rot + dir + 4) % 4;
+      const kicks = [[0,0],[-1,0],[1,0],[-2,0],[2,0],[0,-1]];
+      for (const [kx, ky] of kicks) {
+        if (!intersects(state.board, state.current, kx, ky, nextRot)) {
+          state.current.rot = nextRot;
+          state.current.x += kx;
+          state.current.y += ky;
+          persist();
+          render();
+          return true;
+        }
+      }
+      return false;
+    }
+
+    function reset() {
+      state = defaultState();
+      state.paused = true;
+      state.started = false;
+      state.banner = "Ready";
+      state.bannerUntil = performance.now() + 2000;
+      persist();
+      render();
+    }
+
+    function start() {
+      if (!state) state = loadState() || defaultState();
+      if (state.gameOver) reset();
+      state.paused = false;
+      state.started = true;
+      state.banner = "GO";
+      state.bannerUntil = performance.now() + 800;
+      persist();
+      render();
+    }
+
+    function togglePause() {
+      if (!state || state.gameOver) return;
+      state.started = true;
+      state.paused = !state.paused;
+      state.banner = state.paused ? "PAUSED" : "GO";
+      state.bannerUntil = performance.now() + 900;
+      persist();
+      render();
+    }
+
+    function toggleMute() {
+      audioOn = !audioOn;
+      persist();
+      render();
+      toast(audioOn ? "Sound on" : "Sound off");
+    }
+
+    function getVisibleBanner() {
+      const now = performance.now();
+      if (state.banner && now <= state.bannerUntil) return state.banner;
+      if (state.gameOver) return "GAME OVER";
+      if (!state.started) return "READY";
+      if (state.paused) return "PAUSED";
+      return "";
+    }
+
+    function drawBlock(ctx, x, y, size, color) {
+      ctx.fillStyle = color;
+      ctx.fillRect(x, y, size, size);
+      ctx.fillStyle = "rgba(255,255,255,.18)";
+      ctx.fillRect(x + 2, y + 2, size - 4, Math.max(3, size * 0.18));
+      ctx.strokeStyle = "rgba(0,0,0,.62)";
+      ctx.lineWidth = 2;
+      ctx.strokeRect(x + 1, y + 1, size - 2, size - 2);
+    }
+
+    function drawPiece(ctx, piece, offsetX, offsetY, cellSize) {
+      const cells = cellsFor(piece);
+      const color = COLORS[piece.type] || "#ffffff";
+      cells.forEach(([cx, cy]) => drawBlock(ctx, offsetX + (piece.x + cx) * cellSize, offsetY + (piece.y + cy) * cellSize, cellSize, color));
+    }
+
+    function drawPreview(canvas, type) {
+      const ctx = canvas.getContext("2d");
+      ctx.imageSmoothingEnabled = false;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = "#020617";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      if (!type) return;
+      const cells = PIECES[type][0];
+      const color = COLORS[type];
+      const size = 18;
+      const bounds = cells.reduce((acc, [x, y]) => ({ minX: Math.min(acc.minX, x), minY: Math.min(acc.minY, y), maxX: Math.max(acc.maxX, x), maxY: Math.max(acc.maxY, y) }), { minX: 99, minY: 99, maxX: -99, maxY: -99 });
+      const pieceW = (bounds.maxX - bounds.minX + 1) * size;
+      const pieceH = (bounds.maxY - bounds.minY + 1) * size;
+      const ox = Math.floor((canvas.width - pieceW) / 2) - bounds.minX * size;
+      const oy = Math.floor((canvas.height - pieceH) / 2) - bounds.minY * size;
+      cells.forEach(([x, y]) => drawBlock(ctx, ox + x * size, oy + y * size, size, color));
+    }
+
+    function render() {
+      const handles = ensureCanvas();
+      if (!handles) return;
+      const { canvas, nextCanvas } = handles;
+      const ctx = canvas.getContext("2d");
+      ctx.imageSmoothingEnabled = false;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = "#020617";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.strokeStyle = "rgba(148,163,184,.22)";
+      ctx.lineWidth = 1;
+      for (let x = 0; x <= BOARD_W; x++) {
+        ctx.beginPath();
+        ctx.moveTo(x * CELL + 0.5, 0);
+        ctx.lineTo(x * CELL + 0.5, PLAYFIELD_H);
+        ctx.stroke();
+      }
+      for (let y = 0; y <= BOARD_H; y++) {
+        ctx.beginPath();
+        ctx.moveTo(0, y * CELL + 0.5);
+        ctx.lineTo(PLAYFIELD_W, y * CELL + 0.5);
+        ctx.stroke();
+      }
+      state.board.forEach((row, y) => row.forEach((cell, x) => {
+        if (cell) drawBlock(ctx, x * CELL, y * CELL, CELL, COLORS[cell] || "#ffffff");
+      }));
+      if (state.current && !state.gameOver) drawPiece(ctx, state.current, 0, 0, CELL);
+      const overlay = getVisibleBanner();
+      if (overlay) {
+        ctx.fillStyle = "rgba(2,6,23,.72)";
+        ctx.fillRect(0, PLAYFIELD_H / 2 - 34, PLAYFIELD_W, 68);
+        ctx.fillStyle = "#f8fafc";
+        ctx.font = 'bold 28px "Courier New", monospace';
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillText(overlay, PLAYFIELD_W / 2, PLAYFIELD_H / 2);
+      }
+      drawPreview(nextCanvas, state.nextType);
+      document.getElementById("tetrisScore").textContent = Number(state.score || 0).toLocaleString("en-US");
+      document.getElementById("tetrisLines").textContent = String(state.lines || 0);
+      document.getElementById("tetrisLevel").textContent = String(state.level || 0);
+      document.getElementById("tetrisBest").textContent = Number(state.best || 0).toLocaleString("en-US");
+      document.getElementById("tetrisStatus").textContent = state.gameOver ? "Game Over" : (state.paused ? "Paused" : "Playing");
+    }
+
+    function tick(ts) {
+      if (!state) state = loadState() || defaultState();
+      if (!lastTs) lastTs = ts;
+      const delta = ts - lastTs;
+      lastTs = ts;
+      if (!state.paused && !state.gameOver && currentView === "games") {
+        state.lastDrop += delta;
+        if (state.lastDrop >= state.dropInterval) {
+          state.lastDrop = 0;
+          if (!intersects(state.board, state.current, 0, 1, state.current.rot)) {
+            state.current.y += 1;
+            persist();
+          } else {
+            lockPiece();
+          }
+        }
+      }
+      if (state.score > state.best) {
+        state.best = state.score;
+        persist();
+      }
+      render();
+      raf = requestAnimationFrame(tick);
+    }
+
+    function handleKey(e) {
+      if (currentView !== "games") return false;
+      const key = String(e.key || "").toLowerCase();
+      if (["arrowleft", "arrowright", "arrowdown", "arrowup", "z", "x", " ", "spacebar", "p", "r", "enter"].includes(key) || e.code === "Space") {
+        e.preventDefault();
+      }
+      if (key === "arrowleft") return move(-1) || true;
+      if (key === "arrowright") return move(1) || true;
+      if (key === "arrowdown") { softDrop(); return true; }
+      if (key === "arrowup" || key === "x") { rotate(1); return true; }
+      if (key === "z") { rotate(-1); return true; }
+      if (key === " " || e.code === "Space" || key === "spacebar") { hardDrop(); return true; }
+      if (key === "p") { togglePause(); return true; }
+      if (key === "r") { reset(); return true; }
+      if (key === "enter") { togglePause(); return true; }
+      return false;
+    }
+
+    function ensureRunning() {
+      if (!raf) raf = requestAnimationFrame(tick);
+      render();
+    }
+
+    function init() {
+      ensureCanvas();
+      ensureRunning();
+      render();
+    }
+
+    return {
+      init,
+      render,
+      start,
+      restart: reset,
+      togglePause,
+      toggleMute,
+      handleKey,
+      ensure: ensureCanvas,
+      getState: () => state
+    };
+  })();
+  window.TetrisClassic = TetrisClassic;
 
   function patchRenderer(name) {
     const original = window[name];
