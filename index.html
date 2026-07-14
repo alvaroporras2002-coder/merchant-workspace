@@ -17433,5 +17433,1645 @@ body.dd-portal-ui .workspace-search-result-meta{
 })();
 </script>
 
+
+<!-- =========================================================
+     CRYSTAL CLEAR OPERATIONS REDESIGN V7
+     Integrated follow-up celebration, Activity calendar views,
+     and optimized Work Hub console tabs.
+     ========================================================= -->
+<style id="crystal-clear-operations-v7">
+:root{
+  --crystal-bg:#06101f;
+  --crystal-bg-2:#0a1630;
+  --crystal-ink:#f7fbff;
+  --crystal-muted:#a8b7cb;
+  --crystal-line:rgba(215,235,255,.15);
+  --crystal-line-strong:rgba(215,235,255,.25);
+  --crystal-glass:rgba(10,22,40,.62);
+  --crystal-glass-strong:rgba(9,20,37,.82);
+  --crystal-card:rgba(255,255,255,.065);
+  --crystal-card-hover:rgba(255,255,255,.095);
+  --crystal-blue:#63b3ff;
+  --crystal-cyan:#55e7f4;
+  --crystal-green:#45e29a;
+  --crystal-purple:#b08cff;
+  --crystal-amber:#ffd166;
+  --crystal-red:#ff8e8e;
+  --crystal-shadow:0 28px 80px rgba(0,0,0,.34), inset 0 1px 0 rgba(255,255,255,.10);
+  --crystal-shadow-soft:0 16px 38px rgba(0,0,0,.22), inset 0 1px 0 rgba(255,255,255,.07);
+  --crystal-radius:24px;
+}
+html{
+  background:var(--crystal-bg)!important;
+  color-scheme:dark!important;
+}
+body.crystal-clear-ui,
+body.crystal-clear-ui[data-theme],
+body.crystal-clear-ui[data-theme="doordash"],
+body.crystal-clear-ui.custom-photo-theme{
+  position:relative!important;
+  isolation:isolate!important;
+  min-height:100vh!important;
+  background:
+    radial-gradient(circle at 12% 8%, rgba(68,141,255,.26), transparent 31%),
+    radial-gradient(circle at 86% 12%, rgba(96,231,215,.18), transparent 27%),
+    radial-gradient(circle at 72% 82%, rgba(159,104,255,.20), transparent 34%),
+    linear-gradient(145deg, #040b16 0%, #081428 46%, #071122 100%)!important;
+  color:var(--crystal-ink)!important;
+  --dd-bg:transparent!important;
+  --dd-bg-soft:rgba(255,255,255,.045)!important;
+  --dd-sidebar:rgba(5,14,28,.72)!important;
+  --dd-surface:rgba(10,22,40,.68)!important;
+  --dd-card:rgba(255,255,255,.065)!important;
+  --dd-card-hover:rgba(255,255,255,.095)!important;
+  --dd-input:rgba(3,10,22,.62)!important;
+  --dd-text:var(--crystal-ink)!important;
+  --dd-heading:#ffffff!important;
+  --dd-muted:var(--crystal-muted)!important;
+  --dd-muted-2:#8294ac!important;
+  --dd-border:var(--crystal-line)!important;
+  --dd-border-2:var(--crystal-line-strong)!important;
+  --dd-shadow:var(--crystal-shadow)!important;
+  --dd-shadow-soft:var(--crystal-shadow-soft)!important;
+  --dd-active:rgba(99,179,255,.16)!important;
+  --dd-active-text:#eaf6ff!important;
+  --bg:transparent!important;
+  --surface:rgba(5,14,28,.72)!important;
+  --panel:rgba(10,22,40,.68)!important;
+  --card:rgba(255,255,255,.065)!important;
+  --text:var(--crystal-ink)!important;
+  --muted:var(--crystal-muted)!important;
+  --line:var(--crystal-line)!important;
+}
+body.crystal-clear-ui[data-theme]::before,
+body.crystal-clear-ui[data-theme="doordash"]::before{
+  content:""!important;
+  display:block!important;
+  position:fixed!important;
+  inset:-18vh -12vw!important;
+  z-index:0!important;
+  pointer-events:none!important;
+  background:
+    radial-gradient(circle at 18% 18%, rgba(104,176,255,.20), transparent 24%),
+    radial-gradient(circle at 78% 24%, rgba(75,226,214,.13), transparent 22%),
+    radial-gradient(circle at 66% 76%, rgba(178,121,255,.14), transparent 28%)!important;
+  filter:blur(10px)!important;
+  animation:crystalMeshDrift 18s ease-in-out infinite alternate!important;
+}
+body.crystal-clear-ui[data-theme]::after,
+body.crystal-clear-ui[data-theme="doordash"]::after{
+  content:""!important;
+  display:block!important;
+  position:fixed!important;
+  inset:0!important;
+  z-index:0!important;
+  pointer-events:none!important;
+  background:
+    linear-gradient(rgba(255,255,255,.018) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.014) 1px, transparent 1px)!important;
+  background-size:56px 56px!important;
+  mask-image:linear-gradient(to bottom, rgba(0,0,0,.50), transparent 82%)!important;
+  opacity:.5!important;
+}
+body.crystal-clear-ui .space-scene,
+body.crystal-clear-ui .space-performance-chip,
+body.crystal-clear-ui .motion-orb{
+  display:none!important;
+}
+body.crystal-clear-ui .app,
+body.crystal-clear-ui[data-theme] .app,
+body.crystal-clear-ui[data-theme="doordash"] .app{
+  position:relative!important;
+  z-index:1!important;
+  background:transparent!important;
+  background-image:none!important;
+}
+body.crystal-clear-ui .main,
+body.crystal-clear-ui[data-theme] .main,
+body.crystal-clear-ui[data-theme="doordash"] .main{
+  position:relative!important;
+  z-index:2!important;
+  background:transparent!important;
+  padding:22px 26px 42px!important;
+}
+body.crystal-clear-ui .sidebar,
+body.crystal-clear-ui[data-theme] .sidebar,
+body.crystal-clear-ui[data-theme="doordash"] .sidebar{
+  background:linear-gradient(180deg, rgba(7,17,33,.80), rgba(4,12,25,.67))!important;
+  border-right:1px solid rgba(210,234,255,.14)!important;
+  box-shadow:18px 0 62px rgba(0,0,0,.30), inset -1px 0 0 rgba(255,255,255,.03)!important;
+  backdrop-filter:blur(30px) saturate(150%)!important;
+  -webkit-backdrop-filter:blur(30px) saturate(150%)!important;
+}
+body.crystal-clear-ui .logo,
+body.crystal-clear-ui .sidebar-card,
+body.crystal-clear-ui .workspace-topnav,
+body.crystal-clear-ui .dd-portal-hero,
+body.crystal-clear-ui .panel,
+body.crystal-clear-ui[data-theme] .panel,
+body.crystal-clear-ui[data-theme="doordash"] .panel,
+body.crystal-clear-ui .console,
+body.crystal-clear-ui .table-wrap,
+body.crystal-clear-ui .command-bar,
+body.crystal-clear-ui .sync-modal{
+  background:
+    linear-gradient(145deg, rgba(255,255,255,.105), rgba(255,255,255,.042) 48%, rgba(99,179,255,.035))!important;
+  border:1px solid var(--crystal-line)!important;
+  box-shadow:var(--crystal-shadow)!important;
+  backdrop-filter:blur(26px) saturate(155%)!important;
+  -webkit-backdrop-filter:blur(26px) saturate(155%)!important;
+  color:var(--crystal-ink)!important;
+}
+body.crystal-clear-ui .logo,
+body.crystal-clear-ui .sidebar-card,
+body.crystal-clear-ui .workspace-topnav{
+  box-shadow:var(--crystal-shadow-soft)!important;
+}
+body.crystal-clear-ui .dd-portal-hero{
+  border-radius:30px!important;
+  overflow:hidden!important;
+  position:relative!important;
+}
+body.crystal-clear-ui .dd-portal-hero::after{
+  content:""!important;
+  display:block!important;
+  position:absolute!important;
+  width:280px!important;
+  height:280px!important;
+  right:-110px!important;
+  top:-150px!important;
+  border-radius:999px!important;
+  pointer-events:none!important;
+  background:radial-gradient(circle, rgba(92,213,255,.20), transparent 68%)!important;
+}
+body.crystal-clear-ui .metric,
+body.crystal-clear-ui .merchant-card,
+body.crystal-clear-ui .lane,
+body.crystal-clear-ui .list-item,
+body.crystal-clear-ui .tz-card,
+body.crystal-clear-ui .day-cell,
+body.crystal-clear-ui .status-select-card,
+body.crystal-clear-ui .console-check-card,
+body.crystal-clear-ui .console-time-focus,
+body.crystal-clear-ui .status-note-card,
+body.crystal-clear-ui .promo-tracking-card,
+body.crystal-clear-ui .recap-email-card,
+body.crystal-clear-ui .resource-card,
+body.crystal-clear-ui .gpt-card,
+body.crystal-clear-ui .resource-stat,
+body.crystal-clear-ui .gpt-stat,
+body.crystal-clear-ui .important-reminder-card,
+body.crystal-clear-ui .followup-month-cell,
+body.crystal-clear-ui .followup-week-cell,
+body.crystal-clear-ui .followup-day-board,
+body.crystal-clear-ui .followup-summary-card,
+body.crystal-clear-ui .followup-hero-card{
+  background:linear-gradient(145deg, rgba(255,255,255,.075), rgba(255,255,255,.032))!important;
+  border:1px solid rgba(214,235,255,.105)!important;
+  box-shadow:var(--crystal-shadow-soft)!important;
+  backdrop-filter:blur(18px) saturate(135%)!important;
+  -webkit-backdrop-filter:blur(18px) saturate(135%)!important;
+  color:var(--crystal-ink)!important;
+}
+body.crystal-clear-ui .metric:hover,
+body.crystal-clear-ui .merchant-card:hover,
+body.crystal-clear-ui .lane:hover,
+body.crystal-clear-ui .list-item:hover,
+body.crystal-clear-ui .tz-card:hover,
+body.crystal-clear-ui .day-cell:hover,
+body.crystal-clear-ui .panel:hover{
+  background:linear-gradient(145deg, rgba(255,255,255,.095), rgba(255,255,255,.045))!important;
+  border-color:rgba(210,235,255,.18)!important;
+  box-shadow:0 22px 54px rgba(0,0,0,.27), inset 0 1px 0 rgba(255,255,255,.11)!important;
+  transform:translateY(-1px)!important;
+}
+body.crystal-clear-ui .section-title{
+  border-bottom:1px solid rgba(216,236,255,.10)!important;
+  padding-bottom:11px!important;
+}
+body.crystal-clear-ui .section-title h3,
+body.crystal-clear-ui .page-title h2,
+body.crystal-clear-ui .profile-name,
+body.crystal-clear-ui .card-title,
+body.crystal-clear-ui .lane-title,
+body.crystal-clear-ui .list-title,
+body.crystal-clear-ui .metric .v,
+body.crystal-clear-ui .tz-time,
+body.crystal-clear-ui .kv .b,
+body.crystal-clear-ui .resource-title,
+body.crystal-clear-ui .gpt-title{
+  color:#ffffff!important;
+  text-shadow:0 1px 18px rgba(116,196,255,.08)!important;
+}
+body.crystal-clear-ui .hint,
+body.crystal-clear-ui .small,
+body.crystal-clear-ui .card-sub,
+body.crystal-clear-ui .list-sub,
+body.crystal-clear-ui .metric .s,
+body.crystal-clear-ui .metric .k,
+body.crystal-clear-ui .kv .a,
+body.crystal-clear-ui .field label,
+body.crystal-clear-ui .profile-sub,
+body.crystal-clear-ui .empty,
+body.crystal-clear-ui .pagination-info{
+  color:var(--crystal-muted)!important;
+}
+body.crystal-clear-ui input,
+body.crystal-clear-ui select,
+body.crystal-clear-ui textarea,
+body.crystal-clear-ui .field input,
+body.crystal-clear-ui .field select,
+body.crystal-clear-ui .field textarea,
+body.crystal-clear-ui[data-theme="doordash"] input,
+body.crystal-clear-ui[data-theme="doordash"] select,
+body.crystal-clear-ui[data-theme="doordash"] textarea{
+  background:linear-gradient(180deg, rgba(2,9,21,.72), rgba(8,19,34,.58))!important;
+  color:var(--crystal-ink)!important;
+  border:1px solid rgba(210,234,255,.18)!important;
+  border-radius:14px!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.035)!important;
+}
+body.crystal-clear-ui input:focus,
+body.crystal-clear-ui select:focus,
+body.crystal-clear-ui textarea:focus,
+body.crystal-clear-ui .field input:focus,
+body.crystal-clear-ui .field select:focus,
+body.crystal-clear-ui .field textarea:focus{
+  border-color:rgba(99,179,255,.78)!important;
+  box-shadow:0 0 0 4px rgba(99,179,255,.13), inset 0 1px 0 rgba(255,255,255,.05)!important;
+}
+body.crystal-clear-ui input::placeholder,
+body.crystal-clear-ui textarea::placeholder{
+  color:#73869f!important;
+}
+body.crystal-clear-ui .btn,
+body.crystal-clear-ui[data-theme] .btn,
+body.crystal-clear-ui[data-theme="doordash"] .btn{
+  background:rgba(255,255,255,.055)!important;
+  border:1px solid rgba(214,236,255,.16)!important;
+  color:#eaf4ff!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.06)!important;
+  border-radius:999px!important;
+}
+body.crystal-clear-ui .btn:hover{
+  background:rgba(255,255,255,.10)!important;
+  border-color:rgba(214,236,255,.27)!important;
+  box-shadow:0 10px 26px rgba(0,0,0,.18), inset 0 1px 0 rgba(255,255,255,.10)!important;
+}
+body.crystal-clear-ui .btn.blue,
+body.crystal-clear-ui[data-theme] .btn.blue{
+  background:linear-gradient(135deg, #3489f5, #4fb8ff)!important;
+  border-color:rgba(123,202,255,.76)!important;
+  color:#fff!important;
+  box-shadow:0 12px 28px rgba(52,137,245,.22), inset 0 1px 0 rgba(255,255,255,.24)!important;
+}
+body.crystal-clear-ui .btn.green,
+body.crystal-clear-ui[data-theme] .btn.green{
+  background:linear-gradient(135deg, #0fa871, #35d49b)!important;
+  border-color:rgba(92,238,176,.66)!important;
+  color:#fff!important;
+  box-shadow:0 12px 28px rgba(15,168,113,.22), inset 0 1px 0 rgba(255,255,255,.22)!important;
+}
+body.crystal-clear-ui .btn.purple,
+body.crystal-clear-ui[data-theme] .btn.purple{
+  background:linear-gradient(135deg, #7456e8, #a57bff)!important;
+  border-color:rgba(188,158,255,.64)!important;
+  color:#fff!important;
+  box-shadow:0 12px 28px rgba(116,86,232,.22), inset 0 1px 0 rgba(255,255,255,.22)!important;
+}
+body.crystal-clear-ui .btn.amber,
+body.crystal-clear-ui[data-theme] .btn.amber{
+  background:rgba(255,209,102,.10)!important;
+  border-color:rgba(255,209,102,.27)!important;
+  color:#ffe7a6!important;
+  box-shadow:none!important;
+}
+body.crystal-clear-ui .btn.red,
+body.crystal-clear-ui[data-theme] .btn.red,
+body.crystal-clear-ui button[data-action^="delete"],
+body.crystal-clear-ui button[data-action^="clear"]{
+  background:rgba(255,122,122,.07)!important;
+  border-color:rgba(255,142,142,.18)!important;
+  color:#ffaaaa!important;
+  box-shadow:none!important;
+}
+body.crystal-clear-ui button[data-action^="delete"]:hover,
+body.crystal-clear-ui button[data-action^="clear"]:hover,
+body.crystal-clear-ui .btn.red:hover{
+  background:rgba(255,122,122,.13)!important;
+  border-color:rgba(255,142,142,.30)!important;
+}
+body.crystal-clear-ui .pill,
+body.crystal-clear-ui .info-chip,
+body.crystal-clear-ui .clock-pill,
+body.crystal-clear-ui .nav-count{
+  background:rgba(255,255,255,.055)!important;
+  border:1px solid rgba(214,236,255,.13)!important;
+  color:#dce9f8!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.04)!important;
+}
+body.crystal-clear-ui .pill.green,
+body.crystal-clear-ui .info-chip.safe,
+body.crystal-clear-ui .clock-pill.green{
+  background:rgba(69,226,154,.11)!important;
+  border-color:rgba(69,226,154,.30)!important;
+  color:#a7f3d0!important;
+}
+body.crystal-clear-ui .pill.blue,
+body.crystal-clear-ui .info-chip.neutral,
+body.crystal-clear-ui .clock-pill.blue{
+  background:rgba(99,179,255,.11)!important;
+  border-color:rgba(99,179,255,.30)!important;
+  color:#cbe7ff!important;
+}
+body.crystal-clear-ui .pill.purple,
+body.crystal-clear-ui .info-chip.fu{
+  background:rgba(176,140,255,.11)!important;
+  border-color:rgba(176,140,255,.30)!important;
+  color:#e1d4ff!important;
+}
+body.crystal-clear-ui .pill.amber,
+body.crystal-clear-ui .info-chip.opp{
+  background:rgba(255,209,102,.10)!important;
+  border-color:rgba(255,209,102,.28)!important;
+  color:#ffe8aa!important;
+}
+body.crystal-clear-ui .pill.red,
+body.crystal-clear-ui .info-chip.not-safe{
+  background:rgba(255,142,142,.09)!important;
+  border-color:rgba(255,142,142,.26)!important;
+  color:#ffc2c2!important;
+}
+body.crystal-clear-ui .nav-btn,
+body.crystal-clear-ui .workspace-topnav .nav-btn{
+  background:transparent!important;
+  border-color:transparent!important;
+  color:#c9d7e8!important;
+}
+body.crystal-clear-ui .nav-btn:hover{
+  background:rgba(255,255,255,.065)!important;
+  border-color:rgba(214,236,255,.10)!important;
+}
+body.crystal-clear-ui .nav-btn.active,
+body.crystal-clear-ui .workspace-topnav .nav-btn.active{
+  background:linear-gradient(135deg, rgba(67,145,255,.22), rgba(82,225,214,.10))!important;
+  border-color:rgba(112,191,255,.28)!important;
+  color:#f4fbff!important;
+  box-shadow:inset 3px 0 0 #67b9ff, 0 14px 32px rgba(36,106,194,.12)!important;
+}
+body.crystal-clear-ui .nav-emoji{
+  background:rgba(255,255,255,.055)!important;
+  border-color:rgba(214,236,255,.12)!important;
+}
+body.crystal-clear-ui .nav-btn.active .nav-emoji{
+  background:linear-gradient(135deg, #3a8cf3, #55d4e7)!important;
+  border-color:rgba(149,225,255,.55)!important;
+}
+body.crystal-clear-ui .bar{
+  background:rgba(3,10,22,.64)!important;
+  border:1px solid rgba(214,236,255,.08)!important;
+}
+body.crystal-clear-ui .bar span{
+  background:linear-gradient(90deg, #4aa0ff, #59e0cf)!important;
+}
+body.crystal-clear-ui .table-wrap,
+body.crystal-clear-ui .notion-table,
+body.crystal-clear-ui .notion-table th{
+  background:rgba(8,19,35,.55)!important;
+}
+body.crystal-clear-ui .notion-table th{
+  color:#aabbd0!important;
+  border-bottom-color:rgba(214,236,255,.12)!important;
+}
+body.crystal-clear-ui .notion-table td{
+  color:#eaf4ff!important;
+  border-bottom-color:rgba(214,236,255,.07)!important;
+}
+body.crystal-clear-ui .notion-table tr:hover{
+  background:rgba(99,179,255,.06)!important;
+}
+body.crystal-clear-ui .day-name{
+  background:rgba(255,255,255,.045)!important;
+  border-color:rgba(214,236,255,.10)!important;
+  color:#b9c8da!important;
+}
+body.crystal-clear-ui .recap-email-card,
+body.crystal-clear-ui[data-theme="doordash"] .recap-email-card{
+  background:linear-gradient(145deg, rgba(62,144,255,.13), rgba(255,255,255,.045))!important;
+  border-color:rgba(99,179,255,.22)!important;
+  box-shadow:var(--crystal-shadow-soft)!important;
+}
+body.crystal-clear-ui .recap-email-card::before{
+  display:none!important;
+  content:none!important;
+}
+body.crystal-clear-ui .editable-kv,
+body.crystal-clear-ui .kv{
+  border:0!important;
+  background:rgba(255,255,255,.035)!important;
+  border-radius:16px!important;
+  padding:12px 14px!important;
+}
+body.crystal-clear-ui .inline-edit-btn{
+  width:28px!important;
+  height:28px!important;
+  display:grid!important;
+  place-items:center!important;
+  border-radius:10px!important;
+  border:1px solid rgba(214,236,255,.13)!important;
+  background:rgba(255,255,255,.05)!important;
+  color:#cde7ff!important;
+  opacity:.78!important;
+}
+body.crystal-clear-ui .inline-edit-btn:hover{
+  opacity:1!important;
+  background:rgba(99,179,255,.13)!important;
+  border-color:rgba(99,179,255,.34)!important;
+}
+
+/* Work Hub: compact queue + sticky tabbed console */
+body.crystal-clear-ui #view-callControl .work-hub-queue{
+  grid-template-columns:minmax(340px,.82fr) minmax(560px,1.18fr)!important;
+  align-items:start!important;
+  gap:18px!important;
+}
+body.crystal-clear-ui #section-work-board{
+  padding:18px!important;
+}
+body.crystal-clear-ui #callBoardCards{
+  grid-template-columns:1fr!important;
+  max-height:52vh!important;
+  overflow:auto!important;
+  padding-right:7px!important;
+  scrollbar-color:rgba(118,190,255,.38) transparent!important;
+  scrollbar-width:thin!important;
+}
+body.crystal-clear-ui #section-work-console{
+  position:sticky!important;
+  top:16px!important;
+  align-self:start!important;
+  max-height:calc(100vh - 32px)!important;
+  overflow:auto!important;
+  padding:16px!important;
+  scrollbar-color:rgba(118,190,255,.42) transparent!important;
+  scrollbar-width:thin!important;
+  overscroll-behavior:contain!important;
+}
+body.crystal-clear-ui #section-work-console > .section-title{
+  display:none!important;
+}
+body.crystal-clear-ui #callConsole{
+  min-height:520px!important;
+}
+.console-crystal-shell{
+  display:grid;
+  gap:16px;
+}
+.console-sticky-stack{
+  position:sticky;
+  top:0;
+  z-index:40;
+  display:grid;
+  gap:10px;
+  margin:-2px -2px 0;
+  padding:2px 2px 10px;
+  background:linear-gradient(180deg, rgba(7,17,32,.97) 0%, rgba(7,17,32,.91) 78%, rgba(7,17,32,0) 100%)!important;
+  backdrop-filter:blur(24px) saturate(150%);
+  -webkit-backdrop-filter:blur(24px) saturate(150%);
+}
+.console-context-header{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto;
+  gap:14px;
+  align-items:center;
+  padding:16px;
+  border:1px solid rgba(214,236,255,.14);
+  border-radius:20px;
+  background:linear-gradient(145deg, rgba(255,255,255,.095), rgba(99,179,255,.055))!important;
+  box-shadow:var(--crystal-shadow-soft);
+}
+.console-context-kicker{
+  color:#83cbff;
+  font-size:10px;
+  font-weight:950;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+}
+.console-context-name{
+  margin-top:3px;
+  color:#fff;
+  font-size:22px;
+  line-height:1.08;
+  font-weight:950;
+  letter-spacing:-.045em;
+}
+.console-context-meta{
+  display:flex;
+  gap:7px;
+  flex-wrap:wrap;
+  margin-top:7px;
+  color:#a9b9cd;
+  font-size:11px;
+}
+.console-context-meta span{
+  display:inline-flex;
+  align-items:center;
+  gap:5px;
+  padding:4px 8px;
+  border-radius:999px;
+  background:rgba(255,255,255,.045);
+  border:1px solid rgba(214,236,255,.08);
+}
+.console-context-actions{
+  display:flex;
+  justify-content:flex-end;
+  gap:7px;
+  flex-wrap:wrap;
+  max-width:310px;
+}
+.console-tabbar{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:6px;
+  padding:6px;
+  border:1px solid rgba(214,236,255,.12);
+  border-radius:18px;
+  background:rgba(3,10,22,.52)!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.035);
+}
+.console-tab{
+  min-height:42px;
+  border:1px solid transparent;
+  border-radius:13px;
+  background:transparent;
+  color:#aabbd0;
+  font-size:12px;
+  font-weight:900;
+  cursor:pointer;
+  transition:background .18s ease,border-color .18s ease,color .18s ease,transform .18s ease;
+}
+.console-tab:hover{
+  color:#fff;
+  background:rgba(255,255,255,.055);
+}
+.console-tab.active{
+  color:#fff;
+  border-color:rgba(116,194,255,.34);
+  background:linear-gradient(135deg, rgba(63,141,247,.29), rgba(74,214,205,.13))!important;
+  box-shadow:0 10px 24px rgba(30,104,188,.14), inset 0 1px 0 rgba(255,255,255,.09);
+}
+.console-tab-pane{
+  display:grid;
+  gap:14px;
+  animation:consolePaneIn .24s cubic-bezier(.16,1,.3,1) both;
+}
+.console-tab-pane[hidden]{display:none!important;}
+.console-tab-pane .section-title{
+  margin-top:2px!important;
+}
+.console-tab-pane .status-note-card,
+.console-tab-pane .promo-tracking-card,
+.console-tab-pane .console-check-card,
+.console-tab-pane .status-select-card,
+.console-tab-pane .console-time-focus{
+  box-shadow:none!important;
+}
+.console-contact-grid{
+  display:grid!important;
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  gap:10px!important;
+  margin-top:0!important;
+}
+.console-contact-grid .console-contact-card{
+  display:grid!important;
+  grid-template-columns:1fr!important;
+  gap:7px!important;
+  min-height:92px!important;
+  padding:13px!important;
+  border:1px solid rgba(214,236,255,.09)!important;
+  border-radius:16px!important;
+  background:rgba(255,255,255,.035)!important;
+}
+.console-contact-grid .console-contact-card .a{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:space-between!important;
+  gap:8px!important;
+  color:#93a8c0!important;
+}
+.console-contact-grid .console-contact-card .b{
+  color:#fff!important;
+  font-size:13px!important;
+  line-height:1.4!important;
+  word-break:break-word!important;
+}
+.console-contact-label{
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+}
+.console-contact-icon{
+  width:25px;
+  height:25px;
+  display:grid;
+  place-items:center;
+  border-radius:9px;
+  background:rgba(99,179,255,.10);
+  border:1px solid rgba(99,179,255,.18);
+  color:#cbe7ff;
+  font-size:12px;
+}
+.console-link-actions{
+  padding-top:2px!important;
+  gap:7px!important;
+}
+.console-tab-pane[data-console-pane="photos"] .grid.cols-2,
+.console-tab-pane[data-console-pane="ads"] .promo-tracking-grid{
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+}
+.console-tab-pane[data-console-pane="ads"] .promo-tracking-card{
+  margin:0!important;
+  padding:0!important;
+  background:transparent!important;
+  border:0!important;
+}
+.console-tab-pane[data-console-pane="ads"] .promo-sales-log{
+  padding:12px;
+  border-radius:18px;
+  background:rgba(255,255,255,.03);
+}
+.console-tab-pane .tracker-summary{
+  background:rgba(3,10,22,.35)!important;
+  border:1px solid rgba(214,236,255,.08)!important;
+  border-radius:14px!important;
+}
+body.crystal-clear-ui .work-hub-profile-controls,
+body.crystal-clear-ui .work-hub-profile-section .panel{
+  background:linear-gradient(145deg, rgba(255,255,255,.075), rgba(255,255,255,.035))!important;
+}
+body.crystal-clear-ui .work-hub-profile-section{
+  grid-template-columns:minmax(0,1.04fr) minmax(420px,.96fr)!important;
+  align-items:start!important;
+}
+body.crystal-clear-ui #profileMain .grid.cols-2{
+  gap:10px!important;
+}
+body.crystal-clear-ui #profileTimeline .list{
+  gap:9px!important;
+}
+
+/* Follow-up completed state + celebration */
+body.crystal-clear-ui .followup-completed{
+  position:relative!important;
+  overflow:hidden!important;
+  padding-right:42px!important;
+  --merchant-accent:#45e29a!important;
+  --merchant-accent-soft:rgba(69,226,154,.14)!important;
+  background:linear-gradient(145deg, rgba(69,226,154,.18), rgba(24,100,75,.12))!important;
+  border-color:rgba(69,226,154,.42)!important;
+  box-shadow:0 14px 34px rgba(21,176,111,.12), inset 0 1px 0 rgba(210,255,236,.16)!important;
+}
+body.crystal-clear-ui .followup-completed::after{
+  content:"✓"!important;
+  display:grid!important;
+  place-items:center!important;
+  position:absolute!important;
+  right:10px!important;
+  top:10px!important;
+  width:26px!important;
+  height:26px!important;
+  border-radius:999px!important;
+  background:linear-gradient(135deg, #16b875, #55e7a8)!important;
+  border:1px solid rgba(208,255,235,.52)!important;
+  color:#fff!important;
+  font-size:14px!important;
+  font-weight:950!important;
+  box-shadow:0 8px 18px rgba(18,174,109,.24)!important;
+}
+body.crystal-clear-ui .followup-completed .event-title,
+body.crystal-clear-ui .followup-completed .list-title,
+body.crystal-clear-ui .followup-completed .card-title{
+  color:#dfffee!important;
+}
+body.crystal-clear-ui .followup-completed .event-sub,
+body.crystal-clear-ui .followup-completed .list-sub,
+body.crystal-clear-ui .followup-completed .small{
+  color:#a7e8c8!important;
+}
+body.crystal-clear-ui .followup-completed .pill{
+  background:rgba(69,226,154,.13)!important;
+  border-color:rgba(69,226,154,.34)!important;
+  color:#b8f8d8!important;
+}
+body.crystal-clear-ui #followupWorkbench.completion-preview{
+  border-color:rgba(69,226,154,.46)!important;
+  box-shadow:0 0 0 4px rgba(69,226,154,.09), var(--crystal-shadow)!important;
+}
+.followup-completion-pop{
+  animation:followupCardCompletePop .72s cubic-bezier(.16,1,.3,1) both!important;
+}
+.followup-fireworks-layer{
+  position:fixed;
+  inset:0;
+  z-index:9999;
+  pointer-events:none;
+  overflow:hidden;
+}
+.followup-firework-particle{
+  position:fixed;
+  left:var(--fx);
+  top:var(--fy);
+  width:7px;
+  height:7px;
+  border-radius:999px;
+  background:hsl(var(--hue) 94% 67%);
+  box-shadow:0 0 14px hsl(var(--hue) 94% 67%);
+  transform:translate(-50%,-50%) scale(.35);
+  opacity:0;
+  animation:followupParticleBurst .92s cubic-bezier(.16,1,.3,1) var(--delay) forwards;
+}
+.followup-firework-ring{
+  position:fixed;
+  left:var(--fx);
+  top:var(--fy);
+  width:18px;
+  height:18px;
+  border-radius:999px;
+  border:2px solid rgba(118,255,190,.86);
+  transform:translate(-50%,-50%) scale(.3);
+  opacity:0;
+  animation:followupRingBurst .8s ease-out forwards;
+}
+.followup-complete-toast{
+  position:fixed;
+  left:50%;
+  top:18%;
+  transform:translate(-50%,-12px) scale(.94);
+  padding:11px 16px;
+  border-radius:999px;
+  background:rgba(7,28,24,.82);
+  border:1px solid rgba(87,238,169,.44);
+  color:#dfffee;
+  font-size:12px;
+  font-weight:950;
+  letter-spacing:.02em;
+  box-shadow:0 18px 48px rgba(0,0,0,.30), inset 0 1px 0 rgba(255,255,255,.13);
+  backdrop-filter:blur(18px);
+  animation:followupToastIn 1.45s cubic-bezier(.16,1,.3,1) forwards;
+}
+
+/* Activity calendar now uses the same Day / Week / Month system */
+.activity-viewbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-bottom:14px;
+}
+.activity-view-actions,
+.activity-nav-actions{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+}
+.activity-view-actions .btn.active{
+  background:linear-gradient(135deg, rgba(63,141,247,.30), rgba(74,214,205,.13))!important;
+  border-color:rgba(116,194,255,.36)!important;
+  color:#fff!important;
+}
+.activity-calendar-grid{
+  display:grid!important;
+  gap:10px!important;
+}
+.activity-calendar-grid.month-view{
+  grid-template-columns:repeat(5,minmax(0,1fr))!important;
+  grid-auto-rows:190px!important;
+}
+.activity-calendar-grid.week-view{
+  display:block!important;
+  grid-template-columns:1fr!important;
+}
+.activity-calendar-grid.day-view{
+  grid-template-columns:1fr!important;
+}
+.activity-month-cell,
+.activity-week-cell{
+  cursor:pointer;
+}
+.activity-mini-metrics{
+  display:flex;
+  gap:5px;
+  flex-wrap:wrap;
+}
+.activity-mini-metric{
+  display:inline-flex;
+  align-items:center;
+  gap:4px;
+  padding:3px 6px;
+  border-radius:999px;
+  border:1px solid rgba(214,236,255,.10);
+  background:rgba(255,255,255,.035);
+  color:#9fb2c9;
+  font-size:9px;
+  font-weight:900;
+}
+.activity-event-chip{
+  border-color:rgba(99,179,255,.22)!important;
+  background:rgba(99,179,255,.075)!important;
+}
+.activity-event-chip.type-call{
+  --merchant-accent:#63b3ff!important;
+  --merchant-accent-soft:rgba(99,179,255,.12)!important;
+}
+.activity-event-chip.type-photo{
+  --merchant-accent:#55e7f4!important;
+  --merchant-accent-soft:rgba(85,231,244,.11)!important;
+}
+.activity-event-chip.type-followup{
+  --merchant-accent:#b08cff!important;
+  --merchant-accent-soft:rgba(176,140,255,.11)!important;
+}
+.activity-event-chip.type-reminder{
+  --merchant-accent:#ffd166!important;
+  --merchant-accent-soft:rgba(255,209,102,.11)!important;
+}
+.activity-event-chip.type-completed{
+  --merchant-accent:#45e29a!important;
+  --merchant-accent-soft:rgba(69,226,154,.13)!important;
+  border-color:rgba(69,226,154,.32)!important;
+}
+.activity-day-event{
+  display:grid;
+  gap:3px;
+  width:100%;
+  padding:9px 11px;
+  border:1px solid color-mix(in srgb, var(--merchant-accent,#63b3ff) 38%, rgba(214,236,255,.10));
+  border-radius:14px;
+  background:color-mix(in srgb, var(--merchant-accent-soft,rgba(99,179,255,.11)) 78%, rgba(7,17,32,.65));
+}
+.activity-day-event .event-title{
+  color:#fff;
+  font-size:12px;
+  font-weight:950;
+}
+.activity-day-event .event-sub{
+  color:#a9bad0;
+  font-size:10px;
+  line-height:1.35;
+}
+
+@keyframes crystalMeshDrift{
+  from{transform:translate3d(-1.5%, -1%, 0) scale(1)}
+  to{transform:translate3d(2%, 1.4%, 0) scale(1.06)}
+}
+@keyframes consolePaneIn{
+  from{opacity:0;transform:translateY(8px)}
+  to{opacity:1;transform:translateY(0)}
+}
+@keyframes followupCardCompletePop{
+  0%{transform:scale(.985);filter:brightness(1)}
+  42%{transform:scale(1.025);filter:brightness(1.22)}
+  100%{transform:scale(1);filter:brightness(1)}
+}
+@keyframes followupParticleBurst{
+  0%{opacity:0;transform:translate(-50%,-50%) scale(.25)}
+  14%{opacity:1}
+  100%{opacity:0;transform:translate(calc(-50% + var(--dx)),calc(-50% + var(--dy))) scale(.08)}
+}
+@keyframes followupRingBurst{
+  0%{opacity:.95;transform:translate(-50%,-50%) scale(.25)}
+  100%{opacity:0;transform:translate(-50%,-50%) scale(5.6)}
+}
+@keyframes followupToastIn{
+  0%{opacity:0;transform:translate(-50%,-12px) scale(.94)}
+  16%,76%{opacity:1;transform:translate(-50%,0) scale(1)}
+  100%{opacity:0;transform:translate(-50%,-8px) scale(.98)}
+}
+@media (max-width:1180px){
+  body.crystal-clear-ui #view-callControl .work-hub-queue,
+  body.crystal-clear-ui .work-hub-profile-section{
+    grid-template-columns:1fr!important;
+  }
+  body.crystal-clear-ui #section-work-console{
+    position:relative!important;
+    top:auto!important;
+    max-height:none!important;
+    overflow:visible!important;
+  }
+  body.crystal-clear-ui #callBoardCards{
+    max-height:none!important;
+  }
+}
+@media (max-width:820px){
+  body.crystal-clear-ui .main{padding:14px!important;}
+  .console-context-header{grid-template-columns:1fr!important;}
+  .console-context-actions{justify-content:flex-start;max-width:none;}
+  .console-contact-grid,
+  .console-tab-pane[data-console-pane="photos"] .grid.cols-2,
+  .console-tab-pane[data-console-pane="ads"] .promo-tracking-grid{
+    grid-template-columns:1fr!important;
+  }
+  .activity-calendar-grid.month-view,
+  .followup-calendar-grid.month-view{
+    grid-template-columns:1fr!important;
+    grid-auto-rows:auto!important;
+  }
+  .activity-calendar-grid .followup-week-grid{
+    grid-template-columns:1fr!important;
+  }
+}
+@media (prefers-reduced-motion:reduce){
+  body.crystal-clear-ui[data-theme]::before{animation:none!important;}
+  .followup-firework-particle,
+  .followup-firework-ring,
+  .followup-complete-toast{animation-duration:.001ms!important;}
+}
+
+/* Highest-specificity crystal override: removes the previous red card outlines. */
+body.crystal-clear-ui.dd-portal-ui.dd-default .dd-portal-hero,
+body.crystal-clear-ui.dd-portal-ui.dd-default .panel,
+body.crystal-clear-ui.dd-portal-ui.dd-default .sidebar-card,
+body.crystal-clear-ui.dd-portal-ui.dd-default .workspace-topnav,
+body.crystal-clear-ui.dd-portal-ui.dd-default .command-bar,
+body.crystal-clear-ui.dd-portal-ui.dd-default .health-card,
+body.crystal-clear-ui.dd-portal-ui.dd-default .metric,
+body.crystal-clear-ui.dd-portal-ui.dd-default .merchant-card,
+body.crystal-clear-ui.dd-portal-ui.dd-default .lane,
+body.crystal-clear-ui.dd-portal-ui.dd-default .list-item,
+body.crystal-clear-ui.dd-portal-ui.dd-default .tz-card,
+body.crystal-clear-ui.dd-portal-ui.dd-default .day-cell,
+body.crystal-clear-ui.dd-portal-ui.dd-default .console,
+body.crystal-clear-ui.dd-portal-ui.dd-default .status-select-card,
+body.crystal-clear-ui.dd-portal-ui.dd-default .console-check-card,
+body.crystal-clear-ui.dd-portal-ui.dd-default .console-time-focus,
+body.crystal-clear-ui.dd-portal-ui.dd-default .status-note-card,
+body.crystal-clear-ui.dd-portal-ui.dd-default .promo-tracking-card,
+body.crystal-clear-ui.dd-portal-ui.dd-default .recap-email-card,
+body.crystal-clear-ui.dd-portal-ui.dd-default .resource-card,
+body.crystal-clear-ui.dd-portal-ui.dd-default .gpt-card,
+body.crystal-clear-ui.dd-portal-ui.dd-default .resource-stat,
+body.crystal-clear-ui.dd-portal-ui.dd-default .gpt-stat,
+body.crystal-clear-ui.dd-portal-ui.dd-default .important-reminder-card,
+body.crystal-clear-ui.dd-portal-ui.dd-default .followup-month-cell,
+body.crystal-clear-ui.dd-portal-ui.dd-default .followup-week-cell,
+body.crystal-clear-ui.dd-portal-ui.dd-default .followup-day-board,
+body.crystal-clear-ui.dd-portal-ui.dd-default .followup-summary-card,
+body.crystal-clear-ui.dd-portal-ui.dd-default .followup-hero-card{
+  border-color:rgba(214,236,255,.13)!important;
+  background:linear-gradient(145deg,rgba(255,255,255,.085),rgba(255,255,255,.035))!important;
+  box-shadow:var(--crystal-shadow-soft)!important;
+}
+body.crystal-clear-ui.dd-portal-ui.dd-default .panel,
+body.crystal-clear-ui.dd-portal-ui.dd-default .dd-portal-hero,
+body.crystal-clear-ui.dd-portal-ui.dd-default .workspace-topnav{
+  box-shadow:var(--crystal-shadow)!important;
+}
+body.crystal-clear-ui.dd-portal-ui.dd-default .nav-btn.active,
+body.crystal-clear-ui.dd-portal-ui.dd-default .workspace-topnav .nav-btn.active{
+  background:linear-gradient(135deg,rgba(63,141,247,.28),rgba(74,214,205,.13))!important;
+  border-color:rgba(116,194,255,.34)!important;
+  color:#f4fbff!important;
+  box-shadow:inset 3px 0 0 #67b9ff,0 14px 32px rgba(36,106,194,.14)!important;
+}
+body.crystal-clear-ui.dd-portal-ui.dd-default .nav-btn.active .nav-emoji{
+  background:linear-gradient(135deg,#3a8cf3,#55d4e7)!important;
+  border-color:rgba(149,225,255,.55)!important;
+}
+body.crystal-clear-ui.dd-portal-ui.dd-default .merchant-card.selected,
+body.crystal-clear-ui.dd-portal-ui.dd-default .day-cell.selected,
+body.crystal-clear-ui.dd-portal-ui.dd-default .resource-card.selected,
+body.crystal-clear-ui.dd-portal-ui.dd-default .gpt-card.selected{
+  outline:2px solid rgba(99,179,255,.72)!important;
+  border-color:rgba(99,179,255,.62)!important;
+  box-shadow:0 0 0 4px rgba(99,179,255,.10),var(--crystal-shadow-soft)!important;
+}
+body.crystal-clear-ui.dd-portal-ui.dd-default .followup-completed{
+  border-color:rgba(69,226,154,.44)!important;
+  background:linear-gradient(145deg,rgba(69,226,154,.19),rgba(24,100,75,.12))!important;
+}
+
+</style>
+
+<script id="crystal-clear-operations-v7-js">
+(function(){
+  "use strict";
+
+  const CONSOLE_TAB_KEY = "dd_workhub_console_tab_crystal_v1";
+  const ACTIVITY_VIEW_KEY = "dd_activity_calendar_view_crystal_v1";
+  const VALID_CONSOLE_TABS = new Set(["call","photos","ads"]);
+  const VALID_ACTIVITY_VIEWS = new Set(["day","week","month"]);
+  let activityCalendarView = (()=>{
+    try{
+      const stored = localStorage.getItem(ACTIVITY_VIEW_KEY) || "month";
+      return VALID_ACTIVITY_VIEWS.has(stored) ? stored : "month";
+    }catch(_e){ return "month"; }
+  })();
+
+  document.body.classList.add("crystal-clear-ui");
+
+  const escapeHtml = value => {
+    if(typeof window.esc === "function") return window.esc(value);
+    return String(value ?? "").replace(/[&<>"']/g, ch => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[ch]));
+  };
+  const escapeAttr = value => {
+    if(typeof window.attr === "function") return window.attr(value);
+    return escapeHtml(value).replace(/`/g,"&#096;");
+  };
+
+  function getCurrentMerchant(){
+    try{
+      return typeof window.byUid === "function" ? window.byUid(window.selectedUid || selectedUid) : null;
+    }catch(_e){
+      try{return byUid(selectedUid);}catch(_err){return null;}
+    }
+  }
+
+  function getConsoleTab(){
+    try{
+      const stored = localStorage.getItem(CONSOLE_TAB_KEY) || "call";
+      return VALID_CONSOLE_TABS.has(stored) ? stored : "call";
+    }catch(_e){return "call";}
+  }
+
+  function saveConsoleTab(tab){
+    try{localStorage.setItem(CONSOLE_TAB_KEY, tab);}catch(_e){}
+  }
+
+  function enhanceContactGrid(scope){
+    if(!scope) return;
+    const candidate = Array.from(scope.querySelectorAll(".grid.cols-2")).find(grid => grid.querySelectorAll(":scope > .kv").length >= 4);
+    if(!candidate) return;
+    candidate.classList.add("console-contact-grid");
+    const map = {
+      "contact name":{field:"dm_name",icon:"◉"},
+      "phone":{field:"dm_phone",icon:"☎"},
+      "email":{field:"dm_email",icon:"✉"},
+      "address for google":{field:"address",icon:"⌖"}
+    };
+    candidate.querySelectorAll(":scope > .kv").forEach(card => {
+      card.classList.add("console-contact-card");
+      const labelNode = card.querySelector(".a");
+      if(!labelNode) return;
+      const label = labelNode.textContent.trim();
+      const cfg = map[label.toLowerCase()] || {field:"",icon:"•"};
+      labelNode.innerHTML = `<span class="console-contact-label"><span class="console-contact-icon">${escapeHtml(cfg.icon)}</span><span>${escapeHtml(label)}</span></span>${cfg.field ? `<button type="button" class="inline-edit-btn" data-action="openMerchantQuickEdit" data-field="${escapeAttr(cfg.field)}" data-uid="${escapeAttr(String(window.selectedUid || ""))}" title="Edit ${escapeAttr(label)}">✎</button>` : ""}`;
+    });
+  }
+
+  function buildConsoleContextHeader(){
+    const r = getCurrentMerchant();
+    if(!r) return null;
+    let derivedInfo = {};
+    try{derivedInfo = typeof window.derived === "function" ? window.derived(r) : derived(r);}catch(_e){}
+    const st = (()=>{try{return (window.states || states || {})[r.uid] || {};}catch(_e){return {};}})();
+    const merchantName = String(r.store_name || r.business_name || "Selected merchant");
+    const phone = String(r.dm_phone || r.phone || "");
+    const email = String(r.dm_email || r.email || "");
+    const storeId = String(r.store_id || r.business_id || "");
+    const market = String(r.market_name || r.submarket_name || "");
+    const statusLabel = String(st.status || derivedInfo.lane || "Active");
+    const statusClass = String(derivedInfo.laneCls || (statusLabel === "Done" ? "green" : "blue"));
+    const localTime = String(derivedInfo?.tz?.localTime || "—");
+    let mapsUrl = "";
+    try{mapsUrl = typeof window.googleMapsUrl === "function" ? window.googleMapsUrl(r) : googleMapsUrl(r);}catch(_e){}
+    const header = document.createElement("div");
+    header.className = "console-context-header";
+    const pill = (()=>{try{return statusPill(statusLabel,statusClass);}catch(_e){return `<span class="pill ${escapeAttr(statusClass)}">${escapeHtml(statusLabel)}</span>`;}})();
+    header.innerHTML = `
+      <div>
+        <div class="console-context-kicker">Active merchant</div>
+        <div class="console-context-name">${escapeHtml(merchantName)}</div>
+        <div class="console-context-meta">
+          ${storeId ? `<span>Store ${escapeHtml(storeId)}</span>` : ""}
+          ${market ? `<span>${escapeHtml(market)}</span>` : ""}
+          ${phone ? `<span>${escapeHtml(phone)}</span>` : `<span>No phone</span>`}
+          <span>${escapeHtml(localTime)}</span>
+          ${pill}
+        </div>
+      </div>
+      <div class="console-context-actions">
+        <button type="button" class="btn ghost" data-action="copyPhone" ${phone ? "" : "disabled"}>Copy Phone</button>
+        ${mapsUrl ? `<a class="btn ghost" href="${escapeAttr(mapsUrl)}" target="_blank" rel="noreferrer">Google Maps</a>` : `<button type="button" class="btn ghost" disabled>Google Maps</button>`}
+        <button type="button" class="btn ghost" data-action="copyEmail" ${email ? "" : "disabled"}>Copy Email</button>
+      </div>`;
+    return header;
+  }
+
+  function setConsoleTab(shell, tab, shouldScroll){
+    const targetTab = VALID_CONSOLE_TABS.has(tab) ? tab : "call";
+    shell.querySelectorAll("[data-console-tab]").forEach(btn => {
+      const active = btn.dataset.consoleTab === targetTab;
+      btn.classList.toggle("active", active);
+      btn.setAttribute("aria-selected", active ? "true" : "false");
+      btn.tabIndex = active ? 0 : -1;
+    });
+    shell.querySelectorAll("[data-console-pane]").forEach(pane => {
+      const active = pane.dataset.consolePane === targetTab;
+      pane.hidden = !active;
+      pane.classList.toggle("active", active);
+    });
+    saveConsoleTab(targetTab);
+    if(shouldScroll){
+      const panel = document.getElementById("section-work-console");
+      try{panel?.scrollTo({top:0,behavior:"smooth"});}catch(_e){if(panel) panel.scrollTop = 0;}
+    }
+  }
+
+  function enhanceCallConsole(){
+    const root = document.getElementById("callConsole");
+    if(!root || root.querySelector(":scope > .console-crystal-shell")) return;
+    const children = Array.from(root.children);
+    if(!children.length || (children.length === 1 && children[0].classList.contains("empty"))) return;
+
+    const hero = children.find(el => el.classList?.contains("profile-hero"));
+    const photoTitle = children.find(el => el.classList?.contains("section-title") && /photo counter/i.test(el.querySelector("h3")?.textContent || ""));
+    const promoCard = children.find(el => el.classList?.contains("promo-tracking-card"));
+    const photoIndex = photoTitle ? children.indexOf(photoTitle) : -1;
+    const promoIndex = promoCard ? children.indexOf(promoCard) : -1;
+    const shell = document.createElement("div");
+    shell.className = "console-crystal-shell";
+
+    const stickyStack = document.createElement("div");
+    stickyStack.className = "console-sticky-stack";
+    const contextHeader = buildConsoleContextHeader();
+    if(contextHeader) stickyStack.appendChild(contextHeader);
+
+    const tabbar = document.createElement("div");
+    tabbar.className = "console-tabbar";
+    tabbar.setAttribute("role","tablist");
+    tabbar.innerHTML = `
+      <button type="button" class="console-tab" role="tab" data-console-tab="call">Call Log</button>
+      <button type="button" class="console-tab" role="tab" data-console-tab="photos">Photo Counter</button>
+      <button type="button" class="console-tab" role="tab" data-console-tab="ads">Ads &amp; Credits</button>`;
+    stickyStack.appendChild(tabbar);
+    shell.appendChild(stickyStack);
+
+    const callPane = document.createElement("section");
+    callPane.className = "console-tab-pane";
+    callPane.dataset.consolePane = "call";
+    callPane.setAttribute("role","tabpanel");
+    const photoPane = document.createElement("section");
+    photoPane.className = "console-tab-pane";
+    photoPane.dataset.consolePane = "photos";
+    photoPane.setAttribute("role","tabpanel");
+    const adsPane = document.createElement("section");
+    adsPane.className = "console-tab-pane";
+    adsPane.dataset.consolePane = "ads";
+    adsPane.setAttribute("role","tabpanel");
+
+    const isHr = el => el?.tagName === "HR";
+    children.forEach((node,index) => {
+      if(node === hero || isHr(node)) return;
+      if(node === promoCard){
+        adsPane.appendChild(node);
+        return;
+      }
+      if(photoIndex >= 0 && index >= photoIndex && (promoIndex < 0 || index < promoIndex)){
+        photoPane.appendChild(node);
+        return;
+      }
+      if(promoIndex >= 0 && index > promoIndex && node.classList?.contains("stepper")){
+        photoPane.appendChild(node);
+        return;
+      }
+      if(promoIndex >= 0 && index > promoIndex){
+        adsPane.appendChild(node);
+        return;
+      }
+      callPane.appendChild(node);
+    });
+
+    if(!photoPane.children.length){
+      photoPane.innerHTML = `<div class="empty">Photo tools will appear after a merchant is selected.</div>`;
+    }
+    if(!adsPane.children.length){
+      adsPane.innerHTML = `<div class="empty">Ads and credit tools will appear after a merchant is selected.</div>`;
+    }
+
+    enhanceContactGrid(callPane);
+    shell.append(callPane, photoPane, adsPane);
+    root.replaceChildren(shell);
+
+    tabbar.addEventListener("click", event => {
+      const btn = event.target.closest("[data-console-tab]");
+      if(!btn) return;
+      event.preventDefault();
+      setConsoleTab(shell, btn.dataset.consoleTab, true);
+    });
+    tabbar.addEventListener("keydown", event => {
+      if(!["ArrowLeft","ArrowRight"].includes(event.key)) return;
+      const buttons = Array.from(tabbar.querySelectorAll("[data-console-tab]"));
+      const current = buttons.findIndex(btn => btn.classList.contains("active"));
+      const delta = event.key === "ArrowRight" ? 1 : -1;
+      const next = (current + delta + buttons.length) % buttons.length;
+      event.preventDefault();
+      buttons[next].focus();
+      setConsoleTab(shell, buttons[next].dataset.consoleTab, false);
+    });
+    setConsoleTab(shell, getConsoleTab(), false);
+  }
+
+  const originalMerchantQuickEditConfig = window.merchantQuickEditConfig;
+  if(typeof originalMerchantQuickEditConfig === "function"){
+    window.merchantQuickEditConfig = function(field, merged, st){
+      if(field === "address"){
+        let addressValue = merged?.address || merged?.store_address || merged?.merchant_address || "";
+        if(!addressValue){
+          try{addressValue = typeof window.merchantAddressForSearch === "function" ? window.merchantAddressForSearch(merged) : merchantAddressForSearch(merged);}catch(_e){}
+        }
+        return {label:"Address for Google",type:"text",value:addressValue || "",help:"Used by Google Search, Google Maps, and the competitor heat map."};
+      }
+      return originalMerchantQuickEditConfig.apply(this, arguments);
+    };
+  }
+
+  const originalRenderCallConsole = window.renderCallConsole;
+  if(typeof originalRenderCallConsole === "function"){
+    window.renderCallConsole = function(){
+      const result = originalRenderCallConsole.apply(this, arguments);
+      requestAnimationFrame(enhanceCallConsole);
+      return result;
+    };
+  }
+
+  function markCompletedFollowups(){
+    let list = [];
+    try{list = Array.isArray(window.followups) ? window.followups : followups;}catch(_e){list = [];}
+    const completedIds = new Set(list.filter(item => String(item.status || "").toLowerCase() === "completed").map(item => String(item.id)));
+    document.querySelectorAll("#view-followups .followup-event-chip[data-id], #view-followups .followup-day-event[data-id], #view-followups .followup-card[data-id]").forEach(node => {
+      const completed = completedIds.has(String(node.dataset.id || ""));
+      node.classList.toggle("followup-completed", completed);
+      if(completed){
+        node.style.setProperty("--merchant-accent", "#45e29a", "important");
+        node.style.setProperty("--merchant-accent-soft", "rgba(69,226,154,.14)", "important");
+      }
+    });
+    const workbench = document.getElementById("followupWorkbench");
+    let current = null;
+    try{current = typeof window.getFollowupById === "function" ? window.getFollowupById(window.followupEditorId || followupEditorId) : null;}catch(_e){}
+    workbench?.classList.toggle("completion-preview", String(current?.status || "").toLowerCase() === "completed");
+  }
+
+  function launchFollowupCelebration(id){
+    if(window.matchMedia?.("(prefers-reduced-motion: reduce)").matches){
+      try{toast("Follow-up completed ✓");}catch(_e){}
+      return;
+    }
+    markCompletedFollowups();
+    const candidates = Array.from(document.querySelectorAll("#view-followups [data-id]")).filter(node => String(node.dataset.id || "") === String(id || ""));
+    const target = candidates.find(node => node.offsetParent !== null) || candidates[0] || null;
+    const rect = target?.getBoundingClientRect();
+    const centerX = rect ? rect.left + rect.width / 2 : window.innerWidth * .62;
+    const centerY = rect ? rect.top + Math.min(rect.height / 2, 96) : window.innerHeight * .36;
+    target?.classList.add("followup-completion-pop");
+
+    const layer = document.createElement("div");
+    layer.className = "followup-fireworks-layer";
+    const makeBurst = (x,y,offsetHue) => {
+      const ring = document.createElement("span");
+      ring.className = "followup-firework-ring";
+      ring.style.setProperty("--fx", `${x}px`);
+      ring.style.setProperty("--fy", `${y}px`);
+      layer.appendChild(ring);
+      for(let i=0;i<22;i++){
+        const angle = (Math.PI * 2 * i / 22) + Math.random() * .22;
+        const distance = 46 + Math.random() * 78;
+        const particle = document.createElement("i");
+        particle.className = "followup-firework-particle";
+        particle.style.setProperty("--fx", `${x}px`);
+        particle.style.setProperty("--fy", `${y}px`);
+        particle.style.setProperty("--dx", `${Math.cos(angle) * distance}px`);
+        particle.style.setProperty("--dy", `${Math.sin(angle) * distance}px`);
+        particle.style.setProperty("--hue", String((offsetHue + i * 11 + Math.random() * 22) % 360));
+        particle.style.setProperty("--delay", `${Math.random() * 100}ms`);
+        layer.appendChild(particle);
+      }
+    };
+    makeBurst(centerX - 30, centerY, 145);
+    makeBurst(centerX + 38, centerY - 18, 195);
+    const toastNode = document.createElement("div");
+    toastNode.className = "followup-complete-toast";
+    toastNode.textContent = "Follow-up completed ✓";
+    layer.appendChild(toastNode);
+    document.body.appendChild(layer);
+    setTimeout(()=>target?.classList.remove("followup-completion-pop"), 850);
+    setTimeout(()=>layer.remove(), 1650);
+  }
+
+  const originalRenderFollowups = window.renderFollowups;
+  if(typeof originalRenderFollowups === "function"){
+    window.renderFollowups = function(){
+      const result = originalRenderFollowups.apply(this, arguments);
+      requestAnimationFrame(markCompletedFollowups);
+      return result;
+    };
+  }
+
+  const originalSaveFollowupEdit = window.saveFollowupEdit;
+  if(typeof originalSaveFollowupEdit === "function"){
+    window.saveFollowupEdit = function(){
+      let existing = null;
+      try{existing = typeof window.getFollowupById === "function" ? window.getFollowupById(window.followupEditorId || followupEditorId) : null;}catch(_e){}
+      const id = existing?.id;
+      const wasCompleted = String(existing?.status || "").toLowerCase() === "completed";
+      const requestedStatus = String(document.getElementById("followEditStatus")?.value || existing?.status || "").toLowerCase();
+      const result = originalSaveFollowupEdit.apply(this, arguments);
+      if(id && requestedStatus === "completed" && !wasCompleted){
+        setTimeout(()=>launchFollowupCelebration(id), 100);
+      }
+      return result;
+    };
+  }
+
+  const originalSaveFollowup = window.saveFollowup;
+  if(typeof originalSaveFollowup === "function"){
+    window.saveFollowup = function(){
+      let beforeIds = new Set();
+      try{beforeIds = new Set((Array.isArray(window.followups) ? window.followups : followups).map(item => String(item.id)));}catch(_e){}
+      const requestedStatus = String(document.getElementById("followStatus")?.value || "Pending").toLowerCase();
+      const result = originalSaveFollowup.apply(this, arguments);
+      if(requestedStatus === "completed"){
+        let created = null;
+        try{created = (Array.isArray(window.followups) ? window.followups : followups).find(item => !beforeIds.has(String(item.id)));}catch(_e){}
+        if(created?.id) setTimeout(()=>launchFollowupCelebration(created.id), 100);
+      }
+      return result;
+    };
+  }
+
+  document.addEventListener("change", event => {
+    if(!["followEditStatus","followStatus"].includes(event.target?.id)) return;
+    const workbench = document.getElementById("followupWorkbench");
+    workbench?.classList.toggle("completion-preview", String(event.target.value || "").toLowerCase() === "completed");
+  });
+
+  function activityTimeFromTimestamp(value, fallback="09:00"){
+    if(!value) return fallback;
+    const date = new Date(value);
+    if(Number.isNaN(date.getTime())) return fallback;
+    return `${String(date.getHours()).padStart(2,"0")}:${String(date.getMinutes()).padStart(2,"0")}`;
+  }
+
+  function activityEventsForDate(key){
+    let pack = null;
+    try{pack = typeof window.activityForDate === "function" ? window.activityForDate(key) : activityForDate(key);}catch(_e){pack = null;}
+    if(!pack) return [];
+    const events = [];
+    (pack.dayCalls || []).forEach(call => events.push({
+      type:"call",
+      time:activityTimeFromTimestamp(call.timestamp,"09:00"),
+      title:call.store_name || "Merchant call",
+      subtitle:call.outcome || "Call logged"
+    }));
+    const loggedUids = new Set((pack.dayCalls || []).map(call => String(call.uid || "")));
+    (pack.manualCalledRecords || []).filter(record => !loggedUids.has(String(record.uid || ""))).forEach(record => events.push({
+      type:"call",
+      time:"09:00",
+      title:record.store_name || "Merchant call",
+      subtitle:"Marked as called"
+    }));
+    (pack.dayPhotos || []).forEach(photo => events.push({
+      type:"photo",
+      time:activityTimeFromTimestamp(photo.timestamp,"10:00"),
+      title:photo.store_name || "Photo work",
+      subtitle:`${Number(photo.photos || 0)} photo${Number(photo.photos || 0) === 1 ? "" : "s"} · ${photo.status || "Logged"}`
+    }));
+    (pack.dayFollowups || []).forEach(followup => {
+      const complete = String(followup.status || "").toLowerCase() === "completed";
+      events.push({
+        type:complete ? "completed" : "followup",
+        time:followup.time || String(followup.datetime || "").slice(11,16) || "11:00",
+        title:followup.store_name || "Follow-up",
+        subtitle:`${followup.reason || "Follow-up"} · ${followup.status || "Pending"}`
+      });
+    });
+    let important = [];
+    try{important = typeof window.importantEventsForDate === "function" ? window.importantEventsForDate(key) : importantEventsForDate(key);}catch(_e){}
+    (important || []).forEach(item => events.push({
+      type:"reminder",
+      time:"08:00",
+      title:item.title || "Reminder",
+      subtitle:[item.market,item.status].filter(Boolean).join(" · ") || "Important reminder"
+    }));
+    return events.sort((a,b)=>String(a.time).localeCompare(String(b.time)));
+  }
+
+  function activityEventChip(event){
+    const palette = {
+      call:["#63b3ff","rgba(99,179,255,.12)"],
+      photo:["#55e7f4","rgba(85,231,244,.11)"],
+      followup:["#b08cff","rgba(176,140,255,.11)"],
+      completed:["#45e29a","rgba(69,226,154,.13)"],
+      reminder:["#ffd166","rgba(255,209,102,.11)"]
+    }[event.type] || ["#63b3ff","rgba(99,179,255,.12)"];
+    let friendly = event.time;
+    try{friendly = typeof window.followupFriendlyTime === "function" ? window.followupFriendlyTime(event.time) : followupFriendlyTime(event.time);}catch(_e){}
+    return `<div class="followup-event-chip activity-event-chip type-${escapeAttr(event.type)}" style="--merchant-accent:${palette[0]};--merchant-accent-soft:${palette[1]};"><div class="event-title">${escapeHtml(event.title)}</div><div class="event-sub">${escapeHtml(friendly)} · ${escapeHtml(event.subtitle)}</div></div>`;
+  }
+
+  function activityMetricsForDate(key){
+    let pack = null;
+    try{pack = typeof window.activityForDate === "function" ? window.activityForDate(key) : activityForDate(key);}catch(_e){}
+    if(!pack) return {calls:0,photos:0,followups:0};
+    return {
+      calls:Number((pack.dayCalls || []).length) + Number((pack.manualCalledRecords || []).length),
+      photos:Number(pack.photosCount || 0),
+      followups:Number((pack.dayFollowups || []).length)
+    };
+  }
+
+  function activityMonthHtml(days){
+    return days.map(day => {
+      const key = dateKey(day);
+      const events = activityEventsForDate(key);
+      const visible = events.slice(0,3);
+      const metrics = activityMetricsForDate(key);
+      const active = isSameDate(day, selectedActivityDate);
+      return `<div class="followup-month-cell activity-month-cell ${day.getMonth() === activityAnchor.getMonth() ? "" : "other-month"} ${active ? "selected" : ""}" data-action="selectActivityDay" data-date="${escapeAttr(key)}">
+        <div class="followup-month-num">
+          <div class="followup-day-number ${active ? "active-day" : ""}">${day.getDate()}</div>
+          <button type="button" class="btn ghost compact-btn" data-action="selectActivityDay" data-date="${escapeAttr(key)}">Open</button>
+        </div>
+        <div class="activity-mini-metrics">
+          ${metrics.calls ? `<span class="activity-mini-metric">☎ ${metrics.calls}</span>` : ""}
+          ${metrics.photos ? `<span class="activity-mini-metric">▣ ${metrics.photos}</span>` : ""}
+          ${metrics.followups ? `<span class="activity-mini-metric">✓ ${metrics.followups}</span>` : ""}
+        </div>
+        <div class="followup-event-stack">${visible.map(activityEventChip).join("") || `<div class="followup-month-more">No activity</div>`}</div>
+        ${events.length > visible.length ? `<div class="followup-month-more">+${events.length - visible.length} more</div>` : ""}
+      </div>`;
+    }).join("");
+  }
+
+  function activityWeekHtml(days){
+    return `<div class="followup-week-grid">${days.map(day => {
+      const key = dateKey(day);
+      const events = activityEventsForDate(key);
+      const active = isSameDate(day, selectedActivityDate);
+      return `<div class="followup-week-cell activity-week-cell ${active ? "selected" : ""}" data-action="selectActivityDay" data-date="${escapeAttr(key)}">
+        <div class="followup-week-date">
+          <div><div class="followup-week-name">${escapeHtml(day.toLocaleDateString("en-US",{weekday:"short"}))}</div><div class="followup-day-number ${active ? "active-day" : ""}">${day.getDate()}</div></div>
+          <button type="button" class="btn ghost compact-btn" data-action="selectActivityDay" data-date="${escapeAttr(key)}">Open</button>
+        </div>
+        <div class="followup-event-stack">${events.map(activityEventChip).join("") || `<div class="followup-week-empty">No activity.</div>`}</div>
+      </div>`;
+    }).join("")}</div>`;
+  }
+
+  function activityDayHtml(day){
+    const key = dateKey(day);
+    const events = activityEventsForDate(key);
+    const display = day.toLocaleDateString("en-US",{weekday:"long",month:"long",day:"numeric",year:"numeric"});
+    const rows = [];
+    for(let hour=7;hour<=21;hour++){
+      const matches = events.filter(event => Number(String(event.time || "00:00").split(":")[0]) === hour);
+      let label = `${hour}:00`;
+      try{label = typeof window.followupHourLabel === "function" ? window.followupHourLabel(hour) : followupHourLabel(hour);}catch(_e){}
+      rows.push(`<div class="followup-hour-row"><div class="followup-hour-label">${escapeHtml(label)}</div><div class="followup-hour-track"><div class="followup-hour-events">${matches.map(event => {
+        const palette = {call:["#63b3ff","rgba(99,179,255,.12)"],photo:["#55e7f4","rgba(85,231,244,.11)"],followup:["#b08cff","rgba(176,140,255,.11)"],completed:["#45e29a","rgba(69,226,154,.13)"],reminder:["#ffd166","rgba(255,209,102,.11)"]}[event.type] || ["#63b3ff","rgba(99,179,255,.12)"];
+        return `<div class="activity-day-event type-${escapeAttr(event.type)}" style="--merchant-accent:${palette[0]};--merchant-accent-soft:${palette[1]};"><div class="event-title">${escapeHtml(event.title)}</div><div class="event-sub">${escapeHtml(event.subtitle)}</div></div>`;
+      }).join("") || `<div class="followup-day-empty">No activity this hour.</div>`}</div></div></div>`);
+    }
+    return `<div class="followup-day-board"><div class="followup-day-board-head"><div><strong>${escapeHtml(display)}</strong><span>${events.length ? `${events.length} activity item${events.length === 1 ? "" : "s"}` : "No activity recorded"}</span></div><button type="button" class="btn ghost compact-btn" data-action="selectActivityDay" data-date="${escapeAttr(key)}">Refresh</button></div><div class="followup-day-timeline">${rows.join("")}</div></div>`;
+  }
+
+  function activityRangeText(){
+    if(activityCalendarView === "day"){
+      return selectedActivityDate.toLocaleDateString("en-US",{weekday:"long",month:"long",day:"numeric",year:"numeric"});
+    }
+    if(activityCalendarView === "week"){
+      const days = followupWeekBusinessDays(selectedActivityDate);
+      return `${days[0].toLocaleDateString("en-US",{month:"short",day:"numeric"})} - ${days[4].toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric"})}`;
+    }
+    return activityAnchor.toLocaleDateString("en-US",{month:"long",year:"numeric"});
+  }
+
+  function activityTitle(){
+    if(activityCalendarView === "day") return selectedActivityDate.toLocaleDateString("en-US",{weekday:"long",month:"long",day:"numeric",year:"numeric"});
+    if(activityCalendarView === "week") return selectedActivityDate.toLocaleDateString("en-US",{month:"long",year:"numeric"});
+    return activityAnchor.toLocaleDateString("en-US",{month:"long",year:"numeric"});
+  }
+
+  function ensureActivityControls(){
+    const panel = document.querySelector("#view-activity > .panel");
+    if(!panel) return;
+    const firstTitle = panel.querySelector(":scope > .section-title:first-child");
+    if(firstTitle){
+      const h3 = firstTitle.querySelector("h3");
+      const hint = firstTitle.querySelector(".hint");
+      if(h3) h3.textContent = "Activity calendar";
+      if(hint) hint.textContent = "Weekdays only · day, week, month views";
+    }
+    let bar = panel.querySelector(":scope > .activity-viewbar");
+    if(!bar){
+      const oldActions = panel.querySelector(":scope > .actions");
+      bar = document.createElement("div");
+      bar.className = "activity-viewbar";
+      bar.innerHTML = `
+        <div class="activity-view-actions">
+          <button type="button" class="btn ghost" data-activity-view="day">Day</button>
+          <button type="button" class="btn ghost" data-activity-view="week">Week</button>
+          <button type="button" class="btn ghost" data-activity-view="month">Month</button>
+        </div>
+        <div class="activity-nav-actions">
+          <button type="button" class="btn ghost" data-activity-step="-1">Previous</button>
+          <button type="button" class="btn blue" data-activity-focus-today>Focus Today</button>
+          <button type="button" class="btn ghost" data-activity-step="1">Next</button>
+          <button type="button" class="btn purple" data-action="downloadMonthlyCSV">Download Monthly CSV</button>
+        </div>`;
+      if(oldActions) oldActions.replaceWith(bar);
+      else firstTitle?.insertAdjacentElement("afterend",bar);
+    }
+    const titles = Array.from(panel.querySelectorAll(":scope > .section-title"));
+    const calendarTitle = titles.find(title => title.querySelector("#activityMonthLabel")) || titles[1];
+    if(calendarTitle){
+      let range = calendarTitle.querySelector(".hint");
+      if(range){range.id = "activityCalendarRangeLabel";}
+    }
+  }
+
+  function renderActivityCalendar(){
+    ensureActivityControls();
+    const grid = document.getElementById("activityCalendarGrid");
+    if(!grid) return;
+    grid.className = `calendar-grid followup-calendar-grid activity-calendar-grid ${activityCalendarView}-view`;
+    if(activityCalendarView === "day") grid.innerHTML = activityDayHtml(selectedActivityDate);
+    else if(activityCalendarView === "week") grid.innerHTML = activityWeekHtml(followupWeekBusinessDays(selectedActivityDate));
+    else grid.innerHTML = activityMonthHtml(followupVisibleBusinessDays(activityAnchor));
+    const title = document.getElementById("activityMonthLabel");
+    if(title) title.textContent = activityTitle();
+    const range = document.getElementById("activityCalendarRangeLabel");
+    if(range) range.textContent = activityRangeText();
+    document.querySelectorAll("[data-activity-view]").forEach(btn => btn.classList.toggle("active", btn.dataset.activityView === activityCalendarView));
+  }
+
+  function stepActivityCalendar(delta){
+    const current = new Date(selectedActivityDate);
+    if(activityCalendarView === "day"){
+      selectedActivityDate = addDays(current, delta);
+      activityAnchor = new Date(selectedActivityDate.getFullYear(),selectedActivityDate.getMonth(),1);
+    }else if(activityCalendarView === "week"){
+      selectedActivityDate = addDays(current, delta * 7);
+      activityAnchor = new Date(selectedActivityDate.getFullYear(),selectedActivityDate.getMonth(),1);
+    }else{
+      activityAnchor = new Date(activityAnchor.getFullYear(),activityAnchor.getMonth() + delta,1);
+      const last = new Date(activityAnchor.getFullYear(),activityAnchor.getMonth()+1,0).getDate();
+      selectedActivityDate = new Date(activityAnchor.getFullYear(),activityAnchor.getMonth(),Math.min(current.getDate(),last));
+    }
+    window.renderActivity?.();
+  }
+
+  document.addEventListener("click", event => {
+    const viewButton = event.target.closest("[data-activity-view]");
+    if(viewButton){
+      event.preventDefault();
+      const view = viewButton.dataset.activityView;
+      if(VALID_ACTIVITY_VIEWS.has(view)){
+        activityCalendarView = view;
+        try{localStorage.setItem(ACTIVITY_VIEW_KEY,view);}catch(_e){}
+        window.renderActivity?.();
+      }
+      return;
+    }
+    const stepButton = event.target.closest("[data-activity-step]");
+    if(stepButton){
+      event.preventDefault();
+      stepActivityCalendar(Number(stepButton.dataset.activityStep || 0));
+      return;
+    }
+    const focusButton = event.target.closest("[data-activity-focus-today]");
+    if(focusButton){
+      event.preventDefault();
+      selectedActivityDate = new Date();
+      activityAnchor = new Date(selectedActivityDate.getFullYear(),selectedActivityDate.getMonth(),1);
+      window.renderActivity?.();
+      try{toast("Activity focused today");}catch(_e){}
+    }
+  });
+
+  const originalRenderActivity = window.renderActivity;
+  if(typeof originalRenderActivity === "function"){
+    window.renderActivity = function(){
+      const result = originalRenderActivity.apply(this, arguments);
+      requestAnimationFrame(renderActivityCalendar);
+      return result;
+    };
+  }
+
+  function bootCrystalEnhancements(){
+    document.body.classList.add("crystal-clear-ui");
+    ensureActivityControls();
+    enhanceCallConsole();
+    markCompletedFollowups();
+    if(document.getElementById("activityCalendarGrid")) renderActivityCalendar();
+  }
+
+  if(document.readyState === "loading") document.addEventListener("DOMContentLoaded",bootCrystalEnhancements,{once:true});
+  else bootCrystalEnhancements();
+  window.addEventListener("load",bootCrystalEnhancements,{once:true});
+})();
+</script>
+
 </body>
 </html>
