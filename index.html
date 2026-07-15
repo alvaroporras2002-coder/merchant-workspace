@@ -1153,7 +1153,7 @@ function showView(view){
  if(previousView !== view) closeCommandBar(false);
 }
 function selectMerchant(u, view){
- closeMerchantQuickEdit();
+ if (typeof closeMerchantQuickEdit === 'function') closeMerchantQuickEdit();
  const candidate = String(u || DEFAULT_UID);
  selectedUid = byUid(candidate) ? candidate : (RECORDS[0]?.uid || candidate);
  localStorage.setItem(LS.selected, selectedUid);
@@ -1161,7 +1161,20 @@ function selectMerchant(u, view){
  storeCallBoardReturnPage();
  }
  consoleDuration = 0;
- renderAll();
+ 
+ document.querySelectorAll('.merchant-card.selected, .list-item.selected, .day-cell.selected').forEach(el => {
+  el.classList.remove('selected');
+ });
+ document.querySelectorAll(`[data-uid="${selectedUid}"]`).forEach(el => {
+  el.classList.add('selected');
+ });
+
+ requestAnimationFrame(() => {
+  if (typeof renderProfile === 'function') renderProfile();
+  if (typeof renderCallConsole === 'function') renderCallConsole();
+  if (typeof renderMerchantEditor === 'function') renderMerchantEditor();
+ });
+
  if(view) showView(view);
 }
 function displaySeconds(sec){return mmss(Math.max(0, Number(sec || 0)))}
@@ -1607,6 +1620,7 @@ function storeCallBoardReturnPage(){
  callBoardReturnPage = callBoardPage;
  localStorage.setItem(LS.callBoardReturnPage, String(callBoardReturnPage));
 }
+let _filterDebounceTimer = null;
 function applyCallBoardFilterChange(partial = {}){
  if(currentView !== "callControl") {
  callFilters = Object.assign({}, callFilters, partial);
@@ -1626,7 +1640,12 @@ function applyCallBoardFilterChange(partial = {}){
  localStorage.setItem(LS.callBoardPage, String(callBoardPage));
  }
  }
- renderCallControl();
+ clearTimeout(_filterDebounceTimer);
+ _filterDebounceTimer = setTimeout(() => {
+  requestAnimationFrame(() => {
+   renderCallControl();
+  });
+ }, 100);
 }
 function renderCallControl(){
  const q=callFilters.q.toLowerCase();
