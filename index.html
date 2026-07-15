@@ -2,9 +2,9 @@
 <html lang="es">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Merchant Workspace</title>
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="./styles.css" />
 </head>
 <body class="dd-portal-ui dd-default">
   <div class="app">
@@ -17,23 +17,63 @@
         </div>
       </div>
 
-      <button class="sidebar-toggle" id="sidebarToggle">☰</button>
+      <button id="sidebarToggle" class="sidebar-toggle" type="button">
+        <span class="toggle-icon">☰</span>
+        <span class="toggle-label">Collapse</span>
+      </button>
 
-      <nav class="workspace-topnav" id="workspaceTopNav"></nav>
+      <section class="sidebar-card import-center-card">
+        <div class="import-center-head">
+          <div>
+            <div class="label">Import Center</div>
+            <div class="small">Start by importing merchants CSV</div>
+          </div>
+          <button class="btn ghost compact-btn" type="button" id="undoImportBtn">Undo</button>
+        </div>
+
+        <div class="import-tabs" role="tablist">
+          <button class="import-tab active" type="button" data-import-tab="merchants">Merchants CSV</button>
+          <button class="import-tab" type="button" data-import-tab="calls">Calls CSV</button>
+        </div>
+
+        <div class="import-pane active" id="importPaneMerchants">
+          <div id="merchantCsvDrop" class="sidebar-dropzone">
+            <strong>Drop merchants CSV</strong>
+            <span>Preview first · add · update · remove</span>
+          </div>
+          <input id="merchantCsvInput" type="file" accept=".csv,.tsv,text/csv,text/tab-separated-values" hidden />
+          <div class="sidebar-import-actions">
+            <button class="btn blue" type="button" id="chooseMerchantCsvBtn">Choose</button>
+            <button class="btn red" type="button" id="resetMerchantsBtn">Reset</button>
+          </div>
+          <div id="merchantImportSummary" class="import-summary sidebar-import-summary"></div>
+        </div>
+
+        <div class="import-pane" id="importPaneCalls">
+          <div id="callCsvDrop" class="sidebar-dropzone">
+            <strong>Drop calls CSV</strong>
+            <span>Real + credited time, attempts, unmatched</span>
+          </div>
+          <input id="callCsvInput" type="file" accept=".csv,.tsv,text/csv,text/tab-separated-values" hidden />
+          <div class="sidebar-import-actions">
+            <button class="btn blue" type="button" id="chooseCallCsvBtn">Choose</button>
+            <button class="btn red" type="button" id="clearCallsBtn">Clear</button>
+          </div>
+          <div id="callImportSummary" class="import-summary sidebar-import-summary"></div>
+        </div>
+
+        <div class="import-history-compact" id="importHistorySummary"></div>
+      </section>
+
+      <nav id="workspaceTopNav" class="workspace-topnav"></nav>
     </aside>
 
     <main class="main">
-      <section class="workspace-topbar">
-        <div class="workspace-search">
-          <input id="merchantGlobalSearch" type="search" placeholder="Search any merchant field..." />
-          <div class="workspace-search-results" id="merchantGlobalSearchResults"></div>
-        </div>
-      </section>
-
-      <section class="panel timezone-panel" id="timezonePanel">
+      <section class="panel flat timezone-panel" id="timezonePanel">
         <div class="section-title">
-          <h3>Timezones</h3>
-          <button class="btn ghost compact-btn" id="timezoneToggleBtn">Hide</button>
+          <h3>Canada time zones</h3>
+          <span class="hint">Live clocks update every second</span>
+          <button class="btn ghost compact-btn" type="button" id="timezoneToggleBtn">Hide</button>
         </div>
         <div class="tz-strip" id="tzStrip"></div>
       </section>
@@ -54,6 +94,6 @@
   <div id="commandBar" class="command-bar"></div>
   <div id="toast" class="toast"></div>
 
-  <script src="app.js" defer></script>
+  <script type="module" src="./app.js"></script>
 </body>
 </html>
