@@ -1335,18 +1335,43 @@
     .status-select-card .field { gap: 5px; }
     .status-select-card .field label { margin-bottom: 1px; }
     .status-select-wrap { display: grid; gap: 7px; }
-    .status-select { width: 100%; min-height: 52px; padding: 12px 14px; border: 1px solid var(--line); border-radius: 14px; background: rgba(8,15,29,.78); color: var(--text); font-size: 12px; font-weight: 800; outline: none; }
+    .status-select {
+      width: 100%;
+      min-height: 52px;
+      padding: 12px 14px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: rgba(8,15,29,.78);
+      color: var(--text);
+      font-size: 12px;
+      font-weight: 800;
+      outline: none;
+      color-scheme: dark;
+      -webkit-appearance: none;
+      appearance: none;
+    }
     .status-select:focus { border-color: rgba(var(--accent-rgb), .58); box-shadow: 0 0 0 4px rgba(var(--accent-rgb), .10); }
+    .status-select option,
+    .status-select optgroup {
+      background: #0e1728;
+      color: var(--text);
+    }
+    .status-select option:checked,
+    .status-select option:focus,
+    .status-select option:hover {
+      background: #17243b;
+      color: white;
+    }
     .status-preview { display: inline-flex; align-items: center; justify-content: center; min-height: 52px; padding: 0 14px; border-radius: 14px; border: 1px solid var(--line); background: rgba(8,15,29,.56); font-size: 11px; font-weight: 900; white-space: nowrap; }
-    .status-tone-active .status-preview, .status-tone-active .status-select { border-color: rgba(148,163,184,.28); }
-    .status-tone-called .status-preview, .status-tone-called .status-select { border-color: rgba(34,197,94,.38); background: rgba(34,197,94,.10); color: #bbf7d0; }
-    .status-tone-no-answer .status-preview, .status-tone-no-answer .status-select { border-color: rgba(245,158,11,.38); background: rgba(245,158,11,.10); color: #fde68a; }
-    .status-tone-spoke .status-preview, .status-tone-spoke .status-select { border-color: rgba(59,130,246,.38); background: rgba(59,130,246,.10); color: #dbeafe; }
-    .status-tone-needs-follow-up .status-preview, .status-tone-needs-follow-up .status-select { border-color: rgba(139,92,246,.38); background: rgba(139,92,246,.10); color: #ddd6fe; }
-    .status-tone-waiting-on-merchant .status-preview, .status-tone-waiting-on-merchant .status-select, .status-tone-blocked .status-preview, .status-tone-blocked .status-select { border-color: rgba(239,68,68,.38); background: rgba(239,68,68,.10); color: #fecaca; }
-    .status-tone-relationship-healthy .status-preview, .status-tone-relationship-healthy .status-select { border-color: rgba(20,184,166,.38); background: rgba(20,184,166,.10); color: #99f6e4; }
-    .status-tone-done .status-preview, .status-tone-done .status-select { border-color: rgba(34,197,94,.38); background: rgba(34,197,94,.12); color: #bbf7d0; }
-    .status-tone-needs-data-review .status-preview, .status-tone-needs-data-review .status-select { border-color: rgba(245,158,11,.42); background: rgba(245,158,11,.12); color: #fde68a; }
+    .status-tone-active .status-preview { border-color: rgba(148,163,184,.28); }
+    .status-tone-called .status-preview { border-color: rgba(34,197,94,.38); background: rgba(34,197,94,.10); color: #bbf7d0; }
+    .status-tone-no-answer .status-preview { border-color: rgba(245,158,11,.38); background: rgba(245,158,11,.10); color: #fde68a; }
+    .status-tone-spoke .status-preview { border-color: rgba(59,130,246,.38); background: rgba(59,130,246,.10); color: #dbeafe; }
+    .status-tone-needs-follow-up .status-preview { border-color: rgba(139,92,246,.38); background: rgba(139,92,246,.10); color: #ddd6fe; }
+    .status-tone-waiting-on-merchant .status-preview, .status-tone-blocked .status-preview { border-color: rgba(239,68,68,.38); background: rgba(239,68,68,.10); color: #fecaca; }
+    .status-tone-relationship-healthy .status-preview { border-color: rgba(20,184,166,.38); background: rgba(20,184,166,.10); color: #99f6e4; }
+    .status-tone-done .status-preview { border-color: rgba(34,197,94,.38); background: rgba(34,197,94,.12); color: #bbf7d0; }
+    .status-tone-needs-data-review .status-preview { border-color: rgba(245,158,11,.42); background: rgba(245,158,11,.12); color: #fde68a; }
 
     .email-recap-card { padding: 14px; border: 1px solid var(--line); border-radius: 18px; background: radial-gradient(circle at top left, rgba(var(--accent-rgb), .10), transparent 28%), rgba(8,15,29,.55); }
     .email-recap-head { display: flex; justify-content: space-between; gap: 10px; align-items: flex-start; margin-bottom: 10px; }
