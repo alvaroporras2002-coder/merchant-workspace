@@ -627,6 +627,27 @@
     .resource-card .url { margin-top: 8px; color: #a5b4fc; font-size: 9px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .resource-card .button-row { margin-top: 10px; padding-top: 9px; border-top: 1px solid var(--line); }
     .resource-editor { position: sticky; top: 98px; }
+    .resource-card.resource-card-compact p {
+      margin-top: 5px;
+      color: var(--muted);
+      font-size: 9px;
+      line-height: 1.3;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .resource-card .resource-meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 10px;
+    }
+    .resource-card.resource-card-compact .button-row,
+    .resource-card .button-row {
+      flex-wrap: wrap;
+    }
+    .resource-card.resource-card-compact .url { display: none; }
     .category-heading { display: flex; justify-content: space-between; gap: 10px; align-items: center; margin: 15px 2px 8px; }
     .category-heading strong { color: var(--muted); font-size: 10px; letter-spacing: .11em; text-transform: uppercase; }
     .category-heading span { color: var(--muted-2); font-size: 9px; }
@@ -1835,6 +1856,22 @@
     {name:"MX Portal password reset",category:"Systems",url:"https://identity.doordash.com/auth/user/password/reset?client_id=1643580605860775164&redirect_uri=https%3A%2F%2Fmerchant-portal.doordash.com%2Fauth_callback&scope=*&prompt=none&response_type=code&layout=merchant_web_v2&state=329d5d63-081b-4c83-a462-c980db134b5a&allowRedirect=true&failureRedirect=%2Fmerchant%2Flogin",description:"Merchant Portal password reset. The state parameter may expire.",icon:"↺",review:true}
   ];
 
+
+  const DEFAULT_RESOURCES = [
+    {name:"DashMenu Matcher",type:"GPT",accessLevel:"Anyone at DoorDash (with link)",creator:"Esteban Golfin",url:"https://chatgpt.com/g/g-6994bb0499dc81919719c4955ea86b9f-dashmenu-matcher",description:"Matches food photos to correct DoorDash menu items with high accuracy",icon:"🍔"},
+    {name:"Interview Lab",type:"GPT",accessLevel:"Anyone at DoorDash (with link)",creator:"Esteban Golfin",url:"https://chatgpt.com/g/g-694c11a2824c81918868af8af1745fa3-interview-lab",description:"Conversational interview trainer for Account Managers",icon:"🎤"},
+    {name:"Crispy Case Finder",type:"GPT",accessLevel:"Anyone at DoorDash (with link)",creator:"Esteban Golfin",url:"https://chatgpt.com/g/g-6938c11ea7f0819188db2f43e83a1ddb-crispy-case-finder",description:"Identifies the correct support case category from merchant issue descriptions",icon:"🔎"},
+    {name:"TempSmith",type:"GPT",accessLevel:"Leadership access only",creator:"Esteban Golfin",url:"https://chatgpt.com/g/g-6914d041b1d08191a0095d8f155b8855-tempsmith",description:"Generates formatted regular and HTML bulk email templates for merchant outreach",icon:"✉️"},
+    {name:"DashGuide",type:"GPT",accessLevel:"Anyone at DoorDash (with link)",creator:"Esteban Golfin",url:"https://chatgpt.com/g/g-68f2d885edec8191a9cc9111b676d2f0-dashguide",description:"Internal DoorDash assistant for workflows and merchant growth strategy",icon:"📘"},
+    {name:"Closer's Script",type:"GPT",accessLevel:"Anyone at DoorDash (with link)",creator:"Esteban Golfin",url:"https://chatgpt.com/g/g-68d6ebfa1c248191858b8df13d89b868-closers-script",description:"Adaptive sales call scripts with ROI framing and objection handling",icon:"🗣️"},
+    {name:"Case Whisperer",type:"GPT",accessLevel:"Anyone at DoorDash (with link)",creator:"Esteban Golfin",url:"https://chatgpt.com/g/g-68d44c1383b481918648ce10c1ed06aa-case-whisperer",description:"Formats AM-style support cases with structured summaries and next steps",icon:"💬"},
+    {name:"DashLens",type:"GPT",accessLevel:"Anyone at DoorDash (with link)",creator:"Esteban Golfin",url:"https://chatgpt.com/g/g-688bb684c78881918e01bfceabd74b3e-dashlens",description:"Creates DoorDash-compliant menu images with custom backgrounds",icon:"🖼️"},
+    {name:"Smart Links",type:"GPT",accessLevel:"Anyone at DoorDash (with link)",creator:"Enrique Segovia",url:"https://chatgpt.com/g/g-6982817490b08191a622f755dc4f42b0-smart-links",description:"Creates activation links for DoorDash marketing campaigns",icon:"🔗"},
+    {name:"Camp Ency",type:"GPT",accessLevel:"Anyone at DoorDash (with link)",creator:"Enrique Segovia",url:"https://chatgpt.com/g/g-69811e02bbc88191b604a3ea33e16add-camp-ency",description:"Campaign Knowledge Encyclopedia for DoorDash marketing tools",icon:"📚"},
+    {name:"Biz Summ",type:"GPT",accessLevel:"Anyone at DoorDash (with link)",creator:"Enrique Segovia",url:"https://chatgpt.com/g/g-697ceb18f4608191a31373588f31418e-biz-summ",description:"Generates polished business summary PDFs and structured email summaries",icon:"📄"},
+    {name:"MatchBot Pro-Checker",type:"GPT",accessLevel:"Anyone at DoorDash (with link)",creator:"Enrique Segovia",url:"https://chatgpt.com/g/g-68ed5e24130c819190f2b4bb50d49bed-matchbot-pro-checker",description:"Matches dish photos to menu items and reports completion status",icon:"✅"}
+  ];
+
   function createDefaultState() {
     return {
       version: APP_VERSION,
@@ -1875,7 +1912,7 @@
       sales: [],
       credits: [],
       followups: [],
-      resources: [],
+      resources: DEFAULT_RESOURCES.map((item, index) => ({ ...item, id: `resource_${index + 1}`, favorite: index < 4, uses: 0, lastOpened: "", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() })),
       links: DEFAULT_LINKS.map((x,i)=>({ ...x, id: `link_${i+1}`, uses: 0, lastOpened: "" })),
       unmatchedCalls: [],
       selectedUid: "",
@@ -1897,7 +1934,9 @@
         linkSelectedId: "",
         laneOpen: {},
         workHubFilters: { q:"", view:"uncalled", market:"all", video:"all", photo:"all", contact:"all" },
-        followupFilters: { merchant:"all", reason:"all", status:"open" }
+        followupFilters: { merchant:"all", reason:"all", status:"open" },
+        resourceFilters: { q:"", type:"all", sort:"favorites" },
+        linkFilters: { q:"", category:"all", sort:"favorites" }
       },
       notifiedFollowups: {}
     };
@@ -1965,7 +2004,7 @@
       sales: Array.isArray(saved.sales) ? saved.sales : [],
       credits: Array.isArray(saved.credits) ? saved.credits : [],
       followups: Array.isArray(saved.followups) ? saved.followups : [],
-      resources: Array.isArray(saved.resources) ? saved.resources : [],
+      resources: Array.isArray(saved.resources) && saved.resources.length ? saved.resources : base.resources,
       links: Array.isArray(saved.links) && saved.links.length ? saved.links : base.links,
       unmatchedCalls: Array.isArray(saved.unmatchedCalls) ? saved.unmatchedCalls : [],
       importHistory: Array.isArray(saved.importHistory) ? saved.importHistory : [],
@@ -2964,11 +3003,20 @@
     document.getElementById("modal").classList.remove("show");
   }
 
-  function renderApp() {
+  function renderApp(options = {}) {
+    const preserveFocus = !!options.preserveFocus;
+    const active = preserveFocus ? document.activeElement : null;
+    const activeId = preserveFocus && active && active.id ? active.id : "";
+    const activeValue = preserveFocus && active && "value" in active ? active.value : "";
+    const activeStart = preserveFocus && active && typeof active.selectionStart === "number" ? active.selectionStart : null;
+    const activeEnd = preserveFocus && active && typeof active.selectionEnd === "number" ? active.selectionEnd : null;
+
     renderChrome();
     const host = document.getElementById("viewHost");
-    host.classList.remove("view-enter");
-    void host.offsetWidth;
+    if (options.animate !== false) {
+      host.classList.remove("view-enter");
+      void host.offsetWidth;
+    }
     const renderers = {
       dashboard: renderDashboard,
       workhub: renderWorkHub,
@@ -2982,7 +3030,22 @@
       settings: renderSettings
     };
     host.innerHTML = (renderers[state.currentView] || renderDashboard)();
-    host.classList.add("view-enter");
+    if (options.animate !== false) host.classList.add("view-enter");
+
+    if (preserveFocus && activeId) {
+      requestAnimationFrame(() => {
+        const el = document.getElementById(activeId);
+        if (el && typeof el.focus === "function") {
+          try {
+            el.focus({ preventScroll: true });
+            if (typeof el.setSelectionRange === "function" && activeStart != null && activeEnd != null) {
+              el.setSelectionRange(activeStart, activeEnd);
+            }
+          } catch {}
+        }
+      });
+    }
+
     bindViewSpecific();
   }
 
@@ -3996,72 +4059,92 @@
 
   function renderResources() {
     const filter = state.ui.resourceFilters || { q:"", type:"all", sort:"favorites" };
-    const selected = state.resources.find(x=>x.id===state.ui.resourceSelectedId) || null;
-    const types = unique(state.resources.map(x=>x.type)).sort();
+    const selected = state.resources.find(x => x.id === state.ui.resourceSelectedId) || null;
+    const types = unique(state.resources.map(x => x.type || "Resource")).sort();
     let items = state.resources.filter(x => {
-      const hay=normalizeText([x.name,x.type,x.description,x.url].join(" "));
-      return (!filter.q||hay.includes(normalizeText(filter.q)))&&(filter.type==="all"||x.type===filter.type);
+      const hay = normalizeText([x.name, x.type, x.accessLevel, x.creator, x.description, x.url].join(" "));
+      return (!filter.q || hay.includes(normalizeText(filter.q))) && (filter.type === "all" || String(x.type || "Resource") === filter.type);
     });
-    items.sort((a,b)=>filter.sort==="name"?a.name.localeCompare(b.name):filter.sort==="type"?String(a.type).localeCompare(String(b.type)):(Number(b.favorite)-Number(a.favorite)||a.name.localeCompare(b.name)));
+    items.sort((a, b) => filter.sort === "name"
+      ? a.name.localeCompare(b.name)
+      : filter.sort === "type"
+        ? String(a.type || "Resource").localeCompare(String(b.type || "Resource"))
+        : (Number(b.favorite) - Number(a.favorite) || a.name.localeCompare(b.name)));
+
     return `<section class="panel">
-      <div class="card-head"><div><div class="card-kicker">Resource hub</div><h2>Documents, playbooks and materials</h2></div><button class="btn primary" type="button" data-action="newResource">New resource</button></div>
-      <div class="toolbar" style="grid-template-columns:1.5fr .8fr .8fr auto"><div class="field"><label>Search</label><input id="resourceSearch" value="${attr(filter.q||"")}" placeholder="Name, description or URL…" /></div><div class="field"><label>Type</label><select id="resourceType"><option value="all">All types</option>${types.map(x=>`<option ${filter.type===x?"selected":""}>${esc(x)}</option>`).join("")}</select></div><div class="field"><label>Sort</label><select id="resourceSort"><option value="favorites" ${filter.sort==="favorites"?"selected":""}>Favorites first</option><option value="name" ${filter.sort==="name"?"selected":""}>Name</option><option value="type" ${filter.sort==="type"?"selected":""}>Type</option></select></div><button class="btn ghost" type="button" data-action="clearResourceFilters">Clear</button></div>
+      <div class="card-head"><div><div class="card-kicker">Resources</div><h2>Knowledge base and AI assistants</h2></div><button class="btn primary" type="button" data-action="newResource">New resource</button></div>
+      <div class="toolbar" style="grid-template-columns:1.5fr .8fr .8fr auto"><div class="field"><label>Search</label><input id="resourceSearch" value="${attr(filter.q || "")}" placeholder="Name, creator, access level or URL…" /></div><div class="field"><label>Collection</label><select id="resourceType"><option value="all">All collections</option>${types.map(x => `<option ${filter.type === x ? "selected" : ""}>${esc(x)}</option>`).join("")}</select></div><div class="field"><label>Sort</label><select id="resourceSort"><option value="favorites" ${filter.sort === "favorites" ? "selected" : ""}>Favorites first</option><option value="name" ${filter.sort === "name" ? "selected" : ""}>Name</option><option value="type" ${filter.sort === "type" ? "selected" : ""}>Collection</option></select></div><button class="btn ghost" type="button" data-action="clearResourceFilters">Clear</button></div>
     </section>
     <div class="resource-layout">
       <section class="panel">
         <div class="card-head"><div><div class="card-kicker">Library</div><h3>${items.length} resources</h3></div></div>
-        ${items.length?`<div class="resource-grid">${items.map(x=>renderResourceCard(x,"resource")).join("")}</div>`:`<div class="empty-state"><div class="icon">◇</div><strong>No resources yet</strong><span>Create documents, playbooks, spreadsheets or guides here. The predefined systems live in Links.</span><button class="btn primary" type="button" data-action="newResource">Create first resource</button></div>`}
+        ${items.length ? `<div class="resource-grid">${items.map(x => renderResourceCard(x, "resource")).join("")}</div>` : `<div class="empty-state"><div class="icon">◇</div><strong>No resources yet</strong><span>Move playbooks, GPT tools and reference files here. The Links section now stays focused on quick shortcuts.</span><button class="btn primary" type="button" data-action="newResource">Create first resource</button></div>`}
       </section>
       <aside class="panel resource-editor">${renderResourceEditor(selected)}</aside>
     </div>`;
   }
 
   function renderResourceEditor(item) {
-    const x=item||{id:"",name:"",type:"Guide",emoji:"◇",url:"",description:"",favorite:false};
-    return `<div class="card-head"><div><div class="card-kicker">${item?"Edit resource":"Resource editor"}</div><h3>${item?esc(item.name):"Select or create"}</h3></div>${item&&item.favorite?`<span class="pill orange">Pinned</span>`:""}</div>
+    const x = item || { id:"", name:"", type:"Guide", emoji:"◇", accessLevel:"", creator:"", url:"", description:"", favorite:false };
+    return `<div class="card-head"><div><div class="card-kicker">${item ? "Edit resource" : "Resource editor"}</div><h3>${item ? esc(item.name) : "Select or create"}</h3></div>${item && item.favorite ? `<span class="pill orange">Pinned</span>` : ""}</div>
       <input id="resourceEditId" type="hidden" value="${attr(x.id)}" />
       <div class="form-grid">
         <div class="field c8"><label>Name</label><input id="resourceEditName" value="${attr(x.name)}" placeholder="Resource name" /></div>
         <div class="field c4"><label>Emoji</label><input id="resourceEditEmoji" value="${attr(x.emoji)}" maxlength="8" /></div>
-        <div class="field c6"><label>Type</label><input id="resourceEditType" value="${attr(x.type)}" placeholder="Guide, Form, Sheet…" /></div>
+        <div class="field c6"><label>Collection</label><input id="resourceEditType" value="${attr(x.type)}" placeholder="GPT, Guide, Sheet…" /></div>
+        <div class="field c6"><label>Access level</label><input id="resourceEditAccessLevel" value="${attr(x.accessLevel || "")}" placeholder="Anyone at DoorDash…" /></div>
+        <div class="field c6"><label>Creator</label><input id="resourceEditCreator" value="${attr(x.creator || "")}" placeholder="Name" /></div>
         <div class="field c6"><label>URL</label><input id="resourceEditUrl" value="${attr(x.url)}" placeholder="https://…" /></div>
         <div class="field c12"><label>Description</label><textarea id="resourceEditDescription" placeholder="What is this used for?">${esc(x.description)}</textarea></div>
       </div>
-      <div class="button-row" style="margin-top:11px"><button class="btn primary" type="button" data-action="saveResource">Save</button>${item?`<button class="btn orange" type="button" data-action="toggleResourceFavorite">${item.favorite?"Unpin":"Pin"}</button><button class="btn red" type="button" data-action="deleteResource">Delete</button>`:""}</div>`;
+      <div class="button-row" style="margin-top:11px"><button class="btn primary" type="button" data-action="saveResource">Save</button>${item ? `<button class="btn orange" type="button" data-action="toggleResourceFavorite">${item.favorite ? "Unpin" : "Pin"}</button><button class="btn red" type="button" data-action="deleteResource">Delete</button>` : ""}</div>`;
   }
 
   function renderLinks() {
     const filter = state.ui.linkFilters || { q:"", category:"all", sort:"favorites" };
-    const selected = state.links.find(x=>x.id===state.ui.linkSelectedId) || null;
-    const categories = unique(state.links.map(x=>x.category)).sort();
-    let items=state.links.filter(x=>{
-      const hay=normalizeText([x.name,x.category,x.description,x.url].join(" "));
-      return (!filter.q||hay.includes(normalizeText(filter.q)))&&(filter.category==="all"||x.category===filter.category);
+    const selected = state.links.find(x => x.id === state.ui.linkSelectedId) || null;
+    const categories = unique(state.links.map(x => x.category)).sort();
+    let items = state.links.filter(x => {
+      const hay = normalizeText([x.name, x.category, x.description, x.url].join(" "));
+      return (!filter.q || hay.includes(normalizeText(filter.q))) && (filter.category === "all" || x.category === filter.category);
     });
-    items.sort((a,b)=>filter.sort==="recent"?String(b.lastOpened||"").localeCompare(String(a.lastOpened||"")):filter.sort==="usage"?Number(b.uses||0)-Number(a.uses||0):(Number(b.favorite)-Number(a.favorite)||a.name.localeCompare(b.name)));
-    const pinned=items.filter(x=>x.favorite).slice(0,6);
-    const grouped=Object.groupBy?Object.groupBy(items,x=>x.category):items.reduce((a,x)=>((a[x.category]||=[]).push(x),a),{});
+    items.sort((a, b) => filter.sort === "recent"
+      ? String(b.lastOpened || "").localeCompare(String(a.lastOpened || ""))
+      : filter.sort === "usage"
+        ? Number(b.uses || 0) - Number(a.uses || 0)
+        : (Number(b.favorite) - Number(a.favorite) || a.name.localeCompare(b.name)));
+    const pinned = items.filter(x => x.favorite).slice(0, 6);
+    const grouped = Object.groupBy ? Object.groupBy(items, x => x.category) : items.reduce((a, x) => ((a[x.category] ||= []).push(x), a), {});
     return `<section class="panel">
-      <div class="card-head"><div><div class="card-kicker">Links</div><h2>Systems, forms and merchant tools</h2></div><button class="btn primary" type="button" data-action="newLink">New link</button></div>
-      <div class="toolbar" style="grid-template-columns:1.5fr .8fr .8fr auto"><div class="field"><label>Search</label><input id="linkSearch" value="${attr(filter.q||"")}" placeholder="Name, category, description or URL…" /></div><div class="field"><label>Category</label><select id="linkCategory"><option value="all">All categories</option>${categories.map(x=>`<option ${filter.category===x?"selected":""}>${esc(x)}</option>`).join("")}</select></div><div class="field"><label>Sort</label><select id="linkSort"><option value="favorites" ${filter.sort==="favorites"?"selected":""}>Favorites first</option><option value="recent" ${filter.sort==="recent"?"selected":""}>Recently opened</option><option value="usage" ${filter.sort==="usage"?"selected":""}>Most used</option></select></div><button class="btn ghost" type="button" data-action="clearLinkFilters">Clear</button></div>
+      <div class="card-head"><div><div class="card-kicker">Links</div><h2>Systems and quick shortcuts</h2></div><button class="btn primary" type="button" data-action="newLink">New link</button></div>
+      <div class="toolbar" style="grid-template-columns:1.5fr .8fr .8fr auto"><div class="field"><label>Search</label><input id="linkSearch" value="${attr(filter.q || "")}" placeholder="Name, category or URL…" /></div><div class="field"><label>Category</label><select id="linkCategory"><option value="all">All categories</option>${categories.map(x => `<option ${filter.category === x ? "selected" : ""}>${esc(x)}</option>`).join("")}</select></div><div class="field"><label>Sort</label><select id="linkSort"><option value="favorites" ${filter.sort === "favorites" ? "selected" : ""}>Favorites first</option><option value="recent" ${filter.sort === "recent" ? "selected" : ""}>Recently opened</option><option value="usage" ${filter.sort === "usage" ? "selected" : ""}>Most used</option></select></div><button class="btn ghost" type="button" data-action="clearLinkFilters">Clear</button></div>
     </section>
     <div class="resource-layout">
       <section class="panel">
         <div class="card-head"><div><div class="card-kicker">Pinned tools</div><h3>Your fastest shortcuts</h3></div><span class="pill">${pinned.length}</span></div>
-        ${pinned.length?`<div class="resource-grid">${pinned.map(x=>renderResourceCard(x,"link")).join("")}</div>`:`<div class="empty-state" style="min-height:130px"><strong>No pinned tools</strong><span>Pin links to keep them at the top.</span></div>`}
+        ${pinned.length ? `<div class="resource-grid">${pinned.map(x => renderResourceCard(x, "link")).join("")}</div>` : `<div class="empty-state" style="min-height:130px"><strong>No pinned tools</strong><span>Pin links to keep them at the top.</span></div>`}
         <div class="divider"></div>
-        ${Object.keys(grouped).sort().map(category=>`<div class="category-heading"><strong>${esc(category)}</strong><span>${grouped[category].length} links</span></div><div class="resource-grid">${grouped[category].map(x=>renderResourceCard(x,"link")).join("")}</div>`).join("")||`<div class="empty-state"><strong>No links match</strong><span>Clear the filters or add a new link.</span></div>`}
+        ${Object.keys(grouped).sort().map(category => `<div class="category-heading"><strong>${esc(category)}</strong><span>${grouped[category].length} links</span></div><div class="resource-grid">${grouped[category].map(x => renderResourceCard(x, "link")).join("")}</div>`).join("") || `<div class="empty-state"><strong>No links match</strong><span>Clear the filters or add a new link.</span></div>`}
       </section>
       <aside class="panel resource-editor">${renderLinkEditor(selected)}</aside>
     </div>`;
   }
 
-  function renderResourceCard(item,kind) {
-    const selectAttr=kind==="link"?`data-select-link="${attr(item.id)}"`:`data-select-resource="${attr(item.id)}"`;
-    return `<article class="resource-card ${(kind==="link"?state.ui.linkSelectedId:state.ui.resourceSelectedId)===item.id?"selected":""}" ${selectAttr}>
-      <div class="resource-card-head"><div class="resource-icon">${esc(item.icon||item.emoji||"◇")}</div><div><h3>${esc(item.name)}</h3><p>${esc(item.description||"No description")}</p></div><span class="pill ${item.favorite?"orange":""}">${item.favorite?"★":"☆"}</span></div>
-      ${item.url?`<div class="url">${esc(item.url.replace(/^https?:\/\//,""))}</div>`:""}
-      <div class="button-row"><button class="btn small ghost" type="button" data-copy="${attr(item.url||"")}">Copy</button>${kind==="link"?`<button class="btn small blue" type="button" data-open-link="${attr(item.id)}">Open</button>`:`${item.url?`<a class="btn small blue" href="${attr(item.url)}" target="_blank" rel="noopener noreferrer">Open</a>`:""}`}${item.review?`<span class="pill red">Needs review</span>`:""}${kind==="link"?`<span class="pill">${Number(item.uses||0)} uses</span>`:""}</div>
+  function renderResourceCard(item, kind) {
+    const selectAttr = kind === "link" ? `data-select-link="${attr(item.id)}"` : `data-select-resource="${attr(item.id)}"`;
+    const isLink = kind === "link";
+    const title = esc(item.name);
+    const subtitle = isLink ? esc(item.category || "Quick shortcut") : esc(item.description || "No description");
+    const urlLabel = item.url ? esc(String(item.url).replace(/^https?:\/\//, "")) : "";
+    return `<article class="resource-card ${isLink ? "resource-card-compact" : ""} ${(kind === "link" ? state.ui.linkSelectedId : state.ui.resourceSelectedId) === item.id ? "selected" : ""}" ${selectAttr}>
+      <div class="resource-card-head">
+        <div class="resource-icon">${esc(item.icon || item.emoji || "◇")}</div>
+        <div><h3>${title}</h3><p>${subtitle}</p></div>
+        <span class="pill ${item.favorite ? "orange" : ""}">${item.favorite ? "★" : "☆"}</span>
+      </div>
+      ${isLink ? `<div class="resource-meta-row">${item.category ? `<span class="pill">${esc(item.category)}</span>` : ""}${item.review ? `<span class="pill red">Review</span>` : ""}<span class="pill">${Number(item.uses || 0)} uses</span></div>` : `<div class="resource-meta-row">${item.type ? `<span class="pill blue">${esc(item.type)}</span>` : ""}${item.accessLevel ? `<span class="pill purple">${esc(item.accessLevel)}</span>` : ""}${item.creator ? `<span class="pill">${esc(item.creator)}</span>` : ""}</div>`}
+      ${!isLink && item.url ? `<div class="url">${urlLabel}</div>` : ""}
+      <div class="button-row"><button class="btn small ghost" type="button" data-copy="${attr(item.url || "")}">Copy</button>${isLink ? `<button class="btn small blue" type="button" data-open-link="${attr(item.id)}">Open</button>` : `${item.url ? `<a class="btn small blue" href="${attr(item.url)}" target="_blank" rel="noopener noreferrer">Open</a>` : ""}`}${item.review && isLink ? `<span class="pill red">Needs review</span>` : ""}</div>
     </article>`;
   }
 
@@ -4228,7 +4311,7 @@
 
   function debouncedRender() {
     clearTimeout(searchTimer);
-    searchTimer=setTimeout(()=>{scheduleSave();renderApp();},180);
+    searchTimer = setTimeout(() => { scheduleSave(); renderApp({ animate: false, preserveFocus: true }); }, 160);
   }
 
   document.addEventListener("click", async e => {
@@ -4286,6 +4369,9 @@
   document.getElementById("globalSearch").addEventListener("input",e=>renderGlobalSearch(e.target.value));
   document.getElementById("globalSearch").addEventListener("focus",e=>renderGlobalSearch(e.target.value));
   document.addEventListener("click",e=>{if(!e.target.closest(".global-search"))document.getElementById("globalSearchResults").classList.remove("show");});
+
+  document.addEventListener("visibilitychange", () => { if (!document.hidden) checkFollowupNotifications(); });
+  window.addEventListener("focus", checkFollowupNotifications);
 
   async function handleAction(action, element) {
     const actions = {
@@ -4645,7 +4731,7 @@
     const name=document.getElementById("resourceEditName")?.value.trim()||"";
     if(!name)return toast("Enter a resource name");
     const existing=state.resources.find(x=>x.id===id);
-    const record={id:id||uid("resource"),name,type:document.getElementById("resourceEditType")?.value.trim()||"Guide",emoji:document.getElementById("resourceEditEmoji")?.value.trim()||"◇",url:normalizeUrl(document.getElementById("resourceEditUrl")?.value),description:document.getElementById("resourceEditDescription")?.value.trim()||"",favorite:existing?.favorite||false,createdAt:existing?.createdAt||new Date().toISOString(),updatedAt:new Date().toISOString()};
+    const record={id:id||uid("resource"),name,type:document.getElementById("resourceEditType")?.value.trim()||"Guide",emoji:document.getElementById("resourceEditEmoji")?.value.trim()||"◇",accessLevel:document.getElementById("resourceEditAccessLevel")?.value.trim()||"",creator:document.getElementById("resourceEditCreator")?.value.trim()||"",url:normalizeUrl(document.getElementById("resourceEditUrl")?.value),description:document.getElementById("resourceEditDescription")?.value.trim()||"",favorite:existing?.favorite||false,createdAt:existing?.createdAt||new Date().toISOString(),updatedAt:new Date().toISOString()};
     if(existing)Object.assign(existing,record);else state.resources.push(record);state.ui.resourceSelectedId=record.id;scheduleSave();renderApp();toast("Resource saved");
   }
   function toggleResourceFavorite(){const x=state.resources.find(r=>r.id===state.ui.resourceSelectedId);if(!x)return toast("Select a resource");x.favorite=!x.favorite;scheduleSave();renderApp();}
