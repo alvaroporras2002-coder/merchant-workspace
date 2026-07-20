@@ -1699,6 +1699,98 @@
     }
     .app-shell { position: relative; z-index: 1; }
 
+
+    /* DASHWORK v11 — promo suite and profile intelligence */
+    .promo-suite {
+      margin-top: 14px;
+      padding: 16px;
+      border: 1px solid color-mix(in srgb, var(--accent) 24%, var(--line));
+      border-radius: 20px;
+      background: radial-gradient(circle at top left, rgba(var(--accent-rgb), .10), transparent 28%), color-mix(in srgb, var(--card) 84%, transparent);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.03);
+    }
+    .promo-suite-head { display: flex; justify-content: space-between; gap: 12px; align-items: flex-start; margin-bottom: 14px; }
+    .promo-suite-head strong { display: block; font-size: 16px; letter-spacing: -.03em; }
+    .promo-suite-head span { display: block; margin-top: 4px; color: var(--muted); font-size: 11px; line-height: 1.5; }
+    .promo-suite-grid { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(300px, .95fr); gap: 12px; }
+    .promo-suite-card { padding: 14px; border: 1px solid var(--line); border-radius: 18px; background: color-mix(in srgb, var(--surface) 82%, transparent); }
+    .promo-suite-card + .promo-suite-card { background: linear-gradient(145deg, color-mix(in srgb, var(--accent) 8%, var(--card)), color-mix(in srgb, var(--accent-2) 5%, var(--surface))); }
+    .promo-type-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 8px; margin-bottom: 12px; }
+    .promo-type-pill { min-height: 52px; padding: 10px 12px; border: 1px solid var(--line); border-radius: 15px; background: color-mix(in srgb, var(--card) 84%, transparent); color: var(--text); text-align: left; }
+    .promo-type-pill.active { border-color: color-mix(in srgb, var(--accent) 55%, var(--line)); background: color-mix(in srgb, var(--accent) 12%, var(--card)); box-shadow: inset 3px 0 0 var(--accent); }
+    .promo-type-pill strong { display: block; font-size: 12px; }
+    .promo-type-pill span { display: block; margin-top: 3px; color: var(--muted); font-size: 9px; line-height: 1.35; }
+    .promo-fields { display: grid; grid-template-columns: repeat(12, minmax(0,1fr)); gap: 10px; }
+    .promo-fields .field { grid-column: span 6; }
+    .promo-fields .field.w4 { grid-column: span 4; }
+    .promo-fields .field.w12 { grid-column: span 12; }
+    .promo-fields .field small { color: var(--muted); font-size: 9px; line-height: 1.35; }
+    .promo-fields .field input[type="range"] { padding: 0; min-height: 0; height: 28px; background: transparent; border: 0; }
+    .promo-summary-bar { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 8px; margin-top: 12px; }
+    .promo-stat { min-height: 96px; padding: 12px; border: 1px solid var(--line); border-radius: 16px; background: rgba(8,15,29,.58); }
+    .promo-stat span { display: block; color: var(--muted); font-size: 10px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+    .promo-stat strong { display: block; margin-top: 8px; font-size: 24px; letter-spacing: -.05em; }
+    .promo-stat small { display: block; margin-top: 5px; color: var(--muted); font-size: 10px; line-height: 1.45; }
+    .promo-note { margin-top: 11px; padding: 12px; border: 1px dashed var(--line-strong); border-radius: 14px; color: var(--muted); font-size: 11px; line-height: 1.55; }
+    .promo-note strong { color: var(--text); }
+    .promo-mini-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 8px; margin-top: 10px; }
+    .promo-mini { padding: 11px; border: 1px solid var(--line); border-radius: 14px; background: color-mix(in srgb, var(--card) 82%, transparent); }
+    .promo-mini span { display: block; color: var(--muted); font-size: 9px; letter-spacing: .08em; text-transform: uppercase; }
+    .promo-mini strong { display: block; margin-top: 6px; font-size: 13px; }
+    .promo-mini small { display: block; margin-top: 3px; color: var(--muted); font-size: 9px; line-height: 1.35; }
+    .promo-breakdown { display: grid; gap: 8px; margin-top: 10px; }
+    .promo-breakdown-row { display: grid; grid-template-columns: 1fr auto; gap: 10px; align-items: center; }
+    .promo-breakdown-row strong { font-size: 11px; }
+    .promo-breakdown-row span { color: var(--muted); font-size: 10px; }
+    .promo-breakdown-track { height: 7px; margin-top: 5px; border-radius: 999px; overflow: hidden; background: rgba(148,163,184,.12); }
+    .promo-breakdown-track i { display: block; height: 100%; border-radius: inherit; background: linear-gradient(90deg, var(--accent), var(--accent-2)); }
+    .insight-grid { display: grid; grid-template-columns: repeat(12, minmax(0,1fr)); gap: 12px; }
+    .insight-card { padding: 14px; border: 1px solid var(--line); border-radius: 18px; background: color-mix(in srgb, var(--card) 84%, transparent); }
+    .insight-card.half { grid-column: span 6; }
+    .insight-card.third { grid-column: span 4; }
+    .insight-card.full { grid-column: span 12; }
+    .insight-title { display: flex; justify-content: space-between; gap: 10px; align-items: flex-start; margin-bottom: 10px; }
+    .insight-title strong { display: block; font-size: 13px; }
+    .insight-title span { display: block; margin-top: 3px; color: var(--muted); font-size: 10px; line-height: 1.35; }
+    .metric-orb-wrap { display: grid; place-items: center; padding: 4px 0 10px; }
+    .metric-orb { width: 154px; height: 154px; }
+    .metric-orb::after { inset: 12px; }
+    .metric-orb > div strong { font-size: 32px; }
+    .metric-orb > div span { font-size: 10px; }
+    .metric-stack { display: grid; gap: 10px; }
+    .metric-row { display: grid; grid-template-columns: 100px minmax(0,1fr) auto; gap: 10px; align-items: center; }
+    .metric-row label { color: var(--muted); font-size: 10px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+    .metric-row .bar { height: 9px; border-radius: 999px; overflow: hidden; background: rgba(148,163,184,.12); }
+    .metric-row .bar i { display: block; height: 100%; border-radius: inherit; background: linear-gradient(90deg, var(--accent), var(--accent-2)); }
+    .metric-row strong { min-width: 44px; text-align: right; font-size: 12px; }
+    .metric-donut { width: 124px; height: 124px; border-radius: 50%; background: conic-gradient(var(--accent) 0 40%, var(--cyan) 40% 68%, var(--green) 68% 86%, var(--orange) 86% 100%); position: relative; box-shadow: inset 0 0 0 1px rgba(255,255,255,.05); }
+    .metric-donut::after { content: ""; position: absolute; inset: 18px; border-radius: 50%; background: color-mix(in srgb, var(--surface) 92%, transparent); border: 1px solid var(--line); box-shadow: inset 0 10px 25px rgba(0,0,0,.18); }
+    .metric-donut > div { position: absolute; inset: 0; display: grid; place-items: center; z-index: 1; text-align: center; }
+    .metric-donut > div strong { display: block; font-size: 24px; }
+    .metric-donut > div span { display: block; margin-top: 3px; color: var(--muted); font-size: 9px; }
+    .recommendation-card { display: grid; gap: 10px; }
+    .recommendation-card strong { font-size: 18px; letter-spacing: -.04em; }
+    .recommendation-card p { margin: 0; color: var(--muted); font-size: 11px; line-height: 1.55; }
+    .recommendation-bullets { display: grid; gap: 7px; }
+    .recommendation-bullets .pill { justify-content: flex-start; width: fit-content; }
+    .sparkline-box { min-height: 162px; display: grid; align-items: end; }
+    .sparkline-svg { width: 100%; height: 160px; overflow: visible; }
+    .sparkline-grid { stroke: rgba(148,163,184,.13); stroke-width: 1; }
+    .sparkline-bar { fill: rgba(var(--accent-rgb), .84); }
+    .sparkline-line { fill: none; stroke: var(--cyan); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+    .sparkline-dot { fill: var(--text); stroke: var(--accent-2); stroke-width: 3; }
+    @media (max-width: 1100px) {
+      .promo-suite-grid { grid-template-columns: 1fr; }
+      .insight-card.half, .insight-card.third { grid-column: span 12; }
+      .promo-fields .field, .promo-fields .field.w4 { grid-column: span 12; }
+    }
+    @media (max-width: 760px) {
+      .promo-summary-bar { grid-template-columns: 1fr; }
+      .promo-mini-grid { grid-template-columns: 1fr; }
+      .metric-row { grid-template-columns: 1fr; }
+      .metric-row strong { text-align: left; }
+    }
+
   </style>
 </head>
 <body data-motion="smooth">
@@ -1952,6 +2044,31 @@
   const PHOTO_STATUS_OPTIONS = ["Needs Photos","Pending","Approved","Rejected","Complete"];
   const CONTACT_STATUS_OPTIONS = ["Not tracked","Voicemail","Email only","GK only","Wrong number","Store closed","DM reached","Need follow-up"];
   const AD_PROMO_TYPES = new Set(["Advertise to all customers","Advertise to new customers"]);
+
+  const PROMO_TYPE_OPTIONS = [
+    "Smart campaign",
+    "Advertise to all customers",
+    "Advertise to new customers",
+    "Buy 1, get 1 free",
+    "Pay customer's delivery fee",
+    "Happy Hour discount",
+    "Offer free or discounted items",
+    "Discount for customers",
+    "Sponsored listings",
+    "Co-op campaign",
+    "Marketing credit",
+    "Other"
+  ];
+
+  const PROMO_TYPE_ALIASES = {
+    "Buy 1, get 1 free promotion": "Buy 1, get 1 free",
+    "Sponsored Listing": "Sponsored listings",
+    "Sponsored listings": "Sponsored listings",
+    "Co op campaign": "Co-op campaign",
+    "Happy Hour": "Happy Hour discount",
+    "Discount": "Discount for customers",
+    "Free item": "Offer free or discounted items"
+  };
 
   const NAV_ITEMS = [
     { id: "dashboard", label: "Dashboard", icon: "⌂" },
@@ -4182,6 +4299,10 @@ const FOLLOWUP_DELETE_SOUND_DATA_URL = "data:audio/wav;base64,UklGRsqKAABXQVZFZm
   function cad(value) {
     return new Intl.NumberFormat("en-CA", { style:"currency", currency:"CAD", minimumFractionDigits:2, maximumFractionDigits:2 }).format(Number(value || 0));
   }
+  function formatOne(value) {
+    const n = Number(value);
+    return Number.isFinite(n) ? n.toFixed(1) : "0.0";
+  }
 
   function adSpendValues(weeklyBudget, costPerOrder) {
     const weekly = Math.max(0, Number(weeklyBudget || 0));
@@ -4215,7 +4336,7 @@ const FOLLOWUP_DELETE_SOUND_DATA_URL = "data:audio/wav;base64,UklGRsqKAABXQVZFZm
   function capturePromoDraft(typeOverride) {
     return {
       promoStatus: document.getElementById("promoStatus")?.value || "Not tracked",
-      promoType: typeOverride ?? document.getElementById("promoType")?.value ?? "",
+      promoType: normalizePromoTypeLabel(typeOverride ?? document.getElementById("promoType")?.value ?? ""),
       promoCampaign: document.getElementById("promoCampaign")?.value.trim() || "",
       promoNotes: document.getElementById("promoNotes")?.value.trim() || "",
       promoStart: document.getElementById("promoStart")?.value || "",
@@ -4226,10 +4347,10 @@ const FOLLOWUP_DELETE_SOUND_DATA_URL = "data:audio/wav;base64,UklGRsqKAABXQVZFZm
 
   function handlePromoTypeSelection() {
     const merchant = selectedMerchant(); if (!merchant) return;
-    const type = document.getElementById("promoType")?.value || "";
+    const type = normalizePromoTypeLabel(document.getElementById("promoType")?.value || "");
     setMerchantState(merchant.uid, capturePromoDraft(type));
     renderApp();
-    if (AD_PROMO_TYPES.has(type)) toast("Ad spend calculator opened");
+    toast(`${type || "Promo"} calculator opened`);
   }
 
   function updateAdCalculator(sourceId = "", persist = false) {
@@ -4265,15 +4386,315 @@ const FOLLOWUP_DELETE_SOUND_DATA_URL = "data:audio/wav;base64,UklGRsqKAABXQVZFZm
     toast("Ad calculator reset");
   }
 
+
+  function normalizePromoTypeLabel(type) {
+    const raw = String(type || "").trim();
+    return PROMO_TYPE_ALIASES[raw] || raw || "Smart campaign";
+  }
+
+  function promoNum(value, fallback = 0) {
+    const n = Number(value);
+    return Number.isFinite(n) ? n : fallback;
+  }
+
+  function promoDefaultValues(type, st = {}) {
+    const gmv = promoNum(st.gmvHint, 0);
+    return {
+      budget: promoNum(st.promoCalcBudget, gmv ? Math.max(35, Math.round(gmv / 125)) : 70),
+      avgOrder: promoNum(st.promoCalcAvgOrder, gmv ? clamp(Math.round(gmv / 360), 12, 45) : 18),
+      outcomeCost: promoNum(st.promoCalcOutcomeCost, 5),
+      discountPct: promoNum(st.promoCalcDiscountPct, 20),
+      cap: promoNum(st.promoCalcCap, 10),
+      hours: promoNum(st.promoCalcHours, 4),
+      coopPct: promoNum(st.promoCalcCoopPct, 30),
+      targetRoas: promoNum(st.promoCalcTargetRoas, type === "Smart campaign" ? 5.9 : type === "Sponsored listings" ? 5.6 : 4.4),
+      redemptions: promoNum(st.promoCalcRedemptions, 25),
+      creditAmount: promoNum(st.promoCalcCreditAmount, 100),
+      cpc: promoNum(st.promoCalcCpc, 5)
+    };
+  }
+
+  function promoCalcModel(type, st = {}, merchant = null) {
+    const t = normalizePromoTypeLabel(type);
+    const v = promoDefaultValues(t, st);
+    const avgOrder = Math.max(1, v.avgOrder);
+    const budget = Math.max(0, v.budget);
+    let unitCost = Math.max(0.01, v.outcomeCost || 1);
+    let targetRoas = Math.max(1.1, v.targetRoas || 4.5);
+    let redemptions = Math.max(0, v.redemptions || 0);
+    let estSales = budget * targetRoas;
+    let merchantSpend = budget;
+    let partnerShare = 0;
+    let benefitText = "Projected uplift";
+    let note = "This calculator uses the campaign budget as the base and estimates sales from the expected response rate.";
+    let unitLabel = "Cost per outcome";
+    let secondary = "Monthly spend";
+
+    if (t === "Smart campaign") {
+      unitCost = Math.max(1, v.cpc || 5.5);
+      redemptions = Math.max(0, Math.round(budget / unitCost));
+      estSales = Math.max(budget * targetRoas, budget * 2.5);
+      note = `Smart campaigns blend personalization and optimization. At ${cad(unitCost)} per response, the budget estimates about ${redemptions} actions and ${cad(estSales)} in sales.`;
+      benefitText = "Estimated actions";
+      unitLabel = "Cost per action";
+    } else if (t === "Advertise to all customers") {
+      unitCost = Math.max(1, v.cpc || 4.5);
+      redemptions = Math.max(0, Math.round(budget / unitCost));
+      estSales = Math.max(budget * (targetRoas + 0.4), budget * 3);
+      note = `Broad targeting usually trades efficiency for volume. With an assumed ${cad(unitCost)} response cost, this budget yields around ${redemptions} visits and strong reach.`;
+      benefitText = "Estimated visits";
+      unitLabel = "Cost per visit";
+    } else if (t === "Advertise to new customers") {
+      unitCost = Math.max(1, v.cpc || 4.25);
+      redemptions = Math.max(0, Math.round(budget / unitCost));
+      estSales = Math.max(budget * (targetRoas + 0.7), budget * 3.3);
+      note = `New-customer targeting prioritizes first orders. This model expects a slightly higher return on spend than broad targeting.`;
+      benefitText = "Estimated first orders";
+      unitLabel = "Cost per new customer";
+    } else if (t === "Buy 1, get 1 free") {
+      unitCost = Math.max(0.5, v.outcomeCost || 5);
+      redemptions = Math.max(0, Math.round(budget / unitCost));
+      estSales = Math.max(redemptions * avgOrder, budget * 2.2);
+      targetRoas = estSales / Math.max(1, budget);
+      note = `BOGO spend is driven by the free item's cost. If the free item averages ${cad(unitCost)}, this budget supports about ${redemptions} redemptions.`;
+      benefitText = "Estimated redemptions";
+      unitLabel = "Free item cost";
+    } else if (t === "Pay customer's delivery fee") {
+      unitCost = Math.max(0.5, v.outcomeCost || 5);
+      redemptions = Math.max(0, Math.round(budget / unitCost));
+      estSales = Math.max(redemptions * avgOrder * 1.03, budget * 2.5);
+      targetRoas = estSales / Math.max(1, budget);
+      note = `Covering delivery fees can improve conversion without changing item price. This model assumes a fee of ${cad(unitCost)} per order.`;
+      benefitText = "Fee-covered orders";
+      unitLabel = "Delivery fee";
+    } else if (t === "Happy Hour discount") {
+      unitCost = Math.max(0.5, avgOrder * (v.discountPct / 100));
+      redemptions = Math.max(0, Math.round(budget / Math.max(unitCost, 0.01)));
+      estSales = Math.max(redemptions * avgOrder, budget * 2.1);
+      targetRoas = estSales / Math.max(1, budget);
+      note = `Happy hour uses the discount value as the spend driver. With ${v.discountPct}% off for ${v.hours} hours, this budget supports about ${redemptions} discounted orders.`;
+      benefitText = "Discounted orders";
+      unitLabel = "Discount cost / order";
+    } else if (t === "Offer free or discounted items") {
+      unitCost = Math.max(0.5, v.outcomeCost || 5);
+      redemptions = Math.max(0, v.redemptions || Math.round(budget / unitCost));
+      estSales = Math.max(redemptions * avgOrder * 1.12, budget * 2.3);
+      targetRoas = estSales / Math.max(1, budget);
+      note = `Free or discounted item promos work best when the free item cost is controlled. This model assumes ${redemptions} redemptions at ${cad(unitCost)} each.`;
+      benefitText = "Eligible redemptions";
+      unitLabel = "Item cost";
+    } else if (t === "Discount for customers") {
+      unitCost = Math.max(0.5, Math.min(avgOrder * (v.discountPct / 100), v.cap > 0 ? v.cap : avgOrder));
+      redemptions = Math.max(0, Math.round(budget / Math.max(unitCost, 0.01)));
+      estSales = Math.max(redemptions * avgOrder, budget * 2.4);
+      targetRoas = estSales / Math.max(1, budget);
+      note = `A percentage discount with a cap protects margin. The assumed cost per order is ${cad(unitCost)} based on ${v.discountPct}% off with a ${cad(v.cap)} cap.`;
+      benefitText = "Discounted orders";
+      unitLabel = "Cost per order";
+    } else if (t === "Sponsored listings") {
+      unitCost = Math.max(0.25, v.cpc || 5);
+      redemptions = Math.max(0, Math.round(budget / unitCost));
+      estSales = Math.max(budget * targetRoas, budget * 2.8);
+      note = `Sponsored listings translate weekly budget into visibility. At ${cad(unitCost)} per action, you get about ${redemptions} clicks and a visible daily pace.`;
+      benefitText = "Estimated clicks";
+      unitLabel = "Cost per click";
+      secondary = "2x cap";
+    } else if (t === "Co-op campaign") {
+      partnerShare = budget * (v.coopPct / 100);
+      merchantSpend = Math.max(0, budget - partnerShare);
+      estSales = Math.max(budget * targetRoas, merchantSpend * (targetRoas + 0.8));
+      redemptions = Math.max(0, Math.round(estSales / avgOrder));
+      note = `Co-op support shares the spend. This model assumes ${v.coopPct}% partner funding, so merchant spend is ${cad(merchantSpend)} on a ${cad(budget)} campaign.`;
+      benefitText = "Partner-funded share";
+      unitLabel = "Co-op share";
+    } else if (t === "Marketing credit") {
+      merchantSpend = Math.max(0, budget - v.creditAmount);
+      estSales = Math.max(v.creditAmount * targetRoas, budget * 2.2);
+      redemptions = Math.max(0, Math.round(estSales / avgOrder));
+      note = `Marketing credit offset reduces the merchant’s cash spend. The model treats the credit as spend relief and estimates return against the credited amount.`;
+      benefitText = "Credit value";
+      unitLabel = "Credit amount";
+    } else {
+      unitCost = Math.max(0.5, v.outcomeCost || 5);
+      redemptions = Math.max(0, Math.round(budget / unitCost));
+      estSales = Math.max(budget * targetRoas, budget * 2.2);
+      note = `Generic promo model for custom promotions. Use the budget and your expected response cost to estimate the likely return.`;
+      benefitText = "Estimated outcomes";
+      unitLabel = "Cost per outcome";
+    }
+
+    const estOrders = redemptions || Math.max(0, Math.round(estSales / avgOrder));
+    const monthly = budget * 4.34;
+    const daily = budget / 7;
+    const roas = estSales / Math.max(1, merchantSpend || budget);
+    const net = estSales - merchantSpend;
+    return {
+      type: t,
+      budget,
+      avgOrder,
+      unitCost,
+      targetRoas,
+      estOrders,
+      estSales,
+      merchantSpend,
+      partnerShare,
+      roas,
+      monthly,
+      daily,
+      net,
+      note,
+      benefitText,
+      unitLabel,
+      secondary,
+      discountPct: v.discountPct,
+      cap: v.cap,
+      hours: v.hours,
+      coopPct: v.coopPct,
+      redemptions,
+      creditAmount: v.creditAmount,
+      cpc: v.cpc,
+      merchantLabel: merchant?.store_name || "Merchant"
+    };
+  }
+
+  function promoField(id, label, value, extra = "", hint = "") {
+    return `<div class="field ${extra}"><label for="${id}">${esc(label)}</label><input id="${id}" data-promo-input type="number" min="0" step="any" value="${attr(value)}" />${hint ? `<small>${esc(hint)}</small>` : ""}</div>`;
+  }
+
+  function promoRateField(id, label, value, extra = "", hint = "") {
+    return `<div class="field ${extra}"><label for="${id}">${esc(label)}</label><input id="${id}" data-promo-input type="range" min="0" max="100" step="1" value="${attr(value)}" /><small>${esc(hint || `${value}%`)} </small></div>`;
+  }
+
+  function renderPromoFields(type, st) {
+    const v = promoDefaultValues(type, st);
+    const core = `
+      ${promoField("promoCalcBudget", "Weekly budget", v.budget, "w4", "Base spend used for the estimate.")}
+      ${promoField("promoCalcAvgOrder", "Average order value", v.avgOrder, "w4", "Used to translate redemptions into sales.")}
+      ${promoField("promoCalcOutcomeCost", type === "Sponsored listings" ? "Cost per click" : type === "Pay customer's delivery fee" ? "Delivery fee" : type === "Buy 1, get 1 free" ? "Free item cost" : type === "Offer free or discounted items" ? "Item cost" : type === "Discount for customers" ? "Average discount cost" : "Outcome cost", v.outcomeCost, "w4", "What one conversion costs the merchant.")}
+    `;
+    const extra = [];
+    if (["Smart campaign","Advertise to all customers","Advertise to new customers","Sponsored listings"].includes(type)) {
+      extra.push(promoField("promoCalcTargetRoas", "Target ROAS", v.targetRoas, "w4", "Used to project sales from spend."));
+    }
+    if (["Happy Hour discount","Discount for customers","Offer free or discounted items"].includes(type)) {
+      extra.push(`<div class="field w4"><label for="promoCalcDiscountPct">Discount %</label><input id="promoCalcDiscountPct" data-promo-input type="range" min="0" max="80" step="1" value="${attr(v.discountPct)}" /><small>${esc(v.discountPct)}% discount</small></div>`);
+    }
+    if (["Discount for customers"].includes(type)) {
+      extra.push(promoField("promoCalcCap", "Discount cap", v.cap, "w4", "Margin protection cap per order."));
+    }
+    if (["Happy Hour discount"].includes(type)) {
+      extra.push(promoField("promoCalcHours", "Promotion hours", v.hours, "w4", "Estimated live hours for the promo."));
+    }
+    if (["Co-op campaign"].includes(type)) {
+      extra.push(`<div class="field w4"><label for="promoCalcCoopPct">Partner support %</label><input id="promoCalcCoopPct" data-promo-input type="range" min="0" max="100" step="1" value="${attr(v.coopPct)}" /><small>${esc(v.coopPct)}% paid by partner</small></div>`);
+    }
+    if (["Marketing credit"].includes(type)) {
+      extra.push(promoField("promoCalcCreditAmount", "Credit amount", v.creditAmount, "w4", "Credit applied to the campaign."));
+    }
+    if (["Buy 1, get 1 free"].includes(type)) {
+      extra.push(promoField("promoCalcRedemptions", "Planned redemptions", v.redemptions, "w4", "Optional target if you already have one."));
+    }
+    return `<div class="promo-fields">${core}${extra.join("")}</div>`;
+  }
+
+  function renderPromoSuite(merchant, st) {
+    const type = normalizePromoTypeLabel(st.promoType || "Smart campaign");
+    const model = promoCalcModel(type, st, merchant);
+    const selectedTypeHtml = PROMO_TYPE_OPTIONS.map(opt => `<button class="promo-type-pill ${opt === type ? "active" : ""}" type="button" data-promo-type-pick="${attr(opt)}"><strong>${esc(opt)}</strong><span>${esc(promoTypeHelp(opt))}</span></button>`).join("");
+    return `<section class="promo-suite">
+      <div class="promo-suite-head"><div><strong>Promotion calculators</strong><span>Choose a promo type, enter the budget, and the calculator estimates spend, redemptions, sales, and return.</span></div><span class="pill blue">Budget-based</span></div>
+      <div class="promo-type-grid">${selectedTypeHtml}</div>
+      <div class="promo-suite-grid">
+        <div class="promo-suite-card">
+          ${renderPromoFields(type, st)}
+          <div class="promo-mini-grid">
+            <div class="promo-mini"><span>Weekly spend</span><strong>${cad(model.budget)}</strong><small>Used for planning and pacing.</small></div>
+            <div class="promo-mini"><span>Estimated monthly</span><strong>${cad(model.monthly)}</strong><small>Weekly budget × 4.34.</small></div>
+          </div>
+          <div class="promo-note"><strong>${esc(type)}</strong> · ${esc(promoTypeHelp(type))}</div>
+        </div>
+        <div class="promo-suite-card">
+          <div class="promo-summary-bar">
+            <div class="promo-stat"><span>${esc(model.benefitText)}</span><strong>${model.redemptions || model.estOrders}</strong><small>${esc(model.unitLabel)}</small></div>
+            <div class="promo-stat"><span>Projected sales</span><strong>${cad(model.estSales)}</strong><small>Estimated revenue influenced by the promo.</small></div>
+            <div class="promo-stat"><span>ROAS</span><strong>${formatOne(model.roas)}x</strong><small>Sales divided by merchant spend.</small></div>
+          </div>
+          <div class="promo-breakdown">
+            <div class="promo-breakdown-row"><div><strong>Merchant spend</strong><span>Cash contribution after any credit or partner support</span></div><strong>${cad(model.merchantSpend)}</strong></div>
+            <div class="promo-breakdown-track"><i style="width:${clamp((model.merchantSpend / Math.max(1, model.estSales)) * 100, 12, 100)}%"></i></div>
+            <div class="promo-breakdown-row"><div><strong>Net return</strong><span>Estimated sales minus merchant spend</span></div><strong>${cad(model.net)}</strong></div>
+            <div class="promo-breakdown-track"><i style="width:${clamp((Math.max(0, model.net) / Math.max(1, model.estSales)) * 100, 10, 100)}%"></i></div>
+          </div>
+          <div class="promo-note" id="promoCalcNote">${esc(model.note)}</div>
+        </div>
+      </div>
+    </section>`;
+  }
+
+  function promoTypeHelp(type) {
+    const t = normalizePromoTypeLabel(type);
+    if (t === "Smart campaign") return "Auto-optimized targeting and personalization.";
+    if (t === "Advertise to all customers") return "Broad targeting for maximum reach.";
+    if (t === "Advertise to new customers") return "Focus on acquiring first-time buyers.";
+    if (t === "Buy 1, get 1 free") return "Free item cost drives the spend.";
+    if (t === "Pay customer's delivery fee") return "Covering fees can improve conversion.";
+    if (t === "Happy Hour discount") return "Time-boxed discount between selected hours.";
+    if (t === "Offer free or discounted items") return "Feature a hero item with margin control.";
+    if (t === "Discount for customers") return "Percentage discount with a cap.";
+    if (t === "Sponsored listings") return "Pay-per-action visibility and traffic.";
+    if (t === "Co-op campaign") return "Shared funding between DoorDash and merchant.";
+    if (t === "Marketing credit") return "Use credits to offset merchant spend.";
+    return "Custom promo type.";
+  }
+
+
+
+  function updatePromoCalculator(sourceId = "", persist = false) {
+    const merchant = selectedMerchant();
+    if (!merchant) return;
+    const type = normalizePromoTypeLabel(document.getElementById("promoType")?.value || "Smart campaign");
+    const st = merchantState(merchant.uid);
+    const read = (id, fallback = 0) => promoNum(document.getElementById(id)?.value, fallback);
+    const patch = {
+      promoCalcBudget: read("promoCalcBudget", st.promoCalcBudget),
+      promoCalcAvgOrder: read("promoCalcAvgOrder", st.promoCalcAvgOrder),
+      promoCalcOutcomeCost: read("promoCalcOutcomeCost", st.promoCalcOutcomeCost),
+      promoCalcDiscountPct: read("promoCalcDiscountPct", st.promoCalcDiscountPct),
+      promoCalcCap: read("promoCalcCap", st.promoCalcCap),
+      promoCalcHours: read("promoCalcHours", st.promoCalcHours),
+      promoCalcCoopPct: read("promoCalcCoopPct", st.promoCalcCoopPct),
+      promoCalcTargetRoas: read("promoCalcTargetRoas", st.promoCalcTargetRoas),
+      promoCalcRedemptions: read("promoCalcRedemptions", st.promoCalcRedemptions),
+      promoCalcCreditAmount: read("promoCalcCreditAmount", st.promoCalcCreditAmount),
+      promoCalcCpc: read("promoCalcCpc", st.promoCalcCpc)
+    };
+    const model = promoCalcModel(type, patch, merchant);
+    const setText = (id, value) => { const el = document.getElementById(id); if (el) el.textContent = value; };
+    setText("promoCalcNote", model.note);
+    const noteBox = document.getElementById("promoCalcNote");
+    if (noteBox) noteBox.innerHTML = model.note;
+    const summaryEls = document.querySelectorAll(".promo-stat strong");
+    if (summaryEls.length >= 3) {
+      summaryEls[0].textContent = String(model.redemptions || model.estOrders || 0);
+      summaryEls[1].textContent = cad(model.estSales);
+      summaryEls[2].textContent = formatOne(model.roas) + "x";
+    }
+    const spendEl = document.querySelector(".promo-breakdown-row strong");
+    if (persist) {
+      setMerchantState(merchant.uid, patch);
+      scheduleSave();
+    }
+  }
+
   function renderAdsCredits(merchant) {
     const st = merchantState(merchant.uid);
     const sales = salesFor(merchant.uid).sort((a,b)=>String(b.timestamp).localeCompare(String(a.timestamp)));
     const credits = creditsFor(merchant.uid).sort((a,b)=>String(b.timestamp).localeCompare(String(a.timestamp)));
-    const showCalculator = AD_PROMO_TYPES.has(st.promoType || "");
-    return `<div class="card-head"><div><div class="card-kicker">Ads / promo tracking</div><h3>Offer, campaign and next step</h3></div><div class="button-row">${statusPill(st.promoStatus || "Not tracked", st.promoStatus === "Sold" ? "green" : "purple")}${statusPill(st.promoType || "Type not set")}</div></div>
+    const type = normalizePromoTypeLabel(st.promoType || "Smart campaign");
+    return `<div class="card-head"><div><div class="card-kicker">Ads / promo tracking</div><h3>Offer, campaign and next step</h3></div><div class="button-row">${statusPill(st.promoStatus || "Not tracked", st.promoStatus === "Sold" ? "green" : "purple")}${statusPill(type || "Type not set")}</div></div>
       <div class="form-grid">
         <div class="field c4"><label>Did we add ads or promo?</label><select id="promoStatus"><option ${st.promoStatus==="Not tracked"?"selected":""}>Not tracked</option><option ${st.promoStatus==="Discussed"?"selected":""}>Discussed</option><option ${st.promoStatus==="Sold"?"selected":""}>Sold</option><option ${st.promoStatus==="Follow-up needed"?"selected":""}>Follow-up needed</option><option ${st.promoStatus==="Declined"?"selected":""}>Declined</option></select></div>
-        <div class="field c4"><label>Promo type</label><select id="promoType"><option value="">Select type</option><option ${st.promoType==="Smart campaign"?"selected":""}>Smart campaign</option><option ${st.promoType==="Advertise to all customers"?"selected":""}>Advertise to all customers</option><option ${st.promoType==="Advertise to new customers"?"selected":""}>Advertise to new customers</option><option ${st.promoType==="Buy 1, get 1 free promotion"?"selected":""}>Buy 1, get 1 free promotion</option><option ${st.promoType==="Pay customer's delivery fee"?"selected":""}>Pay customer's delivery fee</option><option ${st.promoType==="Other"?"selected":""}>Other</option></select></div>
+        <div class="field c4"><label>Promo type</label><select id="promoType"><option value="">Select type</option>${PROMO_TYPE_OPTIONS.map(opt=>`<option ${type===opt?"selected":""}>${esc(opt)}</option>`).join("")}</select></div>
         <div class="field c4"><label>Campaign</label><input id="promoCampaign" value="${attr(st.promoCampaign || "")}" placeholder="Campaign name" /></div>
         <div class="field c12"><label>Notes / next step</label><textarea id="promoNotes" placeholder="What was offered and what needs follow-up?">${esc(st.promoNotes || "")}</textarea></div>
         <div class="field c3"><label>Start date</label><input id="promoStart" type="date" value="${attr(st.promoStart || dateKeyInZone(new Date()))}" /></div>
@@ -4281,7 +4702,7 @@ const FOLLOWUP_DELETE_SOUND_DATA_URL = "data:audio/wav;base64,UklGRsqKAABXQVZFZm
         <div class="field c3"><label>Status</label><select id="promoRecordStatus"><option>Draft</option><option>Submitted</option><option>Active</option><option>Completed</option></select></div>
         <div class="field c3"><label>Reference</label><input id="promoReference" value="${attr(st.promoReference || "")}" placeholder="Order, ticket, link…" /></div>
       </div>
-      ${showCalculator ? renderAdSpendCalculator(st) : ""}
+      ${renderPromoSuite(merchant, st)}
       <div class="button-row" style="margin-top:11px"><button class="btn primary" type="button" data-action="submitSaleRecord">Submit sales record</button><button class="btn ghost" type="button" data-action="savePromoDraft">Save draft</button><button class="btn red" type="button" data-action="clearPromoDraft">Clear draft</button></div>
       <div class="divider"></div>
       <div class="card-head"><div><div class="card-kicker">Credit tracker</div><h3>Record credit amount</h3></div></div>
@@ -4300,6 +4721,7 @@ const FOLLOWUP_DELETE_SOUND_DATA_URL = "data:audio/wav;base64,UklGRsqKAABXQVZFZm
       </div>`;
   }
 
+
   function renderProfile() {
     const merchant = selectedMerchant();
     if (!merchant) return `<section class="panel">${emptyWorkspace()}</section>`;
@@ -4312,6 +4734,10 @@ const FOLLOWUP_DELETE_SOUND_DATA_URL = "data:audio/wav;base64,UklGRsqKAABXQVZFZm
       <div class="form-grid"><div class="field c8"><label>Select merchant</label><select id="profileMerchantSelect">${options.map(m=>`<option value="${attr(m.uid)}" ${m.uid===merchant.uid?"selected":""}>${esc(m.store_name)}${m.store_id?` · ${esc(m.store_id)}`:""}</option>`).join("")}</select></div><div class="field c4"><label>Priority lane</label><div class="tracker-summary"><strong>${esc(d.lane)}</strong><span>${esc(d.reason)}</span></div></div></div>
     </section>
     <div class="profile-grid">
+      <section class="panel" style="grid-column: 1 / -1;">
+        <div class="card-head"><div><div class="card-kicker">Performance intelligence</div><h3>Health, returns and sales monitoring</h3></div><span class="pill blue">Auto metrics</span></div>
+        ${renderProfileInsights(merchant, d, st)}
+      </section>
       <section class="panel">
         <div class="card-head"><div><div class="card-kicker">Core details</div><h3>Merchant record</h3></div>${statusPill(d.local.label,d.local.cls)}</div>
         ${quickLinkButtons(merchant)}
@@ -4351,6 +4777,119 @@ const FOLLOWUP_DELETE_SOUND_DATA_URL = "data:audio/wav;base64,UklGRsqKAABXQVZFZm
     </div>`;
   }
 
+  function renderProfileInsights(merchant, d, st) {
+    const timeline = merchantTimeline(merchant.uid);
+    const calls = callsFor(merchant.uid);
+    const photos = photosFor(merchant.uid);
+    const sales = salesFor(merchant.uid);
+    const credits = creditsFor(merchant.uid);
+    const followups = followupsFor(merchant.uid);
+    const photo = Number(merchant.photo_coverage ?? 0);
+    const desc = Number(merchant.description_coverage ?? 0);
+    const uptime = Number(merchant.uptime ?? 0);
+    const touch = clamp(Number(merchant.touchpoint_count || 0) * 16, 0, 100);
+    const health = clamp(Math.round((photo * 0.36) + (desc * 0.22) + (uptime * 0.28) + (touch * 0.14)), 0, 100);
+    const opportunities = clamp(Math.round((100 - health) * 0.68 + (merchant.promo_opp ? 12 : 0) + (merchant.sl_opp ? 12 : 0) + Math.min(20, Number(merchant.gmv || 0) / 1200)), 0, 100);
+    const returnPotential = clamp(Math.round((Number(merchant.gmv || 0) / 120) + calls.length * 6 + sales.length * 14 + credits.length * 8), 0, 100);
+    const qualityBars = [
+      ["Photo coverage", photo, "Photos are the fastest win."],
+      ["Description coverage", desc, "Descriptions support conversion."],
+      ["Uptime", uptime, "Operational stability."],
+      ["Touchpoints", touch, "Recent merchant contact."],
+      ["Promo opp", merchant.promo_opp ? 100 : 14, "Promo candidate strength."],
+      ["SL opp", merchant.sl_opp ? 100 : 14, "Sponsored listing candidate."],
+    ];
+    const activityMix = [
+      ["Calls", calls.length],
+      ["Photos", photos.length],
+      ["Sales", sales.length],
+      ["Credits", credits.length],
+      ["Follow-ups", followups.length],
+    ];
+    const maxMix = Math.max(1, ...activityMix.map(x => x[1]));
+    const series = timeline.slice(0, 7).reverse().map((x, i) => {
+      const s = Math.max(10, Math.min(100, 16 + (i * 11) + (x.title.includes("Sale") ? 24 : x.title.includes("Credit") ? 18 : x.title.includes("Follow-up") ? 14 : 8)));
+      return s;
+    });
+    const note = d.due ? `Next step: ${d.due.reason}` : (merchant.promo_opp || merchant.sl_opp ? "Merchant is a candidate for promo activation." : "Merchant is stable, keep measuring incremental growth.");
+    const action = d.due ? "Complete the follow-up and re-check the merchant status." : merchant.photo_coverage < 50 ? "Prioritize photos first to unlock conversion." : merchant.promo_opp ? "Open a promo conversation and attach a calculator." : merchant.sl_opp ? "Propose sponsored listings and measure ROAS." : "Keep monitoring and push for higher frequency touchpoints.";
+    return `<div class="insight-grid">
+      <div class="insight-card half">
+        <div class="insight-title"><div><strong>Merchant health</strong><span>Weighted from photos, descriptions, uptime and touchpoints.</span></div><span class="pill ${health >= 75 ? "green" : health >= 50 ? "orange" : "red"}">${health}%</span></div>
+        <div class="metric-orb-wrap"><div class="goal-orb metric-orb" style="--goal:${health}%"><div><strong>${health}%</strong><span>Health score</span></div></div></div>
+        <div class="promo-mini-grid">
+          <div class="promo-mini"><span>Opportunity score</span><strong>${opportunities}%</strong><small>Higher means more upside for outreach.</small></div>
+          <div class="promo-mini"><span>Return potential</span><strong>${returnPotential}%</strong><small>Signals likely impact from the current activity mix.</small></div>
+        </div>
+      </div>
+      <div class="insight-card half recommendation-card">
+        <div class="insight-title"><div><strong>Recommended next action</strong><span>Auto-selected from the merchant state.</span></div><span class="pill blue">AI style</span></div>
+        <strong>${esc(action)}</strong>
+        <p>${esc(note)}</p>
+        <div class="recommendation-bullets">
+          ${[
+            `GMV: ${money(merchant.gmv)}`,
+            `Calls: ${calls.length} · Photos: ${photos.length} · Credits: ${credits.length}`,
+            `Promo: ${merchant.promo_opp ? "Yes" : "No"} · Sponsored listings: ${merchant.sl_opp ? "Yes" : "No"}`
+          ].map(x => `<span class="pill purple">${esc(x)}</span>`).join("")}
+        </div>
+      </div>
+      <div class="insight-card third">
+        <div class="insight-title"><div><strong>Coverage bars</strong><span>Progress across the core merchant quality pillars.</span></div></div>
+        <div class="metric-stack">${qualityBars.map(([label, value, hint], idx) => `<div class="metric-row"><label>${esc(label)}</label><div class="bar"><i style="width:${clamp(value,0,100)}%"></i></div><strong>${formatOne(value)}%</strong></div>`).join("")}</div>
+      </div>
+      <div class="insight-card third">
+        <div class="insight-title"><div><strong>Sales + return mix</strong><span>How activity is spreading across the merchant.</span></div></div>
+        <div class="metric-donut"><div><strong>${sales.length + credits.length}</strong><span>Sales and credits</span></div></div>
+        <div class="promo-mini-grid" style="margin-top:12px">
+          ${activityMix.map(([label, count]) => `<div class="promo-mini"><span>${esc(label)}</span><strong>${count}</strong><small>${count ? "Captured in the timeline." : "No records yet."}</small></div>`).join("")}
+        </div>
+      </div>
+      <div class="insight-card third">
+        <div class="insight-title"><div><strong>Progress trend</strong><span>Recent activity ordered from older to newer events.</span></div><span class="pill blue">7 points</span></div>
+        <div class="sparkline-box">${renderProfileSparkline(series)}</div>
+      </div>
+      <div class="insight-card full">
+        <div class="insight-title"><div><strong>Monitoring summary</strong><span>Use these signals to prioritize the next merchant action.</span></div><span class="pill">${timeline.length} timeline events</span></div>
+        <div class="promo-breakdown">
+          <div class="promo-breakdown-row"><div><strong>Photo coverage</strong><span>Direct visual conversion driver</span></div><strong>${pct(merchant.photo_coverage)}</strong></div>
+          <div class="promo-breakdown-track"><i style="width:${clamp(Number(merchant.photo_coverage || 0),0,100)}%"></i></div>
+          <div class="promo-breakdown-row"><div><strong>Description coverage</strong><span>Menu clarity and item confidence</span></div><strong>${pct(merchant.description_coverage)}</strong></div>
+          <div class="promo-breakdown-track"><i style="width:${clamp(Number(merchant.description_coverage || 0),0,100)}%"></i></div>
+          <div class="promo-breakdown-row"><div><strong>Uptime</strong><span>Availability and operational consistency</span></div><strong>${pct(merchant.uptime)}</strong></div>
+          <div class="promo-breakdown-track"><i style="width:${clamp(Number(merchant.uptime || 0),0,100)}%"></i></div>
+        </div>
+      </div>
+    </div>`;
+  }
+
+  function renderProfileSparkline(values) {
+    const width = 360, height = 160, pad = 16;
+    const series = values.length ? values : [20, 34, 28, 42, 58, 46, 74];
+    const max = Math.max(100, ...series);
+    const min = 0;
+    const w = (width - pad * 2) / Math.max(1, series.length - 1);
+    const points = series.map((v, i) => {
+      const x = pad + i * w;
+      const y = height - pad - ((v - min) / (max - min)) * (height - pad * 2);
+      return [x, y];
+    });
+    const line = points.map(([x, y]) => `${x},${y}`).join(" ");
+    const bars = series.map((v, i) => {
+      const x = pad + i * ((width - pad * 2) / series.length) + 8;
+      const barW = Math.max(12, ((width - pad * 2) / series.length) - 18);
+      const h = ((v - min) / (max - min)) * (height - pad * 2);
+      const y = height - pad - h;
+      return `<rect class="sparkline-bar" x="${x}" y="${y}" width="${barW}" height="${h}" rx="6" />`;
+    }).join("");
+    return `<svg class="sparkline-svg" viewBox="0 0 ${width} ${height}" preserveAspectRatio="none">
+      ${[28, 56, 84, 112].map(y => `<line class="sparkline-grid" x1="14" y1="${y}" x2="${width-14}" y2="${y}" />`).join("")}
+      ${bars}
+      <polyline class="sparkline-line" points="${line}" />
+      ${points.map(([x, y]) => `<circle class="sparkline-dot" cx="${x}" cy="${y}" r="5" />`).join("")}
+    </svg>`;
+  }
+
   function kvCard(label, value) {
     return `<div class="kv-card"><span>${esc(label)}</span><strong>${esc(value == null || value === "" ? "—" : value)}</strong></div>`;
   }
@@ -4362,6 +4901,7 @@ const FOLLOWUP_DELETE_SOUND_DATA_URL = "data:audio/wav;base64,UklGRsqKAABXQVZFZm
   }
 
   function merchantTimeline(uidValue) {
+
     return [
       ...callsFor(uidValue).map(x=>({icon:"☎",title:x.disposition||x.state,detail:`Real ${mmss(x.durationSec)} · Credited ${mmss(x.creditedSec)}${x.note?` · ${x.note}`:""}`,timestamp:x.completedAt})),
       ...photosFor(uidValue).map(x=>({icon:"▧",title:`${x.photosAdded} photos added`,detail:`${x.status} · Coverage ${pct(x.coverageAfter)}${x.note?` · ${x.note}`:""}`,timestamp:x.timestamp})),
@@ -4849,7 +5389,7 @@ const FOLLOWUP_DELETE_SOUND_DATA_URL = "data:audio/wav;base64,UklGRsqKAABXQVZFZm
         <div class="button-row" style="margin-top:11px"><button class="btn primary" type="button" data-action="saveProfileSettings">Save profile and custom colors</button><button class="btn ghost" type="button" data-action="resetPalette">Reset palette</button></div>
       </section>
 
-      <section class="panel span-12">
+      <section class="panel" style="grid-column: 1 / -1;">
         <div class="card-head"><div><div class="card-kicker">Wallpapers</div><h3>Background art library</h3></div><span class="pill blue">${esc(currentWallpaper)}</span></div>
         <div class="wallpaper-manager">
           <div class="wallpaper-dropzone" id="wallpaperDropzone" data-drop-kind="wallpapers">
@@ -4919,6 +5459,11 @@ const FOLLOWUP_DELETE_SOUND_DATA_URL = "data:audio/wav;base64,UklGRsqKAABXQVZFZm
     onInput("merchantContactStatus",e=>{const merchant=selectedMerchant();if(!merchant)return;setMerchantState(merchant.uid,{contactStatus:e.target.value});renderApp();},"change");
 
     onInput("promoType",handlePromoTypeSelection,"change");
+    document.querySelectorAll("[data-promo-input]").forEach(el=>{
+      el.addEventListener("input",()=>updatePromoCalculator(el.id,false));
+      el.addEventListener("change",()=>updatePromoCalculator(el.id,true));
+    });
+    document.querySelectorAll("[data-promo-type-pick]").forEach(el=>el.addEventListener("click",()=>{const sel=document.getElementById("promoType"); if(sel){sel.value=el.dataset.promoTypePick||""; handlePromoTypeSelection();}}));
     ["adWeeklyBudget","adWeeklyBudgetRange","adCostPerOrder","adCostPerOrderRange"].forEach(id=>{
       onInput(id,()=>updateAdCalculator(id,false),"input");
       onInput(id,()=>updateAdCalculator(id,true),"change");
@@ -5192,7 +5737,7 @@ const FOLLOWUP_DELETE_SOUND_DATA_URL = "data:audio/wav;base64,UklGRsqKAABXQVZFZm
   function savePromoDraft() {
     const merchant=selectedMerchant();if(!merchant)return;
     const promoStatus=document.getElementById("promoStatus")?.value||"Not tracked";
-    setMerchantState(merchant.uid,{promoStatus,promoType:document.getElementById("promoType")?.value||"",promoCampaign:document.getElementById("promoCampaign")?.value.trim()||"",promoNotes:document.getElementById("promoNotes")?.value.trim()||"",promoStart:document.getElementById("promoStart")?.value||"",promoEnd:document.getElementById("promoEnd")?.value||"",promoReference:document.getElementById("promoReference")?.value.trim()||""});
+    setMerchantState(merchant.uid,{promoStatus,promoType:normalizePromoTypeLabel(document.getElementById("promoType")?.value||""),promoCampaign:document.getElementById("promoCampaign")?.value.trim()||"",promoNotes:document.getElementById("promoNotes")?.value.trim()||"",promoStart:document.getElementById("promoStart")?.value||"",promoEnd:document.getElementById("promoEnd")?.value||"",promoReference:document.getElementById("promoReference")?.value.trim()||""});
     if (promoStatus === "Sold") playCoinSound();
     renderApp();toast("Ads and promo draft saved");
   }
@@ -5205,7 +5750,7 @@ const FOLLOWUP_DELETE_SOUND_DATA_URL = "data:audio/wav;base64,UklGRsqKAABXQVZFZm
 
   function submitSaleRecord() {
     const merchant=selectedMerchant();if(!merchant)return;
-    const type=document.getElementById("promoType")?.value||"Other";
+    const type=normalizePromoTypeLabel(document.getElementById("promoType")?.value||"Other");
     const status=document.getElementById("promoRecordStatus")?.value||"Submitted";
     const campaign=document.getElementById("promoCampaign")?.value.trim()||"";
     const note=document.getElementById("promoNotes")?.value.trim()||"";
