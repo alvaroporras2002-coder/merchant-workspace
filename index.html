@@ -960,7 +960,7 @@
     .tracker-filter-head { margin-bottom: 10px; }
     .tracker-filter-head strong { display: block; font-size: 13px; }
     .tracker-filter-head span { display: block; margin-top: 3px; color: var(--muted); font-size: 11px; }
-    .tracker-filter-grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 9px; }
+    .tracker-filter-grid { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 9px; }
     .content-tracker-panel {
       margin: 14px 0;
       padding: 14px;
@@ -1420,6 +1420,31 @@
       color: white;
     }
     .status-preview { display: inline-flex; align-items: center; justify-content: center; min-height: 52px; padding: 0 14px; border-radius: 14px; border: 1px solid var(--line); background: rgba(8,15,29,.56); font-size: 11px; font-weight: 900; white-space: nowrap; }
+    .status-select-card.called-return { grid-template-columns: minmax(0,1fr) minmax(0,.92fr); align-items: start; }
+    .call-back-field { display: grid; gap: 7px; }
+    .call-back-summary { display: flex; flex-wrap: wrap; gap: 6px 8px; align-items: center; }
+    .call-back-date { color: var(--muted); font-size: 10px; line-height: 1.45; }
+    .call-back-countdown {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 24px;
+      padding: 4px 8px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      font-size: 10px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+    .call-back-countdown.green { border-color: rgba(34,197,94,.34); background: rgba(34,197,94,.11); color: #bbf7d0; }
+    .call-back-countdown.orange { border-color: rgba(245,158,11,.34); background: rgba(245,158,11,.11); color: #fcd34d; }
+    .call-back-countdown.red { border-color: rgba(239,68,68,.34); background: rgba(239,68,68,.11); color: #fecaca; }
+    .call-back-field .status-select:disabled { opacity: .64; cursor: not-allowed; }
+    .wallpaper-card.custom { cursor: default; }
+    .wallpaper-card-copy { display: grid; gap: 4px; }
+    .wallpaper-card-actions { display: flex; gap: 7px; flex-wrap: wrap; justify-content: space-between; align-items: center; }
+    .wallpaper-card-actions .btn { min-height: 29px; }
+    .wallpaper-card-remove { min-width: 92px; }
     .status-tone-active .status-preview { border-color: rgba(148,163,184,.28); }
     .status-tone-called .status-preview { border-color: rgba(34,197,94,.38); background: rgba(34,197,94,.10); color: #bbf7d0; }
     .status-tone-no-answer .status-preview { border-color: rgba(245,158,11,.38); background: rgba(245,158,11,.10); color: #fde68a; }
@@ -2206,7 +2231,7 @@ const FOLLOWUP_DELETE_SOUND_DATA_URL = "data:audio/wav;base64,UklGRsqKAABXQVZFZm
         resourceSelectedId: "",
         linkSelectedId: "",
         laneOpen: {},
-        workHubFilters: { q:"", view:"uncalled", sort:"priority", market:"all", video:"all", photo:"all", contact:"all" },
+        workHubFilters: { q:"", view:"uncalled", sort:"priority", market:"all", video:"all", photo:"all", contact:"all", recall:"all" },
         followupFilters: { merchant:"all", reason:"all", status:"open" },
         resourceFilters: { q:"", type:"all", sort:"favorites" },
         linkFilters: { q:"", category:"all", sort:"favorites" }
@@ -3050,11 +3075,17 @@ const FOLLOWUP_DELETE_SOUND_DATA_URL = "data:audio/wav;base64,UklGRsqKAABXQVZFZm
       const active = String(state.profile.customWallpaperId || "") === String(item.id);
       const created = item.createdAt ? formatDateTime(item.createdAt) : "Custom";
       const name = item.name || "Uploaded wallpaper";
-      return `<button class="wallpaper-card custom ${active ? "active" : ""}" type="button" data-set-wallpaper-custom="${attr(item.id)}">
+      return `<div class="wallpaper-card custom ${active ? "active" : ""}">
         <span class="wallpaper-card-media" style="background-image:url('${attr(item.src)}')"></span>
-        <strong>${esc(name)}</strong>
-        <small>${esc(created)}</small>
-      </button>`;
+        <div class="wallpaper-card-copy">
+          <strong>${esc(name)}</strong>
+          <small>${esc(created)}</small>
+        </div>
+        <div class="wallpaper-card-actions">
+          <button class="btn small blue" type="button" data-set-wallpaper-custom="${attr(item.id)}">Use wallpaper</button>
+          <button class="btn small red wallpaper-card-remove" type="button" data-remove-wallpaper="${attr(item.id)}">Delete</button>
+        </div>
+      </div>`;
     }).join("") : `<div class="empty-state"><strong>No uploaded wallpapers yet</strong><span>Drop a wallpaper file or choose one from your computer. It will appear here after DASHWORK upscales and compresses it.</span></div>`;
 
     return `${builtIns}${customs}`;
@@ -3143,6 +3174,20 @@ const FOLLOWUP_DELETE_SOUND_DATA_URL = "data:audio/wav;base64,UklGRsqKAABXQVZFZm
     toast(`Wallpaper applied: ${item.name || "custom wallpaper"}`);
   }
 
+  function removeWallpaperEntry(id) {
+    const item = state.wallpaperLibrary.find(w => String(w.id) === String(id));
+    if (!item) return;
+    if (!confirm(`Remove ${item.name || "this wallpaper"} from your library?`)) return;
+    state.wallpaperLibrary = state.wallpaperLibrary.filter(w => String(w.id) !== String(id));
+    if (String(state.profile.customWallpaperId || "") === String(id)) {
+      state.profile.customWallpaperId = "";
+      state.profile.wallpaperPreset = resolvePaletteKey(state.profile.palettePreset || "aurora");
+    }
+    scheduleSave();
+    renderApp();
+    toast(`Wallpaper removed: ${item.name || "custom wallpaper"}`);
+  }
+
   function createUniqueFollowupId(extraTaken = null) {
     const taken = new Set(state.followups.map(f => String(f?.id || "")).filter(Boolean));
     if (extraTaken) extraTaken.forEach(id => taken.add(String(id)));
@@ -3187,7 +3232,7 @@ const FOLLOWUP_DELETE_SOUND_DATA_URL = "data:audio/wav;base64,UklGRsqKAABXQVZFZm
     state.settings.callGoal = Math.max(1, Number(state.settings.callGoal || 70));
     state.settings.photoGoal = Math.max(1, Number(state.settings.photoGoal || DEFAULT_PHOTO_GOAL));
     state.settings.callAttemptGoal = Math.max(1, Number(state.settings.callAttemptGoal || DEFAULT_CALL_ATTEMPT_GOAL));
-    state.ui.workHubFilters = { q:"", view:"uncalled", sort:"priority", market:"all", video:"all", photo:"all", contact:"all", ...(state.ui.workHubFilters || {}) };
+    state.ui.workHubFilters = { q:"", view:"uncalled", sort:"priority", market:"all", video:"all", photo:"all", contact:"all", recall:"all", ...(state.ui.workHubFilters || {}) };
     state.ui.workHubPage = Math.max(1, Math.floor(Number(state.ui.workHubPage || 1)));
     state.ui.followupFilters = { merchant:"all", reason:"all", status:"open", ...(state.ui.followupFilters || {}) };
     state.ui.followupDraftDate ||= "";
@@ -3549,6 +3594,75 @@ const FOLLOWUP_DELETE_SOUND_DATA_URL = "data:audio/wav;base64,UklGRsqKAABXQVZFZm
     return "active";
   }
 
+  const CALL_BACK_DELAY_OPTIONS = [
+    { value: "1d", label: "1 day", days: 1 },
+    { value: "3d", label: "3 days", days: 3 },
+    { value: "5d", label: "5 days", days: 5 },
+    { value: "1w", label: "1 week", days: 7 },
+    { value: "2w", label: "2 weeks", days: 14 }
+  ];
+
+  const CALL_BACK_WINDOW_OPTIONS = [
+    { value: "all", label: "All recall windows" },
+    { value: "overdue", label: "Overdue" },
+    { value: "today", label: "Due today" },
+    ...CALL_BACK_DELAY_OPTIONS.map(option => ({ value: option.value, label: `Due in ${option.label}` }))
+  ];
+
+  function normalizeCallBackDelay(value) {
+    const found = CALL_BACK_DELAY_OPTIONS.find(option => option.value === String(value || "").trim());
+    return found ? found.value : "3d";
+  }
+
+  function callBackDelayLabel(value) {
+    const found = CALL_BACK_DELAY_OPTIONS.find(option => option.value === normalizeCallBackDelay(value));
+    return found ? found.label : "3 days";
+  }
+
+  function callBackDelayDays(value) {
+    const found = CALL_BACK_DELAY_OPTIONS.find(option => option.value === normalizeCallBackDelay(value));
+    return found ? found.days : 3;
+  }
+
+  function callBackDueLabel(statusDate, value) {
+    const base = statusDate ? localDateFromKey(statusDate) : new Date();
+    return formatDate(addDays(base, callBackDelayDays(value)));
+  }
+
+  function merchantCallBackInfo(merchant, now = new Date()) {
+    const st = merchantState(merchant?.uid);
+    if (!st || st.status !== "Called" || !st.statusDate) return null;
+    const delay = normalizeCallBackDelay(st.callBackDelay || "3d");
+    const dueDate = addDays(localDateFromKey(st.statusDate), callBackDelayDays(delay));
+    const daysRemaining = daysBetween(now, dueDate);
+    return {
+      delay,
+      dueDate,
+      dueLabel: formatDate(dueDate),
+      dueKey: toISODate(dueDate),
+      daysRemaining
+    };
+  }
+
+  function callBackCountdownLabel(info) {
+    if (!info) return "";
+    if (info.daysRemaining < 0) {
+      const days = Math.abs(info.daysRemaining);
+      return `Overdue by ${days} day${days === 1 ? "" : "s"}`;
+    }
+    if (info.daysRemaining === 0) return "Call today";
+    return `${info.daysRemaining} day${info.daysRemaining === 1 ? "" : "s"} left`;
+  }
+
+  function recallWindowMatches(info, value) {
+    const key = String(value || "all");
+    if (key === "all") return true;
+    if (!info) return false;
+    if (key === "overdue") return info.daysRemaining < 0;
+    if (key === "today") return info.daysRemaining === 0;
+    return info.daysRemaining === callBackDelayDays(key);
+  }
+
   function priorityTone(priority) {
     const value = String(priority || "Medium").trim().toLowerCase();
     if (value === "critical") return "priority-critical";
@@ -3795,7 +3909,8 @@ const FOLLOWUP_DELETE_SOUND_DATA_URL = "data:audio/wav;base64,UklGRsqKAABXQVZFZm
       market: document.getElementById("workHubMarket")?.value || "all",
       video: document.getElementById("workHubVideoFilter")?.value || "all",
       photo: document.getElementById("workHubPhotoFilter")?.value || "all",
-      contact: document.getElementById("workHubContactFilter")?.value || "all"
+      contact: document.getElementById("workHubContactFilter")?.value || "all",
+      recall: document.getElementById("workHubRecallFilter")?.value || "all"
     };
   }
 
@@ -3832,14 +3947,18 @@ const FOLLOWUP_DELETE_SOUND_DATA_URL = "data:audio/wav;base64,UklGRsqKAABXQVZFZm
   function renderWorkHub() {
     const activeMerchants = state.merchants.filter(m => !m.archived);
     if (!activeMerchants.length) return `<section class="panel">${emptyWorkspace()}</section>`;
-    const filters = { q:"", view:"uncalled", sort:"priority", market:"all", video:"all", photo:"all", contact:"all", ...(state.ui.workHubFilters || {}) };
+    const filters = { q:"", view:"uncalled", sort:"priority", market:"all", video:"all", photo:"all", contact:"all", recall:"all", ...(state.ui.workHubFilters || {}) };
+    const now = new Date();
     let selected = selectedMerchant();
     if (!selected || selected.archived) {
       selected = activeMerchants[0];
       state.selectedUid = selected.uid;
     }
     const markets = unique(activeMerchants.map(m=>m.market_name)).sort();
-    const queue = activeMerchants.map(m=>deriveMerchant(m)).filter(d => {
+    const queue = activeMerchants.map(m=>{
+      const d = deriveMerchant(m, now);
+      return { ...d, recall: merchantCallBackInfo(m, now) };
+    }).filter(d => {
       const m = d.merchant;
       const st = merchantState(m.uid);
       const content = resolvedContentStatuses(m.uid);
@@ -3852,11 +3971,13 @@ const FOLLOWUP_DELETE_SOUND_DATA_URL = "data:audio/wav;base64,UklGRsqKAABXQVZFZm
         (filters.view === "photo" && (content.photo === "Approved" || !!st.hasPhotos)) ||
         (filters.view === "noanswer" && st.status === "No Answer") ||
         (filters.view === "spoke" && st.status === "Spoke");
+      const recallOk = recallWindowMatches(d.recall, filters.recall);
       return (!q || hay.includes(q)) &&
         (filters.market === "all" || m.market_name === filters.market) &&
         (filters.video === "all" || content.video === filters.video) &&
         (filters.photo === "all" || content.photo === filters.photo) &&
         (filters.contact === "all" || content.contact === filters.contact) &&
+        recallOk &&
         viewOk;
     })
       .sort((a, b) => {
@@ -3886,11 +4007,12 @@ const FOLLOWUP_DELETE_SOUND_DATA_URL = "data:audio/wav;base64,UklGRsqKAABXQVZFZm
           <div class="field c4"><label>Market</label><select id="workHubMarket"><option value="all">All markets</option>${markets.map(x=>`<option ${filters.market===x?"selected":""}>${esc(x)}</option>`).join("")}</select></div>
         </div>
         <div class="tracker-filter-panel">
-          <div class="tracker-filter-head"><strong>Tracker filters</strong><span>Filter the queue by video, photo and contact status.</span></div>
+          <div class="tracker-filter-head"><strong>Tracker filters</strong><span>Filter the queue by video, photo, contact and call-back timing.</span></div>
           <div class="tracker-filter-grid">
             <div class="field"><label>Video status</label><select id="workHubVideoFilter">${optionList(VIDEO_STATUS_OPTIONS, filters.video, "All video statuses")}</select></div>
             <div class="field"><label>Photo status</label><select id="workHubPhotoFilter">${optionList(PHOTO_STATUS_OPTIONS, filters.photo, "All photo statuses")}</select></div>
             <div class="field"><label>Contact status</label><select id="workHubContactFilter">${optionList(CONTACT_STATUS_OPTIONS, filters.contact, "All contact statuses")}</select></div>
+            <div class="field"><label>Recall window</label><select id="workHubRecallFilter">${CALL_BACK_WINDOW_OPTIONS.map(option => `<option value="${attr(option.value)}" ${String(filters.recall || "all") === String(option.value) ? "selected" : ""}>${esc(option.label)}</option>`).join("")}</select></div>
           </div>
         </div>
         <div class="queue-scroll call-board-page" style="margin-top:10px">${queue.length ? visibleQueue.map(x=>merchantRowHTML(x)).join("") : `<div class="empty-state"><strong>No matches</strong><span>Change the queue filters.</span></div>`}</div>
@@ -3911,6 +4033,7 @@ const FOLLOWUP_DELETE_SOUND_DATA_URL = "data:audio/wav;base64,UklGRsqKAABXQVZFZm
 
   function renderActiveMerchantHeader(merchant) {
     const d = deriveMerchant(merchant);
+    const recall = merchantCallBackInfo(merchant);
     const emails = splitMulti(merchant.dm_email);
     const phones = splitMulti(merchant.dm_phone);
     return `<div class="active-merchant">
@@ -3922,6 +4045,7 @@ const FOLLOWUP_DELETE_SOUND_DATA_URL = "data:audio/wav;base64,UklGRsqKAABXQVZFZm
             ${merchant.store_id ? `<span class="pill">Store ${esc(merchant.store_id)}</span>` : `<span class="pill red">No Store ID</span>`}
             ${merchant.market_name ? `<span class="pill">${esc(merchant.market_name)}</span>` : ""}
             ${d.local.time !== "—" ? `<span class="pill ${d.local.cls}">${esc(d.local.time)} · ${esc(d.local.label)}</span>` : ""}
+            ${recall ? `<span class="pill ${recall.daysRemaining < 0 ? "red" : recall.daysRemaining === 0 ? "orange" : "green"}">Recall ${esc(callBackCountdownLabel(recall))}</span>` : ""}
             ${statusPill(d.lane,d.laneClass)}
           </div>
         </div>
@@ -3940,9 +4064,15 @@ const FOLLOWUP_DELETE_SOUND_DATA_URL = "data:audio/wav;base64,UklGRsqKAABXQVZFZm
     const calls = callsFor(merchant.uid).sort((a,b)=>String(b.completedAt).localeCompare(String(a.completedAt)));
     const currentStatus = st.status || "Active";
     const statusToneClass = `status-tone-${statusTone(currentStatus)}`;
+    const currentDelay = normalizeCallBackDelay(st.callBackDelay || "3d");
+    const currentDelayLabel = callBackDelayLabel(currentDelay);
+    const currentRecallDate = currentStatus === "Called" ? callBackDueLabel(st.statusDate, currentDelay) : "";
+    const currentRecallInfo = currentStatus === "Called" ? merchantCallBackInfo(merchant) : null;
+    const currentRecallCountdown = currentRecallInfo ? callBackCountdownLabel(currentRecallInfo) : "";
+    const currentRecallCountdownTone = currentRecallInfo ? (currentRecallInfo.daysRemaining < 0 ? "red" : currentRecallInfo.daysRemaining === 0 ? "orange" : "green") : "";
     const draft = buildEmailRecapDraft(merchant);
     return `<div class="card-head"><div><div class="card-kicker">Call console</div><h3>Status, notes and manual calls</h3></div><div class="card-hint">Use Active / Auto to remove a manual status and return the merchant to automatic routing.</div></div>
-      <div class="status-select-card ${statusToneClass}">
+      <div class="status-select-card ${statusToneClass} ${currentStatus === "Called" ? "called-return" : ""}">
         <div class="status-select-wrap">
           <label for="merchantStatusSelect">Merchant status</label>
           <select id="merchantStatusSelect" class="status-select" onchange="setSelectedStatus(this.value)">
@@ -3957,6 +4087,13 @@ const FOLLOWUP_DELETE_SOUND_DATA_URL = "data:audio/wav;base64,UklGRsqKAABXQVZFZm
             <option value="Relationship / Healthy" ${currentStatus === "Relationship / Healthy" ? "selected" : ""}>Relationship / Healthy</option>
             <option value="Needs Data Review" ${currentStatus === "Needs Data Review" ? "selected" : ""}>Needs Data Review</option>
           </select>
+        </div>
+        <div class="call-back-field">
+          <label for="merchantCallBackDelay">Call again in</label>
+          <select id="merchantCallBackDelay" class="status-select" onchange="setSelectedCallBackDelay(this.value)" ${currentStatus === "Called" ? "" : "disabled"}>
+            ${CALL_BACK_DELAY_OPTIONS.map(option => `<option value="${option.value}" ${currentDelay === option.value ? "selected" : ""}>${option.label}</option>`).join("")}
+          </select>
+          <small class="call-back-summary">${currentStatus === "Called" ? `<span class="call-back-date">Next call window: ${currentDelayLabel} · ${currentRecallDate}</span><span class="call-back-countdown ${currentRecallCountdownTone}">${esc(currentRecallCountdown)}</span>` : "Pick Called to unlock a return-call window."}</small>
         </div>
         <span class="status-preview">${esc(currentStatus === "Active" ? "Active / Auto" : currentStatus)}</span>
       </div>
@@ -4773,7 +4910,7 @@ const FOLLOWUP_DELETE_SOUND_DATA_URL = "data:audio/wav;base64,UklGRsqKAABXQVZFZm
     };
 
     onInput("workHubSearch",e=>{state.ui.workHubPage=1;state.ui.workHubFilters={...(state.ui.workHubFilters||{}),q:e.target.value};debouncedRender();});
-    ["workHubView","workHubSort","workHubMarket","workHubVideoFilter","workHubPhotoFilter","workHubContactFilter"].forEach(id=>onInput(id,()=>{state.ui.workHubPage=1;state.ui.workHubFilters=readWorkHubFilters();scheduleSave();renderApp();},"change"));
+    ["workHubView","workHubSort","workHubMarket","workHubVideoFilter","workHubPhotoFilter","workHubContactFilter","workHubRecallFilter"].forEach(id=>onInput(id,()=>{state.ui.workHubPage=1;state.ui.workHubFilters=readWorkHubFilters();scheduleSave();renderApp();},"change"));
 
     onInput("merchantHasPhotos",e=>{const merchant=selectedMerchant();if(!merchant)return;setMerchantState(merchant.uid,{hasPhotos:e.target.checked});renderApp();},"change");
     onInput("merchantVideoInReview",e=>{const merchant=selectedMerchant();if(!merchant)return;setMerchantState(merchant.uid,{videoInReview:e.target.checked,videoStatus:e.target.checked?"In review":merchantState(merchant.uid).videoStatus});renderApp();},"change");
@@ -4864,6 +5001,7 @@ const FOLLOWUP_DELETE_SOUND_DATA_URL = "data:audio/wav;base64,UklGRsqKAABXQVZFZm
     const quickAssign=e.target.closest("[data-quick-assign]"); if(quickAssign){assignUnmatched(quickAssign.dataset.quickAssign,quickAssign.dataset.merchant);return;}
     const setWallpaperPreset=e.target.closest("[data-set-wallpaper-preset]"); if(setWallpaperPreset){applyWallpaperPreset(setWallpaperPreset.dataset.setWallpaperPreset);return;}
     const setWallpaperCustom=e.target.closest("[data-set-wallpaper-custom]"); if(setWallpaperCustom){applyWallpaperCustom(setWallpaperCustom.dataset.setWallpaperCustom);return;}
+    const removeWallpaper=e.target.closest("[data-remove-wallpaper]"); if(removeWallpaper){removeWallpaperEntry(removeWallpaper.dataset.removeWallpaper);return;}
     const palette=e.target.closest("[data-palette-preset]"); if(palette){applyPalettePreset(palette.dataset.palettePreset);return;}
     const action=e.target.closest("[data-action]");
     if(action){await handleAction(action.dataset.action,action);return;}
@@ -4957,11 +5095,12 @@ const FOLLOWUP_DELETE_SOUND_DATA_URL = "data:audio/wav;base64,UklGRsqKAABXQVZFZm
 
   function setSelectedStatus(status) {
     const merchant=selectedMerchant();if(!merchant)return;
+    const key=String(merchant.uid);
+    const current={...merchantState(key)};
     if(status === "Active") {
-      const key=String(merchant.uid);
-      const current={...merchantState(key)};
       delete current.status;
       delete current.statusDate;
+      delete current.callBackDelay;
       current.updatedAt=new Date().toISOString();
       const meaningful=Object.keys(current).filter(k=>k!=="updatedAt");
       if(meaningful.length) state.merchantStates[key]=current;
@@ -4971,10 +5110,30 @@ const FOLLOWUP_DELETE_SOUND_DATA_URL = "data:audio/wav;base64,UklGRsqKAABXQVZFZm
       toast("Merchant returned to Active / Auto routing");
       return;
     }
-    const patch={status,statusDate:status==="Called"?dateKeyInZone(new Date()):""};
-    setMerchantState(merchant.uid,patch);
+    current.status = status;
+    if(status === "Called") {
+      current.statusDate = dateKeyInZone(new Date());
+      current.callBackDelay = normalizeCallBackDelay(current.callBackDelay || "3d");
+    } else {
+      delete current.statusDate;
+    }
+    current.updatedAt = new Date().toISOString();
+    state.merchantStates[key] = current;
+    scheduleSave();
     renderApp();
     toast(`Status updated: ${status}`);
+  }
+
+  function setSelectedCallBackDelay(value) {
+    const merchant = selectedMerchant(); if (!merchant) return;
+    const key = String(merchant.uid);
+    const current = { ...merchantState(key) };
+    current.callBackDelay = normalizeCallBackDelay(value);
+    current.updatedAt = new Date().toISOString();
+    state.merchantStates[key] = current;
+    scheduleSave();
+    renderApp();
+    toast(`Next call window set to ${callBackDelayLabel(current.callBackDelay)}`);
   }
 
   function saveStatusNote() {
