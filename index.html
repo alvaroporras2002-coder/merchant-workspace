@@ -2036,7 +2036,7 @@
   <script>
   "use strict";
 
-  const APP_VERSION = 6;
+  const APP_VERSION = 7;
   const STORAGE_KEY = "dashwork_state_v1";
   const DB_NAME = "dashwork_local_db";
   const DB_STORE = "workspace";
@@ -3338,6 +3338,18 @@ const FOLLOWUP_DELETE_SOUND_DATA_URL = "data:audio/wav;base64,UklGRsqKAABXQVZFZm
     }
     return callsFor(merchant.uid).some(c => callIsRecent(c, now));
   }
+
+  function merchantIsUntouched(merchant) {
+    const uid = merchant?.uid;
+    const st = merchantState(uid);
+    const hasMeaningfulState = Object.keys(st || {}).some(key => key !== "updatedAt" && st[key] !== undefined && st[key] !== null && String(st[key]).trim() !== "");
+    return !hasMeaningfulState &&
+      callsFor(uid).length === 0 &&
+      followupsFor(uid).length === 0 &&
+      photosFor(uid).length === 0 &&
+      salesFor(uid).length === 0 &&
+      creditsFor(uid).length === 0;
+  }
   function merchantCalledToday(merchant, now = new Date()) {
     const today = dateKeyInZone(now);
     const st = merchantState(merchant.uid);
@@ -4554,7 +4566,7 @@ const FOLLOWUP_DELETE_SOUND_DATA_URL = "data:audio/wav;base64,UklGRsqKAABXQVZFZm
       const q = normalizeText(filters.q);
       const hay = normalizeText([m.store_name,m.business_name,m.store_id,m.market_name,m.submarket_name,m.dm_name,m.dm_email,m.dm_phone].join(" "));
       const viewOk = filters.view === "all" || filters.view === "az" ||
-        (filters.view === "uncalled" && !d.calledRecently) ||
+        (filters.view === "uncalled" && merchantIsUntouched(m)) ||
         (filters.view === "called" && d.calledRecently) ||
         (filters.view === "due" && !!d.due) ||
         (filters.view === "photo" && (content.photo === "Approved" || !!st.hasPhotos)) ||
@@ -4591,7 +4603,7 @@ const FOLLOWUP_DELETE_SOUND_DATA_URL = "data:audio/wav;base64,UklGRsqKAABXQVZFZm
         <div class="card-head"><div><div class="card-kicker">Call board</div><h3>${queue.length} merchants</h3></div><span class="pill blue">${esc(filters.view)}</span></div>
         <div class="form-grid" style="margin-bottom:10px">
           <div class="field c12"><label>Search</label><input id="workHubSearch" value="${attr(filters.q || "")}" placeholder="Merchant, market, contact…" /></div>
-          <div class="field c6"><label>View</label><select id="workHubView"><option value="uncalled" ${filters.view==="uncalled"?"selected":""}>Uncalled recently</option><option value="called" ${filters.view==="called"?"selected":""}>Called recently</option><option value="due" ${filters.view==="due"?"selected":""}>Follow-up due</option><option value="photo" ${filters.view==="photo"?"selected":""}>Photo approved</option><option value="noanswer" ${filters.view==="noanswer"?"selected":""}>No Answer</option><option value="spoke" ${filters.view==="spoke"?"selected":""}>Spoke</option><option value="az" ${filters.view==="az"?"selected":""}>A-Z</option><option value="all" ${filters.view==="all"?"selected":""}>All merchants</option></select></div>
+          <div class="field c6"><label>View</label><select id="workHubView"><option value="uncalled" ${filters.view==="uncalled"?"selected":""}>Uncalled (untouched)</option><option value="called" ${filters.view==="called"?"selected":""}>Called recently</option><option value="due" ${filters.view==="due"?"selected":""}>Follow-up due</option><option value="photo" ${filters.view==="photo"?"selected":""}>Photo approved</option><option value="noanswer" ${filters.view==="noanswer"?"selected":""}>No Answer</option><option value="spoke" ${filters.view==="spoke"?"selected":""}>Spoke</option><option value="az" ${filters.view==="az"?"selected":""}>A-Z</option><option value="all" ${filters.view==="all"?"selected":""}>All merchants</option></select></div>
           <div class="field c4"><label>Sort</label><select id="workHubSort"><option value="priority" ${filters.sort==="priority"?"selected":""}>Priority</option><option value="az" ${filters.sort==="az"?"selected":""}>A-Z</option></select></div>
           <div class="field c4"><label>Market</label><select id="workHubMarket"><option value="all">All markets</option>${markets.map(x=>`<option ${filters.market===x?"selected":""}>${esc(x)}</option>`).join("")}</select></div>
         </div>
@@ -5941,9 +5953,10 @@ const FOLLOWUP_DELETE_SOUND_DATA_URL = "data:audio/wav;base64,UklGRsqKAABXQVZFZm
         <div class="health-grid">${healthCard("Active merchants",h.active)}${healthCard("Missing Store ID",h.missingIds)}${healthCard("Missing timezone",h.missingTz)}${healthCard("Missing contacts",h.missingContacts)}${healthCard("Duplicate Store IDs",h.duplicates)}${healthCard("Unmatched calls",h.unmatched)}</div>
       </section>
       <section class="panel span-6">
-        <div class="card-head"><div><div class="card-kicker">Backup and privacy</div><h3>Your data stays local</h3></div></div>
-        <p class="metric-sub">Each person opening the GitHub Pages URL gets an independent profile and workspace inside their own browser. Data does not automatically sync between computers.</p>
-        <div class="button-row"><button class="btn green" type="button" data-action="exportBackup">Export JSON backup</button><button class="btn blue" type="button" data-action="importBackup">Import backup</button><button class="btn red" type="button" data-action="resetAllData">Reset all local data</button></div>
+        <div class="card-head"><div><div class="card-kicker">Portable data package</div><h3>Download every collection</h3></div><span class="pill blue">All pages</span></div>
+        <p class="metric-sub">Exports merchants, follow-ups, notes, calls, photos, sales, credits, resources, links, wallpapers, settings and UI state into one portable JSON file you can bring into another Dashwork page or browser.</p>
+        <div class="tracker-summary"><strong>Ready for transfer</strong><span>The file is structured for re-import and keeps your history, drafts and local configuration together.</span></div>
+        <div class="button-row" style="margin-top:11px"><button class="btn green" type="button" data-action="exportWorkspacePackage">Export portable JSON</button><button class="btn blue" type="button" data-action="importBackup">Import JSON</button><button class="btn red" type="button" data-action="resetAllData">Reset all local data</button></div>
       </section>
     </div>`;
   }
@@ -6138,6 +6151,7 @@ const FOLLOWUP_DELETE_SOUND_DATA_URL = "data:audio/wav;base64,UklGRsqKAABXQVZFZm
       resetPalette,
       saveClockSettings,
       requestNotifications,
+      exportWorkspacePackage,
       exportBackup,
       importBackup: () => document.getElementById("backupInput").click(),
       resetAllData,
@@ -6700,8 +6714,63 @@ const FOLLOWUP_DELETE_SOUND_DATA_URL = "data:audio/wav;base64,UklGRsqKAABXQVZFZm
     });
   }
 
-  function exportBackup(){downloadFile(`dashwork-backup-${dateKeyInZone(new Date())}.json`,JSON.stringify(state,null,2),"application/json");}
-  async function restoreBackup(file){try{const parsed=JSON.parse(await file.text());if(!parsed||typeof parsed!=="object")throw new Error("Invalid backup");state=mergeState(parsed);migrateStateV4();scheduleSave();renderApp();toast("Backup restored");}catch(err){toast(err.message||"Backup could not be restored");}}
+  function buildWorkspacePackage() {
+    const exportedAt = new Date().toISOString();
+    const data = JSON.parse(JSON.stringify(state));
+    return {
+      exportType: "dashwork-workspace-package",
+      schemaVersion: 1,
+      appVersion: APP_VERSION,
+      exportedAt,
+      summary: {
+        merchants: Array.isArray(data.merchants) ? data.merchants.filter(m => !m.archived).length : 0,
+        followups: Array.isArray(data.followups) ? data.followups.length : 0,
+        calls: Array.isArray(data.calls) ? data.calls.length : 0,
+        photos: Array.isArray(data.photos) ? data.photos.length : 0,
+        sales: Array.isArray(data.sales) ? data.sales.length : 0,
+        credits: Array.isArray(data.credits) ? data.credits.length : 0,
+        resources: Array.isArray(data.resources) ? data.resources.length : 0,
+        links: Array.isArray(data.links) ? data.links.length : 0
+      },
+      data
+    };
+  }
+
+  function exportWorkspacePackage(){downloadFile(`dashwork-workspace-${dateKeyInZone(new Date())}.json`,JSON.stringify(buildWorkspacePackage(),null,2),"application/json");}
+  function exportBackup(){exportWorkspacePackage();}
+  function normalizeImportedWorkspaceData(parsed) {
+    if (!parsed || typeof parsed !== "object") return null;
+    const source = parsed.data && typeof parsed.data === "object"
+      ? parsed.data
+      : parsed.state && typeof parsed.state === "object"
+        ? parsed.state
+        : parsed;
+    const collections = source.collections && typeof source.collections === "object" ? source.collections : {};
+    return {
+      version: source.version || APP_VERSION,
+      currentView: source.currentView || "dashboard",
+      profile: { ...(source.profile || {}) },
+      settings: { ...(source.settings || {}) },
+      merchants: Array.isArray(collections.merchants) ? collections.merchants : Array.isArray(source.merchants) ? source.merchants : [],
+      merchantStates: collections.merchantStates && typeof collections.merchantStates === "object" ? collections.merchantStates : source.merchantStates && typeof source.merchantStates === "object" ? source.merchantStates : {},
+      calls: Array.isArray(collections.calls) ? collections.calls : Array.isArray(source.calls) ? source.calls : [],
+      photos: Array.isArray(collections.photos) ? collections.photos : Array.isArray(source.photos) ? source.photos : [],
+      sales: Array.isArray(collections.sales) ? collections.sales : Array.isArray(source.sales) ? source.sales : [],
+      credits: Array.isArray(collections.credits) ? collections.credits : Array.isArray(source.credits) ? source.credits : [],
+      followups: Array.isArray(collections.followups) ? collections.followups : Array.isArray(source.followups) ? source.followups : [],
+      resources: Array.isArray(collections.resources) ? collections.resources : Array.isArray(source.resources) ? source.resources : [],
+      links: Array.isArray(collections.links) ? collections.links : Array.isArray(source.links) ? source.links : [],
+      wallpaperLibrary: Array.isArray(collections.wallpaperLibrary) ? collections.wallpaperLibrary : Array.isArray(source.wallpaperLibrary) ? source.wallpaperLibrary : [],
+      gifWallpaperLibrary: Array.isArray(collections.gifWallpaperLibrary) ? collections.gifWallpaperLibrary : Array.isArray(source.gifWallpaperLibrary) ? source.gifWallpaperLibrary : [],
+      unmatchedCalls: Array.isArray(collections.unmatchedCalls) ? collections.unmatchedCalls : Array.isArray(source.unmatchedCalls) ? source.unmatchedCalls : [],
+      importHistory: Array.isArray(collections.importHistory) ? collections.importHistory : Array.isArray(source.importHistory) ? source.importHistory : [],
+      notifiedFollowups: collections.notifiedFollowups && typeof collections.notifiedFollowups === "object" ? collections.notifiedFollowups : source.notifiedFollowups && typeof source.notifiedFollowups === "object" ? source.notifiedFollowups : {},
+      selectedUid: source.selectedUid || "",
+      lastImportSnapshot: source.lastImportSnapshot || null,
+      ui: collections.ui && typeof collections.ui === "object" ? collections.ui : source.ui && typeof source.ui === "object" ? source.ui : {}
+    };
+  }
+  async function restoreBackup(file){try{const parsed=JSON.parse(await file.text());const payload=normalizeImportedWorkspaceData(parsed);if(!payload||typeof payload!=="object")throw new Error("Invalid backup");state=mergeState(payload);migrateStateV4();scheduleSave();renderApp();toast("Backup restored");}catch(err){toast(err.message||"Backup could not be restored");}}
   function resetAllData(){if(!confirm("Delete the entire local DASHWORK profile and all records from this browser?"))return;state=createDefaultState();scheduleSave();renderApp();toast("Local workspace reset");}
 
   function loadDemo() {
