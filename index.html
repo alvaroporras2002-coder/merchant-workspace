@@ -5574,7 +5574,7 @@ const FOLLOWUP_DELETE_SOUND_DATA_URL = "data:audio/wav;base64,UklGRsqKAABXQVZFZm
         <div class="field c12"><label>Status</label><select id="followupStatus"><option ${draft.status==="Pending"?"selected":""}>Pending</option><option ${draft.status==="Completed"?"selected":""}>Completed</option><option ${draft.status==="Overdue"?"selected":""}>Overdue</option></select></div>
         <div class="field c12"><label>Notes</label><textarea id="followupNotes" placeholder="What needs to happen?">${esc(draft.notes||"")}</textarea></div>
       </div>
-      <div class="button-row" style="margin-top:11px"><button class="btn primary" type="button" data-action="saveFollowup">${followup?"Save changes":"Create follow-up"}</button>${followup&&followup.status!=="Completed"?`<button class="btn green" type="button" data-complete-followup="${attr(followup.id)}">Complete</button>`:""}${followup?`<button class="btn red" type="button" data-delete-followup="${attr(followup.id)}">Delete</button>`:""}<button class="btn ghost" type="button" data-action="clearFollowupEditor">← Back</button></div>
+      <div class="button-row" style="margin-top:11px"><button class="btn primary" type="button" data-action="saveFollowup">${followup?"Save changes":"Create follow-up"}</button>${followup&&followup.status!=="Completed"?`<button class="btn green" type="button" data-complete-followup="${attr(followup.id)}">Complete</button>`:""}${followup?`<button class="btn red" type="button" data-delete-followup="${attr(followup.id)}">Delete</button>`:""}<button class="btn purple" type="button" data-action="goToFollowupMerchantProfile">Go to profile</button><button class="btn ghost" type="button" data-action="clearFollowupEditor">← Back</button></div>
       <div class="divider"></div>
       <div class="tracker-summary"><strong>Browser notifications</strong><span>${state.settings.notificationsEnabled?"Enabled while DASHWORK is open.":"Enable them from Settings to receive reminders while the page is open."}</span></div>`;
   }
@@ -6118,6 +6118,7 @@ const FOLLOWUP_DELETE_SOUND_DATA_URL = "data:audio/wav;base64,UklGRsqKAABXQVZFZm
       resetMerchantLocalState,
       newFollowup: () => { state.ui.selectedFollowupId="";state.ui.followupDraftDate=toISODate(new Date(state.ui.followupAnchor||new Date()));state.ui.followupDraftTime="10:00";scheduleSave();renderApp(); },
       saveFollowup,
+      goToFollowupMerchantProfile,
       clearFollowupEditor: () => { state.ui.selectedFollowupId="";state.ui.followupDraftDate="";state.ui.followupDraftTime="";scheduleSave();renderApp(); },
       downloadMonthlyActivity,
       downloadDayTxt,
@@ -6439,6 +6440,25 @@ const FOLLOWUP_DELETE_SOUND_DATA_URL = "data:audio/wav;base64,UklGRsqKAABXQVZFZm
     scheduleSave();renderApp();
     if(status==="Completed"&&!wasCompleted){playFollowupCompleteSound();celebrate();}
     toast(isEditing?"Follow-up updated":"Follow-up created · ready for another");
+  }
+
+  function goToFollowupMerchantProfile() {
+    const followupId = String(state.ui.selectedFollowupId || document.getElementById("followupId")?.value || "").trim();
+    const merchantIdFromForm = String(document.getElementById("followupMerchant")?.value || "").trim();
+    const followup = followupId ? state.followups.find(f => String(f.id) === followupId) : null;
+    const merchantId = merchantIdFromForm || followup?.uid || state.selectedUid || "";
+    const merchant = getMerchant(merchantId);
+    if (!merchant) {
+      toast("Select a merchant first");
+      return;
+    }
+    state.selectedUid = merchant.uid;
+    state.currentView = "workhub";
+    state.ui.workHubTab = state.ui.workHubTab || "call";
+    scheduleSave();
+    renderApp();
+    window.scrollTo({ top: 0, behavior: state.profile.motion === "minimal" ? "auto" : "smooth" });
+    toast(`Opened ${merchant.store_name} in Work Hub`);
   }
 
   function completeFollowup(id) {
