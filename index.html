@@ -494,12 +494,16 @@
     .active-merchant-top { display: flex; justify-content: space-between; gap: 12px; align-items: flex-start; }
     .active-merchant h2 { margin: 3px 0 0; font-size: 20px; line-height: 1.08; letter-spacing: -.045em; }
     .active-meta { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 9px; }
-    .merchant-summary-grid { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(230px, .85fr); gap: 10px; margin-top: 12px; }
-    .merchant-summary-card { padding: 12px 13px; border: 1px solid var(--line); border-radius: 16px; background: rgba(17, 26, 42, .62); }
+    .merchant-summary-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin-top: 12px; }
+    .merchant-summary-card { padding: 12px 13px; border: 1px solid var(--line); border-radius: 16px; background: rgba(17, 26, 42, .62); min-height: 96px; }
     .merchant-summary-card span { display: block; color: var(--muted); font-size: 10px; font-weight: 900; letter-spacing: .09em; text-transform: uppercase; }
     .merchant-summary-card strong { display: block; margin-top: 6px; font-size: 14px; line-height: 1.35; letter-spacing: -.02em; word-break: break-word; }
     .merchant-summary-card.big strong { font-size: 20px; letter-spacing: -.04em; }
     .merchant-summary-card .submeta { margin-top: 5px; color: var(--muted); font-size: 10px; line-height: 1.45; }
+    .merchant-summary-card.latest-summary { display: grid; gap: 6px; }
+    .merchant-summary-card.latest-summary .summary-note { color: #eaf2ff; font-size: 11px; line-height: 1.45; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+    .merchant-summary-card.latest-summary .summary-foot { display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; color: var(--muted); font-size: 9px; line-height: 1.35; }
+    .merchant-summary-card.latest-summary .summary-pill { justify-self: start; }
     .contact-actions { display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; }
     .hub-tabs { display: grid; grid-template-columns: repeat(3,1fr); gap: 5px; padding: 5px; margin: 11px 0; border: 1px solid var(--line); border-radius: 15px; background: rgba(8,15,29,.70); }
     .hub-tab { min-height: 40px; border: 1px solid transparent; border-radius: 11px; background: transparent; color: var(--muted); font-size: 11px; font-weight: 900; }
@@ -545,6 +549,47 @@
     .records-box { padding: 11px; border: 1px solid var(--line); border-radius: 16px; background: rgba(8,15,29,.45); }
     .records-box-head { display: flex; justify-content: space-between; gap: 10px; align-items: center; margin-bottom: 9px; }
     .records-box-head strong { font-size: 12px; }
+    .latest-activity-card {
+      display: grid;
+      gap: 10px;
+      padding: 16px;
+      margin-bottom: 12px;
+      border: 1px solid rgba(var(--accent-rgb), .34);
+      border-radius: 18px;
+      background:
+        radial-gradient(circle at top left, rgba(var(--accent-rgb), .16), transparent 34%),
+        rgba(17,26,42,.82);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.03);
+    }
+    .latest-activity-card .activity-top { display: flex; justify-content: space-between; gap: 10px; align-items: flex-start; }
+    .latest-activity-card .activity-top > div { min-width: 0; }
+    .latest-activity-card .latest-activity-kicker { display: block; color: var(--muted-2); font-size: 10px; font-weight: 900; letter-spacing: .10em; text-transform: uppercase; }
+    .latest-activity-card .latest-activity-title { display: block; margin-top: 4px; font-size: 18px; line-height: 1.1; letter-spacing: -.04em; color: var(--text); }
+    .latest-activity-card .latest-activity-main { display: block; color: #eaf2ff; font-size: 13px; line-height: 1.55; white-space: pre-wrap; }
+    .latest-activity-card .latest-activity-foot { display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; align-items: center; color: var(--muted); font-size: 10px; line-height: 1.4; }
+    .latest-activity-card .latest-activity-foot span { display: inline; color: inherit; }
+    .latest-activity-card .activity-top .pill { flex: 0 0 auto; }
+    .note-history-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+    .note-history-toolbar strong { font-size: 10px; }
+    .note-history-grid { display: grid; gap: 8px; margin-bottom: 12px; }
+    .note-history-item {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 10px;
+      padding: 10px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: rgba(17,26,42,.58);
+    }
+    .note-history-item strong { display: block; font-size: 10px; }
+    .note-history-item span { display: block; margin-top: 3px; color: var(--muted); font-size: 9px; line-height: 1.45; white-space: pre-wrap; }
     .record-item { display: grid; grid-template-columns: 1fr auto; gap: 9px; padding: 8px 0; border-top: 1px solid var(--line); }
     .record-item:first-child { border-top: 0; }
     .record-item strong { display: block; font-size: 10px; }
@@ -4632,6 +4677,42 @@ const FOLLOWUP_DELETE_SOUND_DATA_URL = "data:audio/wav;base64,UklGRsqKAABXQVZFZm
     </div>`;
   }
 
+  function latestInteractionSummary(merchant, currentStatus) {
+    const st = merchantState(merchant.uid);
+    const calls = callsFor(merchant.uid).sort((a, b) => String(b.completedAt || b.timestamp || '').localeCompare(String(a.completedAt || a.timestamp || '')));
+    const recentCall = calls.length ? calls[0] : null;
+    const recentNote = Array.isArray(st.statusNotes) && st.statusNotes.length ? [...st.statusNotes].sort((a, b) => String(b.createdAt || b.updatedAt || '').localeCompare(String(a.createdAt || a.updatedAt || '')))[0] : null;
+
+    const title = recentNote
+      ? `${esc(recentNote.status || 'Last interaction')} · ${formatDateTime(recentNote.createdAt || recentNote.updatedAt || new Date().toISOString())}`
+      : recentCall
+        ? `${esc(recentCall.disposition || recentCall.state || 'Last interaction')} · ${formatDateTime(recentCall.completedAt || recentCall.timestamp || new Date().toISOString())}`
+        : 'No note saved yet';
+
+    const body = recentNote && recentNote.note
+      ? esc(recentNote.note)
+      : recentCall && recentCall.note
+        ? esc(recentCall.note)
+        : 'No note saved yet.';
+
+    const footerLeft = recentNote
+      ? (recentNote.status ? `Status: ${recentNote.status}` : 'Saved from Status note')
+      : recentCall
+        ? `${esc(recentCall.disposition || recentCall.state || 'Call log')}`
+        : 'Use Status note to save the latest interaction.';
+
+    const footerRight = recentCall
+      ? `Real ${mmss(recentCall.durationSec)} · Credited ${mmss(recentCall.creditedSec)}`
+      : recentNote && recentNote.updatedAt
+        ? `Updated ${formatDateTime(recentNote.updatedAt)}`
+        : '';
+
+    const pillTone = recentNote ? (recentNote.status === 'Called' ? 'green' : 'blue') : 'blue';
+    const pillText = recentNote ? (recentNote.status || currentStatus || 'Active') : (recentCall ? 'History' : 'Active');
+
+    return { title, body, footerLeft, footerRight, pillTone, pillText };
+  }
+
   function renderActiveMerchantHeader(merchant) {
     const d = deriveMerchant(merchant);
     const recall = merchantCallBackInfo(merchant);
@@ -4660,6 +4741,23 @@ const FOLLOWUP_DELETE_SOUND_DATA_URL = "data:audio/wav;base64,UklGRsqKAABXQVZFZm
               <span>Decision maker</span>
               <strong>${esc(decisionMakerName)}</strong>
             </div>
+            ${(() => {
+              const latest = latestInteractionSummary(merchant, d.lane);
+              return `<div class="merchant-summary-card latest-summary">
+                <div class="activity-top" style="margin:0">
+                  <div style="min-width:0">
+                    <span class="latest-activity-kicker">Last interaction</span>
+                    <strong class="latest-activity-title" style="font-size:15px; margin-top:4px">${latest.title}</strong>
+                  </div>
+                  <span class="pill summary-pill ${latest.pillTone}">${esc(latest.pillText)}</span>
+                </div>
+                <div class="summary-note">${latest.body}</div>
+                <div class="summary-foot">
+                  <span>${latest.footerLeft}</span>
+                  <span>${latest.footerRight}</span>
+                </div>
+              </div>`;
+            })()}
           </div>
         </div>
         <div class="contact-actions">
@@ -4715,6 +4813,33 @@ const FOLLOWUP_DELETE_SOUND_DATA_URL = "data:audio/wav;base64,UklGRsqKAABXQVZFZm
         <div class="field c8"><label>Status note</label><textarea id="merchantStatusNote" placeholder="What happened and what is the next step?">${esc(st.note || "")}</textarea></div>
         <div class="field c4"><label>Quick actions</label><div class="button-row"><button class="btn blue" type="button" data-action="saveStatusNote">Save note</button><button class="btn orange" type="button" data-action="newFollowupForSelected">Create follow-up</button></div></div>
       </div>
+      <div class="records-box" style="margin-top:12px">
+        <div class="records-box-head"><strong>Saved notes</strong><div class="button-row"><span class="pill">${esc(String(Array.isArray(st.statusNotes) ? st.statusNotes.length : 0))}</span><span class="pill blue">3 notes per page</span></div></div>
+        ${(() => {
+          const notes = Array.isArray(st.statusNotes) ? [...st.statusNotes].sort((a,b)=>String(b.createdAt).localeCompare(String(a.createdAt))) : [];
+          const notesPerPage = 3;
+          const totalPages = Math.max(1, Math.ceil(notes.length / notesPerPage));
+          const currentPage = clamp(Number(st.notePage || 1), 1, totalPages);
+          const pageNotes = notes.slice((currentPage - 1) * notesPerPage, currentPage * notesPerPage);
+          const latest = notes[0] || null;
+          const latestTitle = latest ? `${esc(latest.status || currentStatus || "Last interaction")}` : "No note saved yet";
+          const latestTime = latest ? formatDateTime(latest.createdAt || latest.updatedAt || new Date().toISOString()) : "";
+          const latestBody = latest && latest.note ? esc(latest.note) : "No note saved yet.";
+          return `
+          ${latest ? `<div class="latest-activity-card"><div class="activity-top"><div><span class="latest-activity-kicker">Last interaction</span><strong class="latest-activity-title">${latestTitle} · ${latestTime}</strong></div><span class="pill ${currentStatus === "Called" ? "green" : "blue"}">${esc(currentStatus === "Active" ? "Active" : currentStatus)}</span></div><div class="latest-activity-main">${latestBody}</div><div class="latest-activity-foot"><span>${esc(latest.status ? `Status: ${latest.status}` : "Saved from Status note")}</span><span>${esc(latest.updatedAt ? `Updated ${formatDateTime(latest.updatedAt)}` : "")}</span></div></div>` : `<div class="latest-activity-card"><div class="activity-top"><div><span class="latest-activity-kicker">Last interaction</span><strong class="latest-activity-title">No note saved yet</strong></div><span class="pill blue">${esc(currentStatus === "Active" ? "Active" : currentStatus)}</span></div><div class="latest-activity-main">No note saved yet.</div><div class="latest-activity-foot"><span>Use Status note to save the latest interaction.</span><span>&nbsp;</span></div></div>`}
+          <div class="note-history-toolbar">
+            <strong>Note history</strong>
+            <div class="button-row">
+              <button class="btn small ghost" type="button" data-action="changeStatusNotePage" data-delta="-1" ${currentPage <= 1 ? "disabled" : ""}>Prev</button>
+              <span class="pill">${currentPage} / ${totalPages}</span>
+              <button class="btn small ghost" type="button" data-action="changeStatusNotePage" data-delta="1" ${currentPage >= totalPages ? "disabled" : ""}>Next</button>
+            </div>
+          </div>
+          <div class="note-history-grid">
+            ${pageNotes.length ? pageNotes.map(n => `<div class="note-history-item"><span><strong>${formatDateTime(n.createdAt || n.updatedAt || new Date().toISOString())}</strong><span>${esc(n.note || "")}</span>${n.status ? `<span class="pill">${esc(n.status)}</span>` : ""}</span><button class="btn small red" type="button" data-delete-status-note="${attr(n.id)}">Delete</button></div>`).join("") : `<div class="empty-state" style="min-height:96px"><strong>No notes on this page</strong><span>Use Prev / Next to browse saved notes.</span></div>`}
+          </div>`;
+        })()}
+      </div>
 
       <div class="email-recap-card">
         <div class="email-recap-head">
@@ -4764,8 +4889,18 @@ const FOLLOWUP_DELETE_SOUND_DATA_URL = "data:audio/wav;base64,UklGRsqKAABXQVZFZm
       ${contactCards(merchant)}
       <div class="divider"></div>
       <div class="records-box">
-        <div class="records-box-head"><strong>Recent call records</strong><div class="button-row"><span class="pill">${calls.length}</span><button class="btn small blue" type="button" data-action="exportMerchantCallsCsv">Export CSV</button></div></div>
-        ${calls.length ? calls.slice(0,6).map(c=>`<div class="record-item"><span><strong>${esc(c.disposition || c.state)}</strong><span>${formatDateTime(c.completedAt)} · Real ${mmss(c.durationSec)} · Credited ${mmss(c.creditedSec)}</span>${c.note?`<span>${esc(c.note)}</span>`:""}</span><button class="btn small red" type="button" data-delete-call="${attr(c.id)}">Delete</button></div>`).join("") : `<div class="empty-state" style="min-height:110px"><strong>No call records</strong><span>Import a Calls CSV or use the manual call form.</span></div>`}
+        <div class="records-box-head"><strong>Last interaction</strong><span class="pill blue">${calls.length ? "Active history" : "No call yet"}</span></div>
+        ${(() => {
+          const recentCall = Array.isArray(calls) && calls.length ? [...calls].sort((a,b)=>String(b.completedAt || b.timestamp || "").localeCompare(String(a.completedAt || a.timestamp || "")))[0] : null;
+          const recentNote = Array.isArray(st.statusNotes) && st.statusNotes.length ? [...st.statusNotes].sort((a,b)=>String(b.createdAt).localeCompare(String(a.createdAt)))[0] : null;
+          const title = recentNote ? `${esc(recentNote.status || "Last interaction")} · ${formatDateTime(recentNote.createdAt || recentNote.updatedAt || new Date().toISOString())}` : recentCall ? `${esc(recentCall.disposition || recentCall.state || "Last interaction")} · ${formatDateTime(recentCall.completedAt || recentCall.timestamp || new Date().toISOString())}` : "No note saved yet.";
+          const body = recentNote && recentNote.note ? esc(recentNote.note) : recentCall && recentCall.note ? esc(recentCall.note) : "No note saved yet.";
+          const footerLeft = recentNote ? (recentNote.status ? `Status: ${recentNote.status}` : "Saved from Status note") : recentCall ? `${esc(recentCall.disposition || recentCall.state || "Call log")}` : "Use Status note to save the latest interaction.";
+          const footerRight = recentCall ? `Real ${mmss(recentCall.durationSec)} · Credited ${mmss(recentCall.creditedSec)}` : "";
+          const pillTone = recentNote ? (recentNote.status === "Called" ? "green" : "blue") : "blue";
+          const pillText = recentNote ? (recentNote.status || currentStatus || "Active") : (recentCall ? "History" : "Active");
+          return `<div class="latest-activity-card"><div class="activity-top"><div><span class="latest-activity-kicker">Last interaction</span><strong class="latest-activity-title">${title}</strong></div><span class="pill ${pillTone}">${esc(pillText)}</span></div><div class="latest-activity-main">${body}</div><div class="latest-activity-foot"><span>${esc(footerLeft)}</span><span>${esc(footerRight)}</span></div></div>`;
+        })()}
       </div>`;
   }
 
@@ -5225,9 +5360,47 @@ const FOLLOWUP_DELETE_SOUND_DATA_URL = "data:audio/wav;base64,UklGRsqKAABXQVZFZm
     const timeline = merchantTimeline(merchant.uid).slice(0, 20);
     const st = merchantState(merchant.uid);
     const options = state.merchants.filter(m=>!m.archived).sort((a,b)=>a.store_name.localeCompare(b.store_name));
+    const calls = callsFor(merchant.uid).sort((a,b)=>String(b.completedAt || b.timestamp || "").localeCompare(String(a.completedAt || a.timestamp || "")));
+    const notes = Array.isArray(st.statusNotes) ? [...st.statusNotes].sort((a,b)=>String(b.createdAt || b.updatedAt || "").localeCompare(String(a.createdAt || a.updatedAt || ""))) : [];
+    const latestCall = calls[0] || null;
+    const latestNote = notes[0] || null;
+    const latestCallTime = latestCall ? String(latestCall.completedAt || latestCall.timestamp || "") : "";
+    const latestNoteTime = latestNote ? String(latestNote.createdAt || latestNote.updatedAt || "") : "";
+    const latestIsNote = !!(latestNote && (!latestCall || latestNoteTime >= latestCallTime));
+    const latestTitle = latestIsNote
+      ? `${esc(latestNote.status || "Last interaction")} · ${formatDateTime(latestNote.createdAt || latestNote.updatedAt || new Date().toISOString())}`
+      : latestCall
+        ? `${esc(latestCall.disposition || latestCall.state || "Last interaction")} · ${formatDateTime(latestCall.completedAt || latestCall.timestamp || new Date().toISOString())}`
+        : "No note saved yet.";
+    const latestBody = latestIsNote
+      ? (latestNote.note ? esc(latestNote.note) : "No note saved yet.")
+      : (latestCall && latestCall.note ? esc(latestCall.note) : "No note saved yet.");
+    const latestFooterLeft = latestIsNote
+      ? (latestNote.status ? `Status: ${latestNote.status}` : "Saved from Status note")
+      : (latestCall ? `${esc(latestCall.disposition || latestCall.state || "Call log")}` : "Use Status note to save the latest interaction.");
+    const latestFooterRight = latestIsNote
+      ? (latestNote.updatedAt ? `Updated ${formatDateTime(latestNote.updatedAt)}` : "")
+      : (latestCall ? `Real ${mmss(latestCall.durationSec)} · Credited ${mmss(latestCall.creditedSec)}` : "");
+    const latestPillTone = latestIsNote ? (latestNote.status === "Called" ? "green" : "blue") : "blue";
+    const latestPillText = latestIsNote ? (latestNote.status || currentStatus || "Active") : (latestCall ? "History" : "Active");
+    const callRecords = calls.slice(0, 8).map(call => {
+      const callTitle = `${esc(call.disposition || call.state || "Call log")} · ${formatDateTime(call.completedAt || call.timestamp || new Date().toISOString())}`;
+      const callBody = call.note ? esc(call.note) : "No note saved for this call.";
+      const callFootLeft = call.state ? `State: ${call.state}` : "Call record";
+      const callFootRight = `Real ${mmss(call.durationSec)} · Credited ${mmss(call.creditedSec)}`;
+      return `<div class="record-item"><span><strong>${callTitle}</strong><span>${callBody}</span><span>${esc(callFootLeft)}</span></span><span>${esc(callFootRight)}</span></div>`;
+    }).join("");
     return `<section class="panel">
       <div class="card-head"><div><div class="card-kicker">Merchant profile</div><h2>${esc(merchant.store_name)}</h2></div><div class="button-row"><button class="btn green" type="button" data-nav="workhub">Open Work Hub</button><button class="btn orange" type="button" data-action="newFollowupForSelected">Create follow-up</button></div></div>
       <div class="form-grid"><div class="field c8"><label>Select merchant</label><select id="profileMerchantSelect">${options.map(m=>`<option value="${attr(m.uid)}" ${m.uid===merchant.uid?"selected":""}>${esc(m.store_name)}${m.store_id?` · ${esc(m.store_id)}`:""}</option>`).join("")}</select></div><div class="field c4"><label>Priority lane</label><div class="tracker-summary"><strong>${esc(d.lane)}</strong><span>${esc(d.reason)}</span></div></div></div>
+    </section>
+    <section class="panel" style="grid-column: 1 / -1;">
+      <div class="card-head"><div><div class="card-kicker">Last interaction</div><h3>Always keep the latest call or note visible</h3></div><span class="pill blue">${calls.length ? "Latest on top" : "No call yet"}</span></div>
+      <div class="latest-activity-card">
+        <div class="activity-top"><div><span class="latest-activity-kicker">Last interaction</span><strong class="latest-activity-title">${latestTitle}</strong></div><span class="pill ${latestPillTone}">${esc(latestPillText)}</span></div>
+        <div class="latest-activity-main">${latestBody}</div>
+        <div class="latest-activity-foot"><span>${esc(latestFooterLeft)}</span><span>${esc(latestFooterRight)}</span></div>
+      </div>
     </section>
     <div class="profile-grid">
       <section class="panel" style="grid-column: 1 / -1;">
@@ -5269,6 +5442,14 @@ const FOLLOWUP_DELETE_SOUND_DATA_URL = "data:audio/wav;base64,UklGRsqKAABXQVZFZm
         <div class="divider"></div>
         <div class="card-head"><div><div class="card-kicker">Timeline</div><h3>Calls, photos, follow-ups, sales and credits</h3></div><span class="pill">${timeline.length}</span></div>
         <div class="timeline">${timeline.length ? timeline.map(t=>`<div class="timeline-item"><div class="timeline-icon">${t.icon}</div><div><strong>${esc(t.title)}</strong><span>${esc(t.detail)} · ${formatDateTime(t.timestamp)}</span></div></div>`).join("") : `<div class="empty-state"><strong>No timeline activity</strong><span>Imported calls and Work Hub actions will appear here.</span></div>`}</div>
+      </section>
+
+      <section class="panel" style="grid-column: 1 / -1;">
+        <div class="card-head"><div><div class="card-kicker">Call records</div><h3>Regular call log at the end of the profile</h3></div><span class="pill blue">${calls.length ? `${calls.length} calls` : "No call yet"}</span></div>
+        <div class="records-box">
+          <div class="records-box-head"><strong>Recent calls</strong><div class="button-row"><span class="pill blue">Latest call stays on top</span><span class="pill">${esc(String(calls.length))}</span></div></div>
+          ${callRecords ? callRecords : `<div class="empty-state" style="min-height:110px"><strong>No call records yet</strong><span>Saved calls will appear here after you log them.</span></div>`}
+        </div>
       </section>
     </div>`;
   }
@@ -6050,6 +6231,7 @@ const FOLLOWUP_DELETE_SOUND_DATA_URL = "data:audio/wav;base64,UklGRsqKAABXQVZFZm
     if(adjust){const input=document.getElementById("photoCountNow");if(input)input.value=Math.max(0,Number(input.value||0)+Number(adjust.dataset.photoAdjust||0));return;}
     const delCall=e.target.closest("[data-delete-call]"); if(delCall){deleteRecord("calls",delCall.dataset.deleteCall);return;}
     const delPhoto=e.target.closest("[data-delete-photo]"); if(delPhoto){deleteRecord("photos",delPhoto.dataset.deletePhoto);return;}
+    const delStatusNote=e.target.closest("[data-delete-status-note]"); if(delStatusNote){deleteStatusNote(delStatusNote.dataset.deleteStatusNote);return;}
     const editSale=e.target.closest("[data-edit-sale]"); if(editSale){openSaleRecordInfo(editSale.dataset.editSale);return;}
     const delSale=e.target.closest("[data-delete-sale]"); if(delSale){deleteRecord("sales",delSale.dataset.deleteSale);return;}
     const delCredit=e.target.closest("[data-delete-credit]"); if(delCredit){deleteRecord("credits",delCredit.dataset.deleteCredit);return;}
@@ -6101,6 +6283,7 @@ const FOLLOWUP_DELETE_SOUND_DATA_URL = "data:audio/wav;base64,UklGRsqKAABXQVZFZm
     const actions = {
       closeDay,
       saveStatusNote,
+      changeStatusNotePage: (element) => changeStatusNotePage(Number(element?.dataset?.delta || 0)),
       newFollowupForSelected: () => openFollowupForSelected(),
       saveManualCall,
       savePhotoLog,
@@ -6218,9 +6401,53 @@ const FOLLOWUP_DELETE_SOUND_DATA_URL = "data:audio/wav;base64,UklGRsqKAABXQVZFZm
   }
 
   function saveStatusNote() {
-    const merchant=selectedMerchant();if(!merchant)return;
-    setMerchantState(merchant.uid,{note:document.getElementById("merchantStatusNote")?.value.trim()||""});
-    renderApp();toast("Status note saved");
+    const merchant = selectedMerchant(); if (!merchant) return;
+    const note = document.getElementById("merchantStatusNote")?.value.trim() || "";
+    if (!note) { toast("Write a note first"); return; }
+    const now = new Date().toISOString();
+    const key = String(merchant.uid);
+    const current = { ...merchantState(key) };
+    const history = Array.isArray(current.statusNotes) ? current.statusNotes : [];
+    const latestStatus = current.status || "Active";
+    current.note = note;
+    current.statusNotes = [{ id: uid("status_note"), note, status: latestStatus, createdAt: now, updatedAt: now }, ...history];
+    current.notePage = 1;
+    current.updatedAt = now;
+    state.merchantStates[key] = current;
+    scheduleSave();
+    renderApp();
+    toast("Status note saved");
+  }
+
+  function changeStatusNotePage(delta) {
+    const merchant = selectedMerchant(); if (!merchant) return;
+    const key = String(merchant.uid);
+    const current = { ...merchantState(key) };
+    const notes = Array.isArray(current.statusNotes) ? current.statusNotes : [];
+    const totalPages = Math.max(1, Math.ceil(notes.length / 3));
+    const currentPage = clamp(Number(current.notePage || 1), 1, totalPages);
+    const nextPage = clamp(currentPage + Number(delta || 0), 1, totalPages);
+    if (nextPage === currentPage) return;
+    current.notePage = nextPage;
+    current.updatedAt = new Date().toISOString();
+    state.merchantStates[key] = current;
+    scheduleSave();
+    renderApp();
+  }
+
+  function deleteStatusNote(noteId) {
+    const merchant = selectedMerchant(); if (!merchant) return;
+    const key = String(merchant.uid);
+    const current = { ...merchantState(key) };
+    const notes = Array.isArray(current.statusNotes) ? current.statusNotes : [];
+    const next = notes.filter(n => String(n.id) !== String(noteId));
+    current.statusNotes = next;
+    current.notePage = clamp(Number(current.notePage || 1), 1, Math.max(1, Math.ceil(next.length / 3)));
+    current.updatedAt = new Date().toISOString();
+    state.merchantStates[key] = current;
+    scheduleSave();
+    renderApp();
+    toast("Status note deleted");
   }
 
   function saveManualCall() {
